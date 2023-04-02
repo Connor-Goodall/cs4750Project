@@ -2,11 +2,12 @@
     require("connect-db.php");
     require("club-db.php");
     $user = null;
+    $student = null;
+    $faculty = null;
     if(!empty($_GET['user'])){
         $user = getUser($_GET['user']);
-        echo $_GET['user'];
-        echo $user['computing_id'];
-        echo $user['Bio'];
+        $student = getStudent($_GET['user']);
+        $faculty = getFaculty($_GET['user']);
     }
     else{
         echo "HTTP/1.0 404 Not Found";
@@ -25,19 +26,41 @@
         <body style = "background: #5be7a9;">
         <?php include("header.html") ?>
         <div class = "media">
-        <div class = "media-body">
             &nbsp
-            <h2 class = "account-heading" style = "text-align: center">Computing ID: <?php echo $user['computing_id'];?> </h2>
-            &nbsp
-            <p class = "text-secondary" style = "color: black !important; font-size: 20px; text-align: center">
-                Bio: <?php echo $user['Bio'];?>
-            </p>
-            &nbsp
-            <p class = "text-secondary" style = "color: black !important; font-size: 20px; text-align: center">
-                Date Joined: <?php echo $user['Date_Joined'];?>
-            </p>
+            <div style = "text-align: center">
+                <?php if($user['Profile_Picture'] == null) : ?>
+                    <img class = "rounded-circle account-img" src = "profile_pics\default.jpg" style = "text-align: center; width: 200px; height: 200px;">
+                <?php else: ?>
+                    <?php echo '<img class = "rounded-circle account-img" src="data:image/jpeg;base64,'.base64_encode($user['Profile_Picture']).'" style = "text-align: center;">'; ?> 
+                <?php endif; ?> 
+            </div>
+            <div class = "media-body">
+                <h2 class = "account-heading" style = "text-align: center">Computing ID: <?php echo $user['computing_id'];?> </h2>
+                &nbsp
+                <p class = "text-secondary" style = "color: black !important; font-size: 20px; text-align: center">
+                    Bio: <?php echo $user['Bio'];?>
+                </p>
+                &nbsp
+                <p class = "text-secondary" style = "color: black !important; font-size: 20px; text-align: center">
+                    Date Joined: <?php echo $user['Date_Joined'];?>
+                </p>
+                <?php if($student != null) : ?>
+                    &nbsp
+                    <p class = "text-secondary" style = "color: black !important; font-size: 20px; text-align: center">
+                        Major: <?php echo $student['Major'];?>
+                    </p>
+                    &nbsp
+                    <p class = "text-secondary" style = "color: black !important; font-size: 20px; text-align: center">
+                        Year: <?php echo $student['Year'];?>
+                    </p>
+                <?php elseif($faculty != null) : ?>
+                    &nbsp
+                    <p class = "text-secondary" style = "color: black !important; font-size: 20px; text-align: center">
+                        Department: <?php echo $faculty['Department'];?>
+                    </p>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
         </body>
     <?php else : ?>
         <p> HELLO </p>

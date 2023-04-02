@@ -43,4 +43,26 @@ function getUser($computingID)
     $statement->closeCursor();
     return $result;
 }
+function getStudent($computingID)
+{
+    global $db;
+    $query = "select * from `Student` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+function getFaculty($computingID)
+{
+    global $db;
+    $query = "select * from `Faculty` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 ?>
