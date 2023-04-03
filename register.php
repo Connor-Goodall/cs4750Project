@@ -5,10 +5,10 @@
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Add account"))
         {
             if(!empty($_POST['userName'])){
-                addUser($_POST['userComputingID'], $_POST['userName']);
+                addUser($_POST['userComputingID'], $_POST['userName'], $_POST['userPassword']);
             }
             else{
-                addUser($_POST['userComputingID'], NULL);
+                addUser($_POST['userComputingID'], NULL, $_POST['userPassword']);
             }
             if($_POST['userAffiliation'] == "student"){
                 if(!empty($_POST['userMajor'])){
