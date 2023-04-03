@@ -8,6 +8,7 @@
            $user = getLoginInformation($_POST['loginComputingID'], $_POST['loginPassword']);
            if($user != NULL){
                 $_SESSION['user'] = $user;
+                $_SESSION['computingID'] = $user['computing_id'];
                 header("Location: index.php");
            } 
            else{
