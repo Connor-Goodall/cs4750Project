@@ -2,16 +2,18 @@
     session_start();
     require("connect-db.php");
     require("club-db.php");
+    $tryLogin = 0;
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Login"))
         {
            $user = getLoginInformation($_POST['loginComputingID'], $_POST['loginPassword']);
            if($user != NULL){
                 $_SESSION['user'] = $user;
+                $_SESSION['computingID'] = $user['computing_id'];
                 header("Location: index.php");
            } 
            else{
-            header("Location: login.php");
+            $tryLogin = 1;
            }
         }
     }
@@ -33,6 +35,17 @@
     </p>
     <form name = "loginForm" action = "login.php" method = "post" style = "position:absolute; top: 20%; right:0;
     left:0;">
+     <?php if($user == null && $tryLogin == 1) : ?>
+        <div class = "row mb-0 mx-3">
+            <div class = "alert alert-danger">
+                <ul class = "m-0">
+                    <li>
+                        You have entered a wrong computing ID or password. Please change it to log in.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <?php endif; ?>
       <div class = "row mb-4 mx-3">
         Computing ID* <br/>
         <input type = "text" class = "form-control" name = "loginComputingID" maxlength = "6" 

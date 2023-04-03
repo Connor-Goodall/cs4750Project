@@ -22,8 +22,7 @@
                   <li class="nav-item">
                       <a class="nav-link active" href="#">Search</a>
                   </li>
-            </ul>
-        <?php echo !isset($_SESSION['user']) ;?>    
+            </ul>    
         <?php if(!isset($_SESSION['user'])) : ?>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
