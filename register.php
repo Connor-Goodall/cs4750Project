@@ -5,10 +5,10 @@
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Add account"))
         {
             if(!empty($_POST['userName'])){
-                addUser($_POST['userComputingID'], $_POST['userName']);
+                addUser($_POST['userComputingID'], $_POST['userName'], $_POST['userPassword']);
             }
             else{
-                addUser($_POST['userComputingID'], NULL);
+                addUser($_POST['userComputingID'], NULL, $_POST['userPassword']);
             }
             if($_POST['userAffiliation'] == "student"){
                 if(!empty($_POST['userMajor'])){
@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body style = "background: #5be7a9;">
-<?php include("header.html") ?>
+    <?php include("header.php") ?>
     <br>
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
         Club Finder Registration

@@ -10,6 +10,6 @@ require("connect-db.php");
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body style = "background: #5be7a9;">
-<?php include("header.html") ?>
+<?php include("header.php") ?>
 </body>
 </html>

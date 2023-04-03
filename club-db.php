@@ -1,13 +1,14 @@
 <?php
-function addUser($computingID, $name)
+function addUser($computingID, $name, $password)
 {
     global $db;
-    $query = "insert into `User` values (:Name, :Bio, CURDATE(), :Profile_Picture, :computing_id)";
+    $query = "insert into `User` values (:Name, :Bio, CURDATE(), :Profile_Picture, :computing_id, :Password)";
     $statement = $db->prepare($query);
     $statement->bindValue(':Name', $name);
     $statement->bindValue(':Bio', NULL);
     $statement->bindValue(':Profile_Picture', NULL);
     $statement->bindValue(':computing_id', $computingID);
+    $statement->bindValue(':Password', $password);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -60,6 +61,18 @@ function getFaculty($computingID)
     $query = "select * from `Faculty` where computing_id=:computingID";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+function getLoginInformation($computingID, $password)
+{
+    global $db;
+    $query = "select * from `User` where computing_id=:computingID and Password=:password";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':password', $password);
     $statement->execute();
     $result = $statement->fetch();
     $statement->closeCursor();

@@ -1,6 +1,7 @@
 <?php 
     require("connect-db.php");
     require("club-db.php");
+    session_start();
     $user = null;
     $student = null;
     $faculty = null;
@@ -25,7 +26,7 @@
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         </head>
         <body style = "background: #5be7a9;">
-        <?php include("header.html") ?>
+        <?php include("header.php") ?>
         <div class = "media">
             &nbsp
             <div style = "text-align: center">

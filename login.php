@@ -1,6 +1,20 @@
 <?php 
+    session_start();
     require("connect-db.php");
     require("club-db.php");
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Login"))
+        {
+           $user = getLoginInformation($_POST['loginComputingID'], $_POST['loginPassword']);
+           if($user != NULL){
+                $_SESSION['user'] = $user;
+                header("Location: index.php");
+           } 
+           else{
+            header("Location: login.php");
+           }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -12,12 +26,12 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body style = "background: #5be7a9;">
-    <?php include("header.html") ?>
+    <?php include("header.php") ?>
     <br>
     <p class = "text-decoration-underline" style = "font-size: 25px; text-align:center;">
         Club Finder Login
     </p>
-    <form name = "loginForm" action = "register.php" method = "post" style = "position:absolute; top: 20%; right:0;
+    <form name = "loginForm" action = "login.php" method = "post" style = "position:absolute; top: 20%; right:0;
     left:0;">
       <div class = "row mb-4 mx-3">
         Computing ID* <br/>
