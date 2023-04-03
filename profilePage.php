@@ -10,6 +10,7 @@
         $faculty = getFaculty($_GET['user']);
     }
     else{
+        http_response_code(404);
         echo "HTTP/1.0 404 Not Found";
        
     }
@@ -63,6 +64,7 @@
         </div>
         </body>
     <?php else : ?>
-        <p> HELLO </p>
+        <?php http_response_code(404); ?>
+        <p> User Not Found! </p>
     <?php endif; ?>
 </html>
