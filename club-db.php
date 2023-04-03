@@ -66,4 +66,16 @@ function getFaculty($computingID)
     $statement->closeCursor();
     return $result;
 }
+function getLoginInformation($computingID, $password)
+{
+    global $db;
+    $query = "select * from `User` where computing_id=:computingID and Password=:password";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':password', $password);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 ?>
