@@ -78,4 +78,37 @@ function getLoginInformation($computingID, $password)
     $statement->closeCursor();
     return $result;
 }
+function updateUser($computingID, $name, $bio, $picture)
+{
+    global $db;
+    $query = "update `User` set Name=:name, Bio=:bio, Profile_Picture=:picture where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':name', $name);
+    $statement->bindValue(':bio', $bio);
+    $statement->bindValue(':picture', $picture);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function updateStudent($computingID, $major, $year)
+{
+    global $db;
+    $query = "update `Student` set Major=:major, Year=:year where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':major', $major);
+    $statement->bindValue(':year', $year);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function updateFaculty($computingID, $department)
+{
+    global $db;
+    $query = "update `Faculty` set Department=:department where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':department', $department);
+    $statement->execute();
+    $statement->closeCursor();
+}
 ?>
