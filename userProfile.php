@@ -25,9 +25,9 @@
             &nbsp
             <div style = "text-align: center">
                 <?php if($user['Profile_Picture'] == null) : ?>
-                    <img class = "rounded-circle account-img" src = "profile_pics\default.jpg" style = "text-align: center; width: 300px; height: 300px;">
+                    <img class = "rounded-circle account-img" src = "profile_pics\default.jpg" style = "text-align: center; width: 200px; height: 200px;">
                 <?php else: ?>
-                    <?php echo '<img class = "rounded-circle account-img" src="data:image/jpeg;base64,'.base64_encode($user['Profile_Picture']).'" style = "text-align: center;">'; ?> 
+                    <?php echo '<img class = "rounded-circle account-img" src="data:image/jpeg;base64,'.base64_encode($user['Profile_Picture']).'" style = "text-align: center; width: 200px; height: 200px;">'; ?> 
                 <?php endif; ?> 
             </div>
             <div class = "media-body">

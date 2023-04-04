@@ -31,7 +31,12 @@
                     updateUser($_SESSION['computingID'], $_POST['userName'], $_POST['userBio'], $user['Profile_Picture']);
                 }
                 if($student != null){
-                    updateStudent($_SESSION['computingID'], $_POST['userMajor'], $_POST['userYear']);
+                    if($_POST['userYear'] == "..."){
+                        updateStudent($_SESSION['computingID'], $_POST['userMajor'], $student['Year']);
+                    }
+                    else{
+                        updateStudent($_SESSION['computingID'], $_POST['userMajor'], $_POST['userYear']);
+                    }
                 }
                 elseif($faculty != null){
                     updateFaculty($_SESSION['computingID'], $_POST['userDepartment']);
@@ -83,6 +88,7 @@
                         Year
                         <select id = "userYear" name = "userYear"  
                             style = "border: 2px solid black; height: 35px;" required>
+                            <option value = "..."> ... </option>
                             <option value = "1"> First </option>
                             <option value = "2"> Second </option>
                             <option value = "3"> Third </option>
