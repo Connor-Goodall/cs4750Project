@@ -35,7 +35,7 @@
         <?php else : ?>
             <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="updateProfile.php">Profile</a>
+                <a class="nav-link active" href="userProfile.php">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="logout.php">Logout</a>
