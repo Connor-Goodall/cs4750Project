@@ -54,9 +54,17 @@ function addClub($name, $missionStatement, $nickname, $concentration, $descripti
     $statement->bindValue(':Bylaws', $bylaws);
     $statement->bindValue(':Website', $website);
     $statement->bindValue(':Funding_source', $fundingSource);
-    $statement->bindValue(':Founding_date', $foundingDate);
+    if(empty($foundingDate)){//weird bug that won't create with empty foundingDate
+        $statement->bindValue(':Founding_date', NULL);
+    }else{
+        $statement->bindValue('Founding_date', $foundingDate);
+    }
     $statement->bindValue(':Costs', $costs);
-    $statement->bindValue(':meeting_time', $meetingTime);
+    if(empty($meetingTime)){//weird bug that won't create with empty meetingTime
+        $statement->bindValue(':meeting_time', NULL);
+    }else{
+        $statement->bindValue(':meeting_time', $meetingTime);
+    }
     $statement->bindValue(':meeting_days', $meetingDays);
     $statement->bindValue(':meeting_location', $meetingLocation);
     $statement->bindValue(':Club_ID', $clubID);
