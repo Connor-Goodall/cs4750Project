@@ -22,7 +22,7 @@
                 $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $_POST['logo'], $_POST['dues'], $_POST['constitution'], $_POST['application'], $_POST['bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
                 addMember($clubID, $_SESSION['computingID']);
                 setLeader($clubID, $_SESSION['computingID']);
-                echo $clubName . "<b> " . $clubName . " has been added to the database!</b>";
+                echo "<b> " . $clubName . " has been added to the database!</b>";
             }else{
                 echo "<b>Must have a club name to create club!!</b>";
             }
