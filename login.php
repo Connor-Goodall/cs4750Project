@@ -30,22 +30,27 @@
 <body style = "background: #5be7a9;">
     <?php include("header.php") ?>
     <br>
-    <p class = "text-decoration-underline" style = "font-size: 25px; text-align:center;">
-        Club Finder Login
-    </p>
-    <form name = "loginForm" action = "login.php" method = "post" style = "position:absolute; top: 20%; right:0;
-    left:0;">
-     <?php if($user == null && $tryLogin == 1) : ?>
-        <div class = "row mb-0 mx-3">
-            <div class = "alert alert-danger">
-                <ul class = "m-0">
-                    <li>
-                        You have entered a wrong computing ID or password. Please change it to log in.
-                    </li>
-                </ul>
+    <div>
+        <p class = "text-decoration-underline" style = "font-size: 25px; text-align:center;">
+            Club Finder Login
+        </p>
+    </div>
+    
+    <div>
+        <form name = "loginForm" action = "login.php" method = "post" style = "position:absolute; top: 20%; right:0;
+        left:0;">
+        <?php if($user == null && $tryLogin == 1) : ?>
+            <div class = "row mb-0 mx-3">
+                <div class = "alert alert-danger">
+                    <ul class = "m-0">
+                        <li>
+                            You have entered a wrong computing ID or password. Please change it to log in.
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+    </div>
       <div class = "row mb-4 mx-3">
         Computing ID* <br/>
         <input type = "text" class = "form-control" name = "loginComputingID" maxlength = "6" 
