@@ -33,6 +33,65 @@ function addFaculty($computingID, $department)
     $statement->execute();
     $statement->closeCursor();
 }
+function addClub($name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation)
+{
+    global $db;
+    $sql = "SELECT COUNT(*) FROM `Club`";
+    $res = $db->query($sql);
+    $clubID = $res->fetchColumn();
+    $query = "insert into `Club` values (:Name, :Mission_Statement, :Nickname, :Concentration, :Description, :Logo, :Dues, :Constitution, :Application, :Bylaws, :Website, :Funding_source, :Founding_date, :Costs, :meeting_time, :meeting_days, :meeting_location, :Club_ID)";
+    $statement = $db->prepare($query);
+    //Wow that's a lot of bindValues 0_0
+    $statement->bindValue(':Name', $name);
+    $statement->bindValue(':Mission_Statement', $missionStatement);
+    $statement->bindValue(':Nickname', $nickname);
+    $statement->bindValue(':Concentration', $concentration);
+    $statement->bindValue(':Description', $description);
+    $statement->bindValue(':Logo', $logo);
+    $statement->bindValue(':Dues', $dues);
+    $statement->bindValue(':Constitution', $constitution);
+    $statement->bindValue(':Application', $application);
+    $statement->bindValue(':Bylaws', $bylaws);
+    $statement->bindValue(':Website', $website);
+    $statement->bindValue(':Funding_source', $fundingSource);
+    if(empty($foundingDate)){//weird bug that won't create with empty foundingDate
+        $statement->bindValue(':Founding_date', NULL);
+    }else{
+        $statement->bindValue('Founding_date', $foundingDate);
+    }
+    $statement->bindValue(':Costs', $costs);
+    if(empty($meetingTime)){//weird bug that won't create with empty meetingTime
+        $statement->bindValue(':meeting_time', NULL);
+    }else{
+        $statement->bindValue(':meeting_time', $meetingTime);
+    }
+    $statement->bindValue(':meeting_days', $meetingDays);
+    $statement->bindValue(':meeting_location', $meetingLocation);
+    $statement->bindValue(':Club_ID', $clubID);
+    $statement->execute();
+    $statement->closeCursor();
+    return $clubID;
+}
+function addMember($clubID, $computingID){
+    global $db;
+    $query = "insert into `MemberOf` values (:computing_id, :Club_ID, :time_active)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computing_id', $computingID);
+    $statement->bindValue(':Club_ID', $clubID);
+    $statement->bindValue(':time_active', 1);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function setLeader($clubID, $computingID){
+    global $db;
+    $query = "insert into `Leads` values (:Exec_Role, :Club_ID, :computing_id)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computing_id', $computingID);
+    $statement->bindValue(':Club_ID', $clubID);
+    $statement->bindValue(':Exec_Role', 'President');
+    $statement->execute();
+    $statement->closeCursor();
+}
 function getUser($computingID)
 {
     global $db;
