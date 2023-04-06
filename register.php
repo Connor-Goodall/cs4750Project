@@ -5,10 +5,10 @@
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Add account"))
         {
             if(!empty($_POST['userName'])){
-                addUser($_POST['userComputingID'], $_POST['userName']);
+                addUser($_POST['userComputingID'], $_POST['userName'], $_POST['userPassword']);
             }
             else{
-                addUser($_POST['userComputingID'], NULL);
+                addUser($_POST['userComputingID'], NULL, $_POST['userPassword']);
             }
             if($_POST['userAffiliation'] == "student"){
                 if(!empty($_POST['userMajor'])){
@@ -39,79 +39,85 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body style = "background: #5be7a9;">
-<?php include("header.html") ?>
+    <div>
+        <?php include("header.php") ?>
+    </div>
     <br>
+
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
         Club Finder Registration
     </p>
-<form name = "registerForm" action = "register.php" method = "post" style = "position:absolute; top: 20%; right:0;
-    left:0;">
-    <div class = "row mb-4 mx-3">
-        Computing ID* <br/>
-        <input type = "text" class = "form-control" name = "userComputingID" maxlength = "6" 
-            style = "border: 2px solid black;" placeholder = "Your computing ID..." required
-        />
-        <small id = "computingIDInformation" class = "form-text text-muted" style="color:black !important"> Required. 
-            7 characters or fewer. Letters and digits only. 
-        </small> 
+
+    <div>
+        <form name = "registerForm" action = "register.php" method = "POST" style = "text-align: center">
+            <div class = "row mb-4 mx-3">
+            Computing ID* <br/>
+                <input type = "text" class = "form-control" name = "userComputingID" maxlength = "6" 
+                    style = "border: 2px solid black;" placeholder = "Your computing ID..." required
+                />
+                <small id = "computingIDInformation" class = "form-text text-muted" style="color:black !important"> Required. 
+                    7 characters or fewer. Letters and digits only. 
+                </small> 
+            </div>
+            <div class = "row mb-4 mx-3">
+            Password*
+                <input type = "password" class = "form-control" name = "userPassword" maxlength = "100" minlength = "8" 
+                    style = "border: 2px solid black;" placeholder = "Your password..." required
+                />
+                <small id = "passwordInformation" class = "form-text text-muted" style="color:black !important">
+                    Required. 8 characters minimum.
+                </small> 
+            </div>
+            <div class = "row mb-4 mx-3">
+            Name
+                <input type = "text" class = "form-control" name = "userName" 
+                    style = "border: 2px solid black;" placeholder = "Your name..."
+                />
+                <small id = "nameInformation" class = "form-text text-muted" style="color:black !important">
+                    First Name and Last Name
+                </small> 
+            </div>
+            <div class = "row mb-4 mx-3">
+            Student or Faculty*
+                <select onchange = "checkValues(this)" id = "userAffiliation" name = "userAffiliation"  
+                    style = "border: 2px solid black; height: 35px;">
+                    <option value = "..."> ... </option>
+                    <option value = "student"> Student </option>
+                    <option value = "faculty"> Faculty </option>
+                </select>
+                <small id = "affiliationInformation" class = "form-text text-muted" style="color:black !important"> 
+                    Required.
+                </small> 
+            </div>
+            <div class = "row mb-4 mx-3" id = "studentOptionOne" style = "display: none">
+            Major
+                <input type = "text" class = "form-control" name = "userMajor" 
+                    style = "border: 2px solid black;" placeholder = "Your major..."
+                />
+            </div>
+            <div class = "row mb-4 mx-3" id = "studentOptionTwo" style = "display: none">
+            Year
+                <select id = "userYear" name = "userYear"  
+                    style = "border: 2px solid black; height: 35px;">
+                    <option value = "1"> First </option>
+                    <option value = "2"> Second </option>
+                    <option value = "3"> Third </option>
+                    <option value = "4"> Fourth </option>
+                </select>
+            </div>
+            <div class = "row mb-4 mx-3" id = "facultyOption" style = "display: none">
+            Department
+                <input type = "text" class = "form-control" name = "userDepartment" 
+                    style = "border: 2px solid black;" placeholder = "Your department..."
+                />
+            </div>
+            <div class="row mb-4 mx-3">
+                <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Add account" 
+                title = "Click to register account" style = "width: 10%; display: block; margin: auto;"
+                />
+            </div>
     </div>
-    <div class = "row mb-4 mx-3">
-        Password*
-        <input type = "password" class = "form-control" name = "userPassword" maxlength = "100" minlength = "8" 
-            style = "border: 2px solid black;" placeholder = "Your password..." required
-        />
-        <small id = "passwordInformation" class = "form-text text-muted" style="color:black !important">
-            Required. 8 characters minimum.
-        </small> 
-    </div>
-    <div class = "row mb-4 mx-3">
-        Name
-        <input type = "text" class = "form-control" name = "userName" 
-            style = "border: 2px solid black;" placeholder = "Your name..."
-        />
-        <small id = "nameInformation" class = "form-text text-muted" style="color:black !important">
-            First Name and Last Name
-        </small> 
-    </div>
-    <div class = "row mb-4 mx-3">
-        Student or Faculty*
-        <select onchange = "checkValues(this)" id = "userAffiliation" name = "userAffiliation"  
-            style = "border: 2px solid black; height: 35px;">
-            <option value = "..."> ... </option>
-            <option value = "student"> Student </option>
-            <option value = "faculty"> Faculty </option>
-        </select>
-        <small id = "affiliationInformation" class = "form-text text-muted" style="color:black !important"> 
-            Required.
-        </small> 
-    </div>
-    <div class = "row mb-4 mx-3" id = "studentOptionOne" style = "display: none">
-    Major
-    <input type = "text" class = "form-control" name = "userMajor" 
-            style = "border: 2px solid black;" placeholder = "Your major..."
-        />
-    </div>
-    <div class = "row mb-4 mx-3" id = "studentOptionTwo" style = "display: none">
-    Year
-        <select id = "userYear" name = "userYear"  
-            style = "border: 2px solid black; height: 35px;">
-            <option value = "1"> First </option>
-            <option value = "2"> Second </option>
-            <option value = "3"> Third </option>
-            <option value = "4"> Fourth </option>
-        </select>
-    </div>
-    <div class = "row mb-4 mx-3" id = "facultyOption" style = "display: none">
-    Department
-    <input type = "text" class = "form-control" name = "userDepartment" 
-            style = "border: 2px solid black;" placeholder = "Your department..."
-        />
-    </div>
-    <div class="row mb-4 mx-3">
-      <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Add account" 
-        title = "Click to register account" style = "width: 10%; display: block; margin: auto;"
-      />
-    </div>
+
     <script>
         var studentOptionOne;
         var studentOptionTwo;

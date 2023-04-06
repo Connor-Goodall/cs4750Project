@@ -1,3 +1,9 @@
+<?php 
+    require("connect-db.php");
+    session_start();
+?>
+<!DOCTYPE html>
+<html>
 <header>  
     <nav class="navbar navbar-expand-md navbar-light navbar border border-dark">
       <div class="container-fluid">            
@@ -14,18 +20,33 @@
                       <a class="nav-link active" href="bulletin.php">Bulletin</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link active" href="#">Search</a>
+                      <a class="nav-link active" href="clubSearch.php">Search for Clubs</a>
                   </li>
-            </ul>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="#">Search for Sponsors</a>
+                  </li>
+            </ul>    
+        <?php if(!isset($_SESSION['user'])) : ?>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Login</a>
+                <a class="nav-link active" href="login.php">Login</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="register.php">Register</a>
             </li>
           </ul>
+        <?php else : ?>
+            <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link active" href="userProfile.php">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="logout.php">Logout</a>
+            </li>
+          </ul>
+        <?php endif; ?>
         </div>
       </div>
     </nav>
   </header>
+  </html>
