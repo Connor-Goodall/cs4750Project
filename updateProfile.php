@@ -41,6 +41,7 @@
                 elseif($faculty != null){
                     updateFaculty($_SESSION['computingID'], $_POST['userDepartment']);
                 }
+                header("Location: userProfile.php");
             }
         }
     }
@@ -74,8 +75,7 @@
                 <div class = "row mb-4 mx-3">
                     Bio <br/>
                     <textarea type = "text" class = "form-control" name = "userBio"
-                        style = "border: 2px solid black;"><?php if ($user != null) echo $user['Bio']; ?>
-                    </textarea>
+                        style = "border: 2px solid black;"><?php if ($user != null) echo $user['Bio']; ?></textarea>
                 </div>
                 <?php if($student != null) : ?>
                     <div class = "row mb-4 mx-3">
