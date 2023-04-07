@@ -7,7 +7,8 @@ function findPosts ($name)  // given a search for a club name, returns relevant 
     $l = "%";
     $regex = $l.$name.$l;
     global $db;
-    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes` FROM `post` NATURAL JOIN `club` WHERE club.Name LIKE :Regex";
+    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes` FROM `post` 
+    NATURAL JOIN `club` WHERE club.Name LIKE :Regex OR club.Nickname LIKE :Regex";
     $statement = $db->prepare($query);
     $statement->bindValue(':Regex', $regex);
     $statement->execute();
@@ -67,11 +68,14 @@ What club are you looking for? <input type="text" name="clubName"><br>
 </form>
 <br>
 
-<?php $clubName = $_POST["clubName"];
-$posts = findPosts($clubName);
-?>
+<?php 
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $clubName = $_POST["clubName"];
+        $posts = findPosts($clubName);
+        printPosts($posts);
+    }
 
-<?php  printPosts($posts)?>
+?>
 
 </html>
 
