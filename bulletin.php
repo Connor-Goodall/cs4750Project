@@ -68,11 +68,19 @@ What club are you looking for? <input type="text" name="clubName"><br>
 </form>
 <br>
 
-<?php $clubName = $_POST["clubName"];
-$posts = findPosts($clubName);
+
+<?php 
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $clubName = $_POST["clubName"];
+        $posts = findPosts($clubName);
+        printPosts($posts);
+    }
+
 ?>
 
-<?php  printPosts($posts)?>
+
+
+
 
 </html>
 
