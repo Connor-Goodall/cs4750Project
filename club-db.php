@@ -170,4 +170,28 @@ function updateFaculty($computingID, $department)
     $statement->execute();
     $statement->closeCursor();
 }
+function deleteUser($computingID){
+    global $db;
+    $query = "delete from `User` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteStudent($computingID){
+    global $db;
+    $query = "delete from `Student` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteFaculty($computingID){
+    global $db;
+    $query = "delete from `Faculty` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
 ?>

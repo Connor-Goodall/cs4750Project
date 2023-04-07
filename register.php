@@ -55,7 +55,7 @@
                 <input type = "text" class = "form-control" name = "userComputingID" maxlength = "6" 
                     style = "border: 2px solid black;" placeholder = "Your computing ID..." required
                 />
-                <small id = "computingIDInformation" class = "form-text text-muted" style="color:black !important"> Required. 
+                <small id = "computingIDInformation" class = "form-text text-muted" style="color:black !important; text-align:left;"> Required. 
                     7 characters or fewer. Letters and digits only. 
                 </small> 
             </div>
@@ -64,7 +64,7 @@
                 <input type = "password" class = "form-control" name = "userPassword" maxlength = "100" minlength = "8" 
                     style = "border: 2px solid black;" placeholder = "Your password..." required
                 />
-                <small id = "passwordInformation" class = "form-text text-muted" style="color:black !important">
+                <small id = "passwordInformation" class = "form-text text-muted" style="color:black !important; text-align:left;">
                     Required. 8 characters minimum.
                 </small> 
             </div>
@@ -73,7 +73,7 @@
                 <input type = "text" class = "form-control" name = "userName" 
                     style = "border: 2px solid black;" placeholder = "Your name..."
                 />
-                <small id = "nameInformation" class = "form-text text-muted" style="color:black !important">
+                <small id = "nameInformation" class = "form-text text-muted" style="color:black !important; text-align:left;">
                     First Name and Last Name
                 </small> 
             </div>
@@ -85,17 +85,17 @@
                     <option value = "student"> Student </option>
                     <option value = "faculty"> Faculty </option>
                 </select>
-                <small id = "affiliationInformation" class = "form-text text-muted" style="color:black !important"> 
+                <small id = "affiliationInformation" class = "form-text text-muted" style="color:black !important; text-align:left; "> 
                     Required.
                 </small> 
             </div>
-            <div class = "row mb-4 mx-3" id = "studentOptionOne" style = "display: none">
+            <div class = "row mb-4 mx-3" id = "studentOptionOne" style = "display: none; text-align:left;">
             Major
                 <input type = "text" class = "form-control" name = "userMajor" 
                     style = "border: 2px solid black;" placeholder = "Your major..."
                 />
             </div>
-            <div class = "row mb-4 mx-3" id = "studentOptionTwo" style = "display: none">
+            <div class = "row mb-4 mx-3" id = "studentOptionTwo" style = "display: none; text-align:left;">
             Year
                 <select id = "userYear" name = "userYear"  
                     style = "border: 2px solid black; height: 35px;">
@@ -105,7 +105,7 @@
                     <option value = "4"> Fourth </option>
                 </select>
             </div>
-            <div class = "row mb-4 mx-3" id = "facultyOption" style = "display: none">
+            <div class = "row mb-4 mx-3" id = "facultyOption" style = "display: none; text-align:left;">
             Department
                 <input type = "text" class = "form-control" name = "userDepartment" 
                     style = "border: 2px solid black;" placeholder = "Your department..."
