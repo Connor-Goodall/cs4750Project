@@ -15,11 +15,37 @@
         $display = 'none';
         echo '<b>Only students may create clubs!!</b>';
     }
+    $logoData = null;
+    $consData = null;
+    $appData = null;
+    $bylawsData = null;
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Create Club")){
             if($_POST['clubName']){
+                if (count($_FILES) > 0) {
+                    if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
+                        $logoData = file_get_contents($_FILES['logo']['tmp_name']);
+                    }else{
+                        $logoData = $_POST['logo'];
+                    }
+                    if (is_uploaded_file($_FILES['constitution']['tmp_name'])) {
+                        $consData = file_get_contents($_FILES['constitution']['tmp_name']);
+                    }else{
+                        $consData = $_POST['constitution'];
+                    }
+                    if (is_uploaded_file($_FILES['application']['tmp_name'])) {
+                        $appData = file_get_contents($_FILES['application']['tmp_name']);
+                    }else{
+                        $appData = $_POST['application'];
+                    }
+                    if (is_uploaded_file($_FILES['bylaws']['tmp_name'])) {
+                        $bylawsData = file_get_contents($_FILES['bylaws']['tmp_name']);
+                    }else{
+                        $bylawsData = $_POST['bylaws'];
+                    }
+                }
                 $clubName = $_POST['clubName'];
-                $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $_POST['logo'], $_POST['dues'], $_POST['constitution'], $_POST['application'], $_POST['bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $consData, $appData, $bylawsData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
                 addMember($clubID, $_SESSION['computingID']);
                 setLeader($clubID, $_SESSION['computingID']);
                 echo "<b> " . $clubName . " has been added to the database!</b>";
@@ -83,7 +109,6 @@
 
     <div class = "row mb-4 mx-3">
         Logo <br/>
-        <img class="rounded mx-auto d-block" id="uploadedImage" src="#" style="max-width: 150px; max-height: 100px"  />
         <input type = "file" class = "form-control" name = "logo" id="logo" accept = "image/*" id = "imgInp" />
         <small id = "nameInformation" class = "form-text text-muted" style="color:black !important">
             Upload an image file for the club's logo
@@ -188,13 +213,56 @@
         }
     </script>
     <script>
-        imgInp.onchange = evt => {
-            const [file] = imgInp.files
-            if (file) {
-                //Credit to https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
-                uploadedImage.src = URL.createObjectURL(file)
+        const logo = document.getElementById("logo");
+        const cons = document.getElementById("constitution");
+        const app = document.getElementById("application");
+        const bylaws = document.getElementById("bylaws");
+
+        logo.addEventListener('change', (event) => {
+            const target = event.target
+                if (target.files && target.files[0]) {
+                const maxAllowedSize = 65535;
+                if (target.files[0].size > maxAllowedSize) {
+                    // Here you can ask your users to load correct file
+                    alert("File is too big! Must be less than 65,535B!");
+                    target.value = ''
+                }
             }
-        }
+        })
+        cons.addEventListener('change', (event) => {
+            const target = event.target
+                if (target.files && target.files[0]) {
+                const maxAllowedSize = 65535;
+                if (target.files[0].size > maxAllowedSize) {
+                    // Here you can ask your users to load correct file
+                    alert("File is too big! Must be less than 65,535B!");
+                    target.value = ''
+                }
+            }
+        })
+        app.addEventListener('change', (event) => {
+            const target = event.target
+                if (target.files && target.files[0]) {
+                const maxAllowedSize = 65535;
+                if (target.files[0].size > maxAllowedSize) {
+                    // Here you can ask your users to load correct file
+                    alert("File is too big! Must be less than 65,535B!");
+                    target.value = ''
+                }
+            }
+        })
+        bylaws.addEventListener('change', (event) => {
+            const target = event.target
+                if (target.files && target.files[0]) {
+                const maxAllowedSize = 65535;
+                if (target.files[0].size > maxAllowedSize) {
+                    // Here you can ask your users to load correct file
+                    alert("File is too big! Must be less than 65,535B!");
+                    target.value = ''
+                }
+            }
+        })
+        
     </script>
 </form>
 </body>
