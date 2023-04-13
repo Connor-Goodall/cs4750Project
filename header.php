@@ -12,6 +12,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <style>
+            .navbar-nav>li{
+              border-right: 1px solid #000;
+            }
+            </style>
             <ul class ="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" href="index.php">Home</a>
@@ -24,6 +29,9 @@
                   </li>
                   <li class="nav-item">
                       <a class="nav-link active" href="#">Search for Sponsors</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="createClub.php">Add your Club</a>
                   </li>
             </ul>    
         <?php if(!isset($_SESSION['user'])) : ?>
