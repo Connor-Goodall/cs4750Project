@@ -14,8 +14,9 @@
         $student = getStudent($_SESSION['computingID']);
         $faculty = getFaculty($_SESSION['computingID']); 
         $userSponsor = getSponsor($_SESSION['computingID'], $_GET['id']);
-        $club = getClub($_GET['id']);
+        $userMember = getMember($_SESSION['computingID'], $_GET['id']);
     }
+    $club = getClub($_GET['id']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -248,7 +249,6 @@
         </div>
     </div>
     &nbsp
-    <?php echo $club['Club_ID'];?>
     <?php if($userSponsor != null) : ?>
         <div style = "text-align: center">
             <form name = "deleteSponsorForm" action = "clubInformation.php" method = "POST">
@@ -285,6 +285,8 @@
                                     title = "Click to join this club" />
                 </form>
             </div>
+        <?php endif; ?>
+    <?php endif; ?>
     </body>
 <?php else : ?>
     <p> Cannot find Club! </p>

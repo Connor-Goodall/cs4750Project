@@ -222,9 +222,29 @@ function deleteSponsor($computingID, $clubID){
     $statement->execute();
     $statement->closeCursor();
 }
+function deleteMember($computingID, $clubID){
+    global $db;
+    $query = "delete from `MemberOf` where computing_id=:computingID and Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function getSponsor($computingID, $clubID){
     global $db;
     $query = "select * from `Sponsors` where computing_id=:computingID and Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+function getMember($computingID, $clubID){
+    global $db;
+    $query = "select * from `MemberOf` where computing_id=:computingID and Club_ID=:clubID";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $computingID);
     $statement->bindValue(':clubID', $clubID);
