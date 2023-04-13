@@ -33,6 +33,15 @@ function addFaculty($computingID, $department)
     $statement->execute();
     $statement->closeCursor();
 }
+function addSponsor($computingID, $clubID){
+    global $db;
+    $query = "insert into `Sponsors` values (:computing_id, :Club_ID)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computing_id', $computingID);
+    $statement->bindValue(':Club_ID', $clubID);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function addClub($name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation)
 {
     global $db;
@@ -125,6 +134,16 @@ function getFaculty($computingID)
     $statement->closeCursor();
     return $result;
 }
+function getClub($id){
+    global $db;
+    $query = "select * from `Club` where Club_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 function getLoginInformation($computingID, $password)
 {
     global $db;
@@ -193,5 +212,45 @@ function deleteFaculty($computingID){
     $statement->bindValue(':computingID', $computingID);
     $statement->execute();
     $statement->closeCursor();
+}
+function deleteSponsor($computingID, $clubID){
+    global $db;
+    $query = "delete from `Sponsors` where computing_id=:computingID and Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function getSponsor($computingID, $clubID){
+    global $db;
+    $query = "select * from `Sponsors` where computing_id=:computingID and Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+function getAllSponsors($id){
+    global $db;
+    $query = "select computing_id from `Sponsors` where Club_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
+}
+function getLeaders($id){
+    global $db;
+    $query = "select computing_id, Exec_Role from `Leads` where Club_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
 }
 ?>
