@@ -36,6 +36,9 @@
                   <li class="nav-item">
                       <a class="nav-link active" href="createClub.php">Add your Club</a>
                   </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="createPost.php">Create a Post</a>
+                  </li>
             </ul>    
         <?php if(!isset($_SESSION['user'])) : ?>
           <ul class="navbar-nav ms-auto">
