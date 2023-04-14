@@ -82,13 +82,37 @@ function addMember($clubID, $computingID){
     $statement->execute();
     $statement->closeCursor();
 }
-function setLeader($clubID, $computingID){
+function checkClubName($clubName){
     global $db;
-    $query = "insert into `Leads` values (:Exec_Role, :Club_ID, :computing_id)";
+    $query = "select * from `Club` where Name=:clubName";
     $statement = $db->prepare($query);
-    $statement->bindValue(':computing_id', $computingID);
-    $statement->bindValue(':Club_ID', $clubID);
-    $statement->bindValue(':Exec_Role', 'President');
+    $statement->bindValue(':clubName', $clubName);
+    $statement->execute();
+    $club = $statement->fetchAll();
+    $statement->closeCursor();
+    return ($club != false); //false means there are no clubs found
+}
+function deleteUser($computingID){
+    global $db;
+    $query = "delete from `User` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteStudent($computingID){
+    global $db;
+    $query = "delete from `Student` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteFaculty($computingID){
+    global $db;
+    $query = "delete from `Faculty` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -137,6 +161,16 @@ function getLoginInformation($computingID, $password)
     $statement->closeCursor();
     return $result;
 }
+function setLeader($clubID, $computingID){
+    global $db;
+    $query = "insert into `Leads` values (:Exec_Role, :Club_ID, :computing_id)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computing_id', $computingID);
+    $statement->bindValue(':Club_ID', $clubID);
+    $statement->bindValue(':Exec_Role', 'President');
+    $statement->execute();
+    $statement->closeCursor();
+}
 function updateUser($computingID, $name, $bio, $picture)
 {
     global $db;
@@ -167,30 +201,6 @@ function updateFaculty($computingID, $department)
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $computingID);
     $statement->bindValue(':department', $department);
-    $statement->execute();
-    $statement->closeCursor();
-}
-function deleteUser($computingID){
-    global $db;
-    $query = "delete from `User` where computing_id=:computingID";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':computingID', $computingID);
-    $statement->execute();
-    $statement->closeCursor();
-}
-function deleteStudent($computingID){
-    global $db;
-    $query = "delete from `Student` where computing_id=:computingID";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':computingID', $computingID);
-    $statement->execute();
-    $statement->closeCursor();
-}
-function deleteFaculty($computingID){
-    global $db;
-    $query = "delete from `Faculty` where computing_id=:computingID";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':computingID', $computingID);
     $statement->execute();
     $statement->closeCursor();
 }
