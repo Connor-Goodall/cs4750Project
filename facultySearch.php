@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
     <html>
     <head>
@@ -12,25 +11,24 @@
 
     <?php
 
-    global $db;
     $keyword = $_GET['keyword'];
-    $statement = $db->prepare("select * FROM `Club` where `Name` like '%$keyword%'");
+    $statement = $db->prepare("select `Department`, `Name` from `Faculty` join `User` on User.computing_id = Faculty.computing_id
+                             where `Department` like '%$keyword%'");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
-
     ?>
 
     <br>
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-        Club Finder Search
+        Club Finder Faculty Search
     </p>
     <br>
-    <form name=clubSearch action=clubSearch.php method="GET" style="text-align: center">
+    <form name=facultySearch action=facultySearch.php method="GET" style="text-align: center">
         <div class = "row mb-4 mx-3">
-            <input type = "text" class = "form-control" name = "keyword" style = "border: 2px solid black;" placeholder = "Search Clubs..."/>
+            <input type = "text" class = "form-control" name = "keyword" style = "border: 2px solid black;" placeholder = "Search Faculty..."/>
         </div>
-        <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Search Clubs"
+        <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Search Faculty"
         title = "Search" style = "width: 10%; display: block; margin: auto;"
         />
     </form>
@@ -42,7 +40,7 @@
                     echo '<div class="card mx-auto" style="width: 18rem; text-align: center">';
                         echo '<div class="card-body">';
                             echo '<h5 class="card-title" style="font-size:18px">' . $row['Name'] . '</h5>';
-                                echo '<p class="card-text" style="font-size:12px">' . $row['Concentration'] . '</p>';
+                                echo '<p class="card-text" style="font-size:12px">' . $row['Department'] . '</p>';
                         echo '</div>';
                     echo '</div>';
                     echo '<br>';

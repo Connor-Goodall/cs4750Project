@@ -23,7 +23,7 @@
                       <a class="nav-link active" href="clubSearch.php">Search for Clubs</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link active" href="#">Search for Sponsors</a>
+                      <a class="nav-link active" href="facultySearch.php">Search for Sponsors</a>
                   </li>
             </ul>    
         <?php if(!isset($_SESSION['user'])) : ?>
