@@ -14,7 +14,7 @@
 
     global $db;
     $keyword = $_GET['keyword'];
-    $statement = $db->prepare("select * FROM `Club` where `Name` like '%$keyword%'");
+    $statement = $db->prepare("select * FROM `Club` where `Name` like '%$keyword%' or `Nickname` like '%$keyword%' or `Concentration` like '%$keyword%' ");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
