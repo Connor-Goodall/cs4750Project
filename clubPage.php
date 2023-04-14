@@ -34,7 +34,13 @@
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
         <?php echo $club['Name']; ?>
     </p>
-    &nbsp
+    <div style="text-align: center">
+    <form name = "gotoBulletin" action = "bulletin.php" method = "POST">
+                    <input type='hidden' name='clubName' value= <?php echo $club['Name']; ?> />
+                    <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Bulletin"  />
+                </form>
+    </div>
+    <br>
     <div class = "container">
         <div class = "row">
             <div class = "col-7">

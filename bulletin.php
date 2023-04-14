@@ -7,8 +7,8 @@ function findPosts ($name)  // given a search for a club name, returns relevant 
     $l = "%";
     $regex = $l.$name.$l;
     global $db;
-    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes` FROM `post` 
-    NATURAL JOIN `club` WHERE club.Name LIKE :Regex OR club.Nickname LIKE :Regex";
+    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes` FROM `Post` 
+    NATURAL JOIN `Club` WHERE Club.Name LIKE :Regex OR Club.Nickname LIKE :Regex";
     $statement = $db->prepare($query);
     $statement->bindValue(':Regex', $regex);
     $statement->execute();
