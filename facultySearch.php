@@ -13,7 +13,7 @@
 
     $keyword = $_GET['keyword'];
     $statement = $db->prepare("select `Department`, `Name` from `Faculty` join `User` on User.computing_id = Faculty.computing_id
-                             where `Department` like '%$keyword%'");
+                             where `Department` like '%$keyword%' or `Name` like '%$keyword%' ");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
