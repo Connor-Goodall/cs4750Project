@@ -1,14 +1,3 @@
-<?php
-    require("connect-db.php");
-
-    global $db;
-    $keyword = $_GET['keyword'];
-    $statement = $db->prepare("select * FROM `Club` where `Name` like '%$keyword%'");
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-    $statement->closeCursor();
-
-    ?>
 
 <!DOCTYPE html>
     <html>
@@ -20,6 +9,18 @@
     </head>
     <body style = "background: #5be7a9;">
     <?php include("header.php") ?>
+
+    <?php
+
+    global $db;
+    $keyword = $_GET['keyword'];
+    $statement = $db->prepare("select * FROM `Club` where `Name` like '%$keyword%'");
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+
+    ?>
+
     <br>
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
         Club Finder Search
@@ -40,6 +41,7 @@
                 foreach ($results as $row) {
                     echo '<div class="card mx-auto" style="width: 18rem; text-align: center">';
                         echo '<div class="card-body">';
+                            echo '<h5 class="card-title" style="font-size:18px">' . $row['Name'] . (isset($row['Nickname']) ? ' (' . $row['Nickname'] . ')' : '') .'</h5>';
                             echo '<h5 class="card-title" style="font-size:18px"> <a href = "clubPage.php?id=' . $row['Club_ID'] . '">' . $row['Name'] . '</a> </h5>';
                                 echo '<p class="card-text" style="font-size:12px">' . $row['Concentration'] . '</p>';
                         echo '</div>';
