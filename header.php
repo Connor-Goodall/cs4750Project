@@ -7,14 +7,17 @@
 <header>  
     <nav class="navbar navbar-expand-md navbar-light navbar border border-dark">
       <div class="container-fluid">            
-        <a class="navbar-brand" href="index.php">Club Finder</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index.php" >Club Finder</a>
+        <button class="navbar-toggler" type="button" style="border-right: 1px solid #000;" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <style>
             .navbar-nav>li{
               border-right: 1px solid #000;
+            }
+            .navbar-nav>li:first-child{
+              border-left: 1px solid #000;
             }
             </style>
             <ul class ="navbar-nav me-auto">
@@ -46,7 +49,7 @@
         <?php else : ?>
             <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="userProfile.php">Profile</a>
+                <a class="nav-link active"  href="userProfile.php">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="logout.php">Logout</a>

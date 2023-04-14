@@ -45,10 +45,16 @@
                     }
                 }
                 $clubName = $_POST['clubName'];
-                $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $consData, $appData, $bylawsData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
-                addMember($clubID, $_SESSION['computingID']);
-                setLeader($clubID, $_SESSION['computingID']);
-                echo "<b> " . $clubName . " has been added to the database!</b>";
+                if(!checkClubName($clubName)){
+                    $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $consData, $appData, $bylawsData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                    addMember($clubID, $_SESSION['computingID']);
+                    setLeader($clubID, $_SESSION['computingID']);
+                    echo "<b> " . $clubName . " has been added to the database!</b>";
+                }else{
+                    echo "<b> " . $clubName . " has already been added! Try a different name.</b>";
+
+                }
+
             }else{
                 echo "<b>Must have a club name to create club!!</b>";
             }
