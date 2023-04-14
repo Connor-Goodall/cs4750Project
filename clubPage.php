@@ -365,11 +365,26 @@
     &nbsp
     <?php if($userLeader != null) : ?>
         <div style = "text-align: center">
-            <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
+            <?php if($userLeader['Exec_Role'] == "President") : ?>
+                <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
+                        <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                        <input type = "submit" name = "actionBtn" value = "Update Club Info" class = "btn btn-dark" 
+                        title = "Click to update information about your club" style = "margin-right:400px;"/>
+                </form>
+            <?php else : ?>
+                <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
+                        <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                        <input type = "submit" name = "actionBtn" value = "Update Club Info" class = "btn btn-dark" 
+                        title = "Click to update information about your club"/>
+                </form>
+            <?php endif; ?>
+            <?php if($userLeader['Exec_Role'] == "President") : ?>
+                <form action = "deleteClub.php" method = "post" style = "display:inline-block;">
                     <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
-                    <input type = "submit" name = "actionBtn" value = "Update Club Information" class = "btn btn-dark" 
-                    title = "Click to update information about your club"/>
-            </form>
+                    <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
+                                title = "Click to Delete account" style = " width: 100%;"/>
+                </form>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
     </body>
