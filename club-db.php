@@ -278,6 +278,14 @@ function deleteMember($computingID, $clubID){
     $statement->execute();
     $statement->closeCursor();
 }
+function deleteClub($id){
+    global $db;
+    $query = "delete from `Club` where Club_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function getSponsor($computingID, $clubID){
     global $db;
     $query = "select * from `Sponsors` where computing_id=:computingID and Club_ID=:clubID";
