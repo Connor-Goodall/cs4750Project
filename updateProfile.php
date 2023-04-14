@@ -12,13 +12,6 @@
         $imgData = null;
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Confirm Update")){
-                if (is_array($_FILES)) {
-                    if (is_uploaded_file($_FILES['userPicture']['tmp_name'])) {
-                        if (move_uploaded_file($_FILES['userPicture']['tmp_name'], "profile_pics/" . $_FILES['userPicture']['name'])) {
-                            echo "File uploaded successfully";
-                        }
-                    }
-                }
                 if (count($_FILES) > 0) {
                     if (is_uploaded_file($_FILES['userPicture']['tmp_name'])) {
                         $imgData = file_get_contents($_FILES['userPicture']['tmp_name']);
@@ -41,6 +34,7 @@
                 elseif($faculty != null){
                     updateFaculty($_SESSION['computingID'], $_POST['userDepartment']);
                 }
+                header("Location: userProfile.php");
             }
         }
     }
@@ -74,8 +68,7 @@
                 <div class = "row mb-4 mx-3">
                     Bio <br/>
                     <textarea type = "text" class = "form-control" name = "userBio"
-                        style = "border: 2px solid black;"><?php if ($user != null) echo $user['Bio']; ?>
-                    </textarea>
+                        style = "border: 2px solid black;"><?php if ($user != null) echo $user['Bio']; ?></textarea>
                 </div>
                 <?php if($student != null) : ?>
                     <div class = "row mb-4 mx-3">

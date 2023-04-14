@@ -53,8 +53,15 @@
                 <?php endif; ?>
             </div>
         </div>
-        <form action = "updateProfile.php" method = "post" style = "text-align:center"     >
-            <input type = "submit" name = "actionBtn" value = "Update" class = "btn btn-dark" />
-          </form>
+        <div style = "text-align:center;">
+            <form action = "updateProfile.php" method = "post" style = "display:inline-block;"     >
+                <input type = "submit" name = "actionBtn" value = "Update" class = "btn btn-dark" 
+                title = "Click to update account" style = "margin-right:100px;"/>
+            </form>
+            <form action = "deleteUser.php" method = "post" style = "display:inline-block;">
+                <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
+                            title = "Click to Delete account"/>
+            </form>
+        </div>
         </body>
 </html>

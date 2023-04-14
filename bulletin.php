@@ -1,14 +1,16 @@
-<?php 
-require("connect-db.php");
+<?php
 require("club-db.php");
 
-function getUserPosts ($ID)  // given a search for a club name, returns relevant info about all the posts created by that club
+
+function findPosts ($name)  // given a search for a club name, returns relevant info about all the posts created by that club
 {
+    $l = "%";
+    $regex = $l.$name.$l;
     global $db;
-    $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes` 
-    FROM `Post` AS p NATURAL JOIN `Club` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
+    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes` FROM `Post` 
+    NATURAL JOIN `Club` WHERE Club.Name LIKE :Regex OR Club.Nickname LIKE :Regex";
     $statement = $db->prepare($query);
-    $statement->bindValue(':computingID', $ID);
+    $statement->bindValue(':Regex', $regex);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
@@ -16,25 +18,16 @@ function getUserPosts ($ID)  // given a search for a club name, returns relevant
 
 }
 
-// home page has my bulletin
-// club info page has a button for the clubs individual bulletin page
-
-
 function printPosts ($array) // prints each post
 {
     
     if ($array) {
         $firstClub = $array[0]['Name'];
-        echo '<h3 style="text-align: center">Posts by ' . $firstClub . '<h3>';
-
+        echo '<h3>Showing Posts for ' . $firstClub . '<h3>';
+        echo '<br>';
         foreach ($array as $row) {
-           if ($row['Name'] != $firstClub){
-            echo '<h3 style="text-align: center" >Posts by ' . $row['Name'] . '<h3>';
-            $firstClub = $row['Name'];
-           }
-                
-                
-                echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
+            if ($row['Name'] == $firstClub) { //only show the posts for one club, which ever comes first if multiple clubs are returned by their search
+                echo '<div class="card" text-align: left">';
                 echo '<div class="card-body">';
                     echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
                     echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . '</p>';
@@ -42,15 +35,17 @@ function printPosts ($array) // prints each post
                     echo '<p class="card-footer" style="font-size:15px"> Upvotes:  ' . $row['Upvotes'] . '             Downvotes:  ' . $row['Downvotes'] . '</p'; 
                 echo '</div>';
             echo '</div>';
-            echo '</div>';
-           
-            
+            }
         }
     } else {
         echo '<h3>No posts found</h3>';
     }
 }
+
+// notes:  one bulletin page for each club and a user-based bulletin page, perhaps happens after login
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -65,23 +60,25 @@ function printPosts ($array) // prints each post
 <body style = "background: #5be7a9;">
 
 <?php include("header.php") ?>
-<h1 style="text-align: center"> Welcome to your Bulletin Page!</h1>
-<h4 style="text-align: center">Check out what your clubs have been up to </h4>
+<h1> Welcome to the Bulletin Page!</h1>
 
+<form action="bulletin.php" method="post">
+What club are you looking for? <input type="text" name="clubName"><br>
+<input type="submit">
+</form>
+<br>
 
 <?php 
-if(!isset($_SESSION['user'])){
-    header("Location: login.php");
-}
-else{
-    $user = getUser($_SESSION['computingID']);
-}
-$ID = $user['computing_id'];   
-$posts = getUserPosts($ID);
-printPosts($posts);
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $clubName = $_POST["clubName"];
+        $posts = findPosts($clubName);
+        printPosts($posts);
+    }
 
 ?>
 
 
 
 </html>
+
+
