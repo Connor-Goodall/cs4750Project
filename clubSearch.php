@@ -40,7 +40,7 @@
                 foreach ($results as $row) {
                     echo '<div class="card mx-auto" style="width: 18rem; text-align: center">';
                         echo '<div class="card-body">';
-                            echo '<h5 class="card-title" style="font-size:18px">' . $row['Name'] . '</h5>';
+                            echo '<h5 class="card-title" style="font-size:18px"> <a href = "clubPage.php?id=' . $row['Club_ID'] . '">' . $row['Name'] . '</a> </h5>';
                                 echo '<p class="card-text" style="font-size:12px">' . $row['Concentration'] . '</p>';
                         echo '</div>';
                     echo '</div>';
