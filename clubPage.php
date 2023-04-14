@@ -82,19 +82,66 @@
                     </div>
                     <div class = "col-10">
                         <?php if($club['Constitution'] != null) : ?>
-                            <a title = "Download <?php echo $club['Nickname']; ?>'s Constitution" download = "<?php echo $club['Nickname']; ?>'s Constitution.pdf" href = "data:application/pdf;base64,<?php echo base64_encode($club['Constitution']) ?>" type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Constitution</a>
+                            <?php if (substr($club['Constitution'], 0, 4) == "%PDF") : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Constitution" 
+                                    download = "<?php echo $club['Nickname']; ?>'s Constitution.pdf" 
+                                    href = "data:application/pdf;base64,<?php echo base64_encode($club['Constitution']) ?>" 
+                                    type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Constitution</a>
+                            <?php elseif(strpos($club['Constitution'], ".xml") <= 75 && strpos($club['Constitution'], ".xml") != false) : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Constitution" 
+                                    download = "<?php echo $club['Nickname']; ?>'s Constitution.docx" 
+                                    href = "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,<?php echo base64_encode($club['Constitution']) ?>" 
+                                    type="application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+                                    style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Constitution</a>
+                            <?php else : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Constitution" 
+                                        download = "<?php echo $club['Nickname']; ?>'s Constitution.doc" 
+                                        href = "data:application/msword;base64,<?php echo base64_encode($club['Constitution']) ?>" 
+                                        type="application/msword" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Constitution</a>
+                            <?php endif; ?>
                         <?php else : ?>
                             No Constitution
                         <?php endif; ?>
                         <br/>
                         <?php if($club['Application'] != null) : ?>
-                            <a title = "Download <?php echo $club['Nickname']; ?>'s Application" download = "<?php echo $club['Nickname']; ?>'s Application.pdf" href = "data:application/pdf;base64,<?php echo base64_encode($club['Application']) ?>" type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Application</a>
+                            <?php if (substr($club['Application'], 0, 4) == "%PDF") : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Application" 
+                                    download = "<?php echo $club['Nickname']; ?>'s Application.pdf" 
+                                    href = "data:application/pdf;base64,<?php echo base64_encode($club['Application']) ?>" 
+                                    type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Application</a>
+                            <?php elseif(strpos($club['Application'], ".xml") <= 75 && strpos($club['Application'], ".xml") != false) : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Application" 
+                                download = "<?php echo $club['Nickname']; ?>'s Application.docx" 
+                                href = "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,<?php echo base64_encode($club['Application']) ?>" 
+                                type="application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+                                style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Application</a>
+                            <?php else : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Application" 
+                                        download = "<?php echo $club['Nickname']; ?>'s Application.doc" 
+                                        href = "data:application/msword;base64,<?php echo base64_encode($club['Application']) ?>" 
+                                        type="application/msword" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Application</a>
+                            <?php endif; ?>
                         <?php else : ?>
                             No Application
                         <?php endif; ?>
                         <br/>
                         <?php if($club['Bylaws'] != null) : ?>
-                            <a title = "Download <?php echo $club['Nickname']; ?>'s Bylaws" download = "<?php echo $club['Nickname']; ?>'s Bylaws.pdf" href = "data:application/pdf;base64,<?php echo base64_encode($club['Bylaws']) ?>" type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Bylaws</a>
+                            <?php if (substr($club['Bylaws'], 0, 4) == "%PDF") : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Bylaws" 
+                                    download = "<?php echo $club['Nickname']; ?>'s Bylaws.pdf" 
+                                    href = "data:application/pdf;base64,<?php echo base64_encode($club['Bylaws']) ?>" 
+                                    type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Bylaws</a>
+                            <?php elseif(strpos($club['Bylaws'], ".xml") <= 75 && strpos($club['Bylaws'], ".xml") != false) : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Bylaws" 
+                                    download = "<?php echo $club['Nickname']; ?>'s Bylaws.docx" 
+                                    href = "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,<?php echo base64_encode($club['Bylaws']) ?>" 
+                                    type="application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Bylaws</a>
+                            <?php else : ?>
+                                <a title = "Download <?php echo $club['Nickname']; ?>'s Bylaws" 
+                                        download = "<?php echo $club['Nickname']; ?>'s Bylaws.doc" 
+                                        href = "data:application/msword;base64,<?php echo base64_encode($club['Bylaws']) ?>" 
+                                        type="application/msword" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Bylaws</a>
+                            <?php endif; ?>
                         <?php else : ?>
                             No Bylaws
                         <?php endif; ?>
