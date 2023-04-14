@@ -12,13 +12,6 @@
         $imgData = null;
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Confirm Update")){
-                if (is_array($_FILES)) {
-                    if (is_uploaded_file($_FILES['userPicture']['tmp_name'])) {
-                        if (move_uploaded_file($_FILES['userPicture']['tmp_name'], "profile_pics/" . $_FILES['userPicture']['name'])) {
-                            echo "File uploaded successfully";
-                        }
-                    }
-                }
                 if (count($_FILES) > 0) {
                     if (is_uploaded_file($_FILES['userPicture']['tmp_name'])) {
                         $imgData = file_get_contents($_FILES['userPicture']['tmp_name']);

@@ -189,6 +189,43 @@ function updateFaculty($computingID, $department)
     $statement->execute();
     $statement->closeCursor();
 }
+function updateClub($id, $name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation)
+{
+    global $db;
+    $query = "update `Club` set Name=:name, Mission_Statement=:missionStatement, Nickname=:nickname, Concentration=:concentration,
+     Description=:description, Logo=:logo, Dues=:dues, Constitution=:constitution, Application=:application, 
+     Bylaws=:bylaws, Website=:website, Funding_source=:funding_source, Founding_date=:founding_date, Costs=:costs, 
+     meeting_time=:mtingtime, meeting_days=:mtingdays, meeting_location=:mtinglocation where Club_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':name', $name);
+    $statement->bindValue(':missionStatement', $missionStatement);
+    $statement->bindValue(':nickname', $nickname);
+    $statement->bindValue(':concentration', $concentration);
+    $statement->bindValue(':description', $description);
+    $statement->bindValue(':logo', $logo);
+    $statement->bindValue(':dues', $dues);
+    $statement->bindValue(':constitution', $constitution);
+    $statement->bindValue(':application', $application);
+    $statement->bindValue(':bylaws', $bylaws);
+    $statement->bindValue(':website', $website);
+    $statement->bindValue(':funding_source', $fundingSource);
+    if(empty($foundingDate)){
+        $statement->bindValue(':founding_date', NULL);
+    }else{
+        $statement->bindValue('founding_date', $foundingDate);
+    }
+    $statement->bindValue(':costs', $costs);
+    if(empty($meetingTime)){
+        $statement->bindValue(':mtingtime', NULL);
+    }else{
+        $statement->bindValue(':mtingtime', $meetingTime);
+    }
+    $statement->bindValue(':mtingdays', $meetingDays);
+    $statement->bindValue(':mtinglocation', $meetingLocation);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function deleteUser($computingID){
     global $db;
     $query = "delete from `User` where computing_id=:computingID";
@@ -245,6 +282,17 @@ function getSponsor($computingID, $clubID){
 function getMember($computingID, $clubID){
     global $db;
     $query = "select * from `MemberOf` where computing_id=:computingID and Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+function getLeader($computingID, $clubID){
+    global $db;
+    $query = "select * from `Leads` where computing_id=:computingID and Club_ID=:clubID";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $computingID);
     $statement->bindValue(':clubID', $clubID);

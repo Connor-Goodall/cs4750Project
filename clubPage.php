@@ -15,6 +15,7 @@
         $faculty = getFaculty($_SESSION['computingID']); 
         $userSponsor = getSponsor($_SESSION['computingID'], $_GET['id']);
         $userMember = getMember($_SESSION['computingID'], $_GET['id']);
+        $userLeader = getLeader($_SESSION['computingID'], $_GET['id']);
     }
     $club = getClub($_GET['id']);
 ?>
@@ -70,6 +71,33 @@
                     </div>
                     <div style = "display: inline-block;">
                         <?php echo $club['Description']; ?>
+                    </div>
+                </div>
+                &nbsp
+                <div class = "row">
+                    <div class = "col">
+                        <div class = "text-decoration-underline" style = "font-weight: bold; display: inline-block; ">
+                            Documents:
+                            </div>
+                    </div>
+                    <div class = "col-10">
+                        <?php if($club['Constitution'] != null) : ?>
+                            <a title = "Download <?php echo $club['Nickname']; ?>'s Constitution" download = "<?php echo $club['Nickname']; ?>'s Constitution.pdf" href = "data:application/pdf;base64,<?php echo base64_encode($club['Constitution']) ?>" type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Constitution</a>
+                        <?php else : ?>
+                            No Constitution
+                        <?php endif; ?>
+                        <br/>
+                        <?php if($club['Application'] != null) : ?>
+                            <a title = "Download <?php echo $club['Nickname']; ?>'s Application" download = "<?php echo $club['Nickname']; ?>'s Application.pdf" href = "data:application/pdf;base64,<?php echo base64_encode($club['Application']) ?>" type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Application</a>
+                        <?php else : ?>
+                            No Application
+                        <?php endif; ?>
+                        <br/>
+                        <?php if($club['Bylaws'] != null) : ?>
+                            <a title = "Download <?php echo $club['Nickname']; ?>'s Bylaws" download = "<?php echo $club['Nickname']; ?>'s Bylaws.pdf" href = "data:application/pdf;base64,<?php echo base64_encode($club['Bylaws']) ?>" type="application/pdf" style="height:200px;width:60%"><?php echo $club['Nickname']; ?>'s Bylaws</a>
+                        <?php else : ?>
+                            No Bylaws
+                        <?php endif; ?>
                     </div>
                 </div>
                 &nbsp
@@ -148,7 +176,7 @@
                             <?php if($club['Dues'] == 0.00) : ?>
                                     <?php echo "No dues." ?>
                                 <?php else: ?>
-                                    <?php echo "$" . $club['Dues'] . ".00 per Semester"; ?>
+                                    <?php echo "$" . number_format($club['Dues'], 2) . " per Year"; ?>
 
                                 <?php endif; ?>
                         </div>
@@ -209,7 +237,7 @@
                         </div>
                     <?php else: ?>
                         <div class="d-flex justify-content-center">
-                            <?php echo '<img class = "rounded-circle account-img" src="data:image/jpeg;base64,'.base64_encode($club['Logo']).'" style = "height: 250px; width: 250px;">'; ?> 
+                            <?php echo '<img class = "account-img" src="data:image/jpeg;base64,'.base64_encode($club['Logo']).'" style = "height: 250px; width: 250px;">'; ?> 
                         </div>
                     <?php endif; ?> 
                 </div>
@@ -241,7 +269,7 @@
                         <?php if($club['Costs'] == 0.00) : ?>
                                 <?php echo "No costs (non-dues)." ?>
                             <?php else: ?>
-                                <?php echo "$" . $club['Costs'] . " per Semester"; ?>
+                                <?php echo "$" . number_format($club['Costs'], 2) . " per Year"; ?>
                             <?php endif; ?>
                     </div>
                 </div>
@@ -286,6 +314,16 @@
                 </form>
             </div>
         <?php endif; ?>
+    <?php endif; ?>
+    &nbsp
+    <?php if($userLeader != null) : ?>
+        <div style = "text-align: center">
+            <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
+                    <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                    <input type = "submit" name = "actionBtn" value = "Update Club Information" class = "btn btn-dark" 
+                    title = "Click to update information about your club"/>
+            </form>
+        </div>
     <?php endif; ?>
     </body>
 <?php else : ?>
