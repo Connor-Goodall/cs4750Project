@@ -25,9 +25,6 @@
                     <a class="nav-link active" href="index.php">Home</a>
                   </li>            
                   <li class="nav-item">
-                      <a class="nav-link active" href="bulletin.php">Bulletin</a>
-                  </li>
-                  <li class="nav-item">
                       <a class="nav-link active" href="clubSearch.php">Search for Clubs</a>
                   </li>
                   <li class="nav-item">
