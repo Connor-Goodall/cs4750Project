@@ -31,7 +31,7 @@
                       <a class="nav-link active" href="clubSearch.php">Search for Clubs</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link active" href="#">Search for Sponsors</a>
+                      <a class="nav-link active" href="facultySearch.php">Search for Sponsors</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link active" href="createClub.php">Add your Club</a>
