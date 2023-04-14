@@ -1,5 +1,5 @@
 <?php
-require("connect-db.php");
+require("club-db.php");
 
 
 function findPosts ($name)  // given a search for a club name, returns relevant info about all the posts created by that club
