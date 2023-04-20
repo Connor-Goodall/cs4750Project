@@ -349,7 +349,7 @@
             </div>
         <?php endif; ?>
     <?php endif; ?>
-    <?php if($userMember != null) : ?>
+    <?php if($userMember != null && $userLeader == null) : ?>
         <div style = "text-align: center">
             <form name = "deleteMemberForm" action = "clubInformation.php" method = "POST">
                 <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
@@ -358,7 +358,7 @@
             </form>
         </div>
     <?php else : ?>
-        <?php if($student != null) : ?>
+        <?php if($student != null && $userLeader == null) : ?>
             <div style = "text-align: center">
                 <form name = "addMemberForm" action = "clubInformation.php" method = "POST">
                     <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
@@ -375,7 +375,12 @@
                 <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
                         <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
                         <input type = "submit" name = "actionBtn" value = "Update Club Info" class = "btn btn-dark" 
-                        title = "Click to update information about your club" style = "margin-right:400px;"/>
+                        title = "Click to update information about your club" style = "margin-right:200px;"/>
+                </form>
+                <form action = "editMembers.php" method = "POST" style = "display:inline-block;" >
+                        <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                        <input type = "submit" name = "actionBtn" value = "Edit Your Enrollment" class = "btn btn-secondary" 
+                        title = "Click to edit your enrollment" style = "margin-right:300px;"/>
                 </form>
             <?php else : ?>
                 <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
@@ -388,7 +393,7 @@
                 <form action = "deleteClub.php" method = "post" style = "display:inline-block;">
                     <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
                     <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
-                                title = "Click to Delete account" style = " width: 100%;"/>
+                                title = "Click to Delete club" style = " width: 100%;"/>
                 </form>
             <?php endif; ?>
         </div>

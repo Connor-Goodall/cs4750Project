@@ -199,6 +199,16 @@ function updateFaculty($computingID, $department)
     $statement->execute();
     $statement->closeCursor();
 }
+function updateLeader($computingID, $clubID, $role){
+    global $db;
+    $query = "update `Leads` set Exec_role=:role where computing_id=:computingID and Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue('clubID', $clubID);
+    $statement->bindValue('role', $role);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function updateClub($id, $name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation)
 {
     global $db;
@@ -278,6 +288,15 @@ function deleteMember($computingID, $clubID){
     $statement->execute();
     $statement->closeCursor();
 }
+function deleteLeader($computingID, $clubID){
+    global $db;
+    $query = "delete from `Leads` where computing_id=:computingID and Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function deleteClub($id){
     global $db;
     $query = "delete from `Club` where Club_ID=:id";
@@ -332,6 +351,16 @@ function getAllSponsors($id){
 function getLeaders($id){
     global $db;
     $query = "select computing_id, Exec_Role from `Leads` where Club_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
+}
+function getMembers($id){
+    global $db;
+    $query = "select computing_id from `MemberOf` where Club_ID=:id";
     $statement = $db->prepare($query);
     $statement->bindValue(':id', $id);
     $statement->execute();
