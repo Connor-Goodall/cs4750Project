@@ -12,7 +12,7 @@
     <?php
 
     $keyword = $_GET['keyword'];
-    $statement = $db->prepare("select `Department`, `Name`, User.computing_id from `Faculty` join `User` on User.computing_id = Faculty.computing_id
+    $statement = $db->prepare("select `Department`, `Name`, User.computing_id, User.Profile_Picture from `Faculty` join `User` on User.computing_id = Faculty.computing_id
                              where `Department` like '%$keyword%' or `Name` like '%$keyword%' ");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -38,6 +38,17 @@
             if ($results) {
                 foreach ($results as $row) {
                     echo '<div class="card mx-auto" style="width: 18rem; text-align: center">';
+                    echo '&nbsp';
+                    if($row['Profile_Picture'] == null){
+                        echo '<div class="d-flex justify-content-center">';
+                        echo '<img class = "rounded-circle account-img card-img-top" src = "profile_pics\default.jpg" style = "height: 120px; width: 120px;">';
+                        echo '</div>'; 
+                    }
+                    else{
+                        echo '<div class="d-flex justify-content-center">';
+                        echo '<img class = "rounded-circle account-img" src="data:image/jpeg;base64,'.base64_encode($row['Profile_Picture']).'" style = "text-align: center; width: 120px; height: 120px;">';
+                        echo '</div>';  
+                    }
                         echo '<div class="card-body">';
                             echo '<h5 class="card-title" style="font-size:18px"> <a href = "profilePage.php?user=' . $row['computing_id'] . '">' . $row['Name'] . ' (' . $row['computing_id'] . '@virginia.edu)' . '</a> </h5>';
                                 echo '<p class="card-text" style="font-size:12px">' . $row['Department'] . '</p>';

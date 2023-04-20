@@ -40,6 +40,16 @@
             if ($results) {
                 foreach ($results as $row) {
                     echo '<div class="card mx-auto" style="width: 18rem; text-align: center">';
+                    if($row['Logo'] == null){
+                        echo '<div class="d-flex justify-content-center">';
+                        echo '<img src = "profile_pics\noImage.jpg" style = "height: 150px; width: 150px;" class = "card-img-top">';
+                        echo '</div>';
+                    }
+                    else{
+                        echo '<div class="d-flex justify-content-center">';
+                        echo '<img src="data:image/jpeg;base64,'.base64_encode($row['Logo']).'" style = "width: 100%; height: 10vw; object-fit: scale-down;" class = "card-img-top">';
+                        echo '</div>';
+                    }
                         echo '<div class="card-body">';
                             echo '<h5 class="card-title" style="font-size:18px"> <a href = "clubPage.php?id=' . $row['Club_ID'] . '">' . $row['Name'] . (isset($row['Nickname']) ? ' (' . $row['Nickname'] . ')' : '') .'</a> </h5>';
                                 echo '<p class="card-text" style="font-size:12px">' . $row['Concentration'] . '</p>';
