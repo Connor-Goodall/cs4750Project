@@ -368,4 +368,34 @@ function getMembers($id){
     $statement->closeCursor();
     return $results;
 }
+function getClubsFromMember($computingID){
+    global $db;
+    $query = "select Club_ID, time_active from `MemberOf` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
+}
+function getClubsFromLeader($computingID){
+    global $db;
+    $query = "select Club_ID, Exec_Role from `Leads` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
+}
+function getClubsFromSponsor($computingID){
+    global $db;
+    $query = "select Club_ID from `Sponsors` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
+}
 ?>
