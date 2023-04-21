@@ -154,6 +154,16 @@ function getClub($id){
     $statement->closeCursor();
     return $result;
 }
+function getPost($id){
+    global $db;
+    $query = "select * from `Post` where Post_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 function getLoginInformation($computingID, $password)
 {
     global $db;
@@ -174,6 +184,17 @@ function updateUser($computingID, $name, $bio, $picture)
     $statement->bindValue(':computingID', $computingID);
     $statement->bindValue(':name', $name);
     $statement->bindValue(':bio', $bio);
+    $statement->bindValue(':picture', $picture);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function updatePost($id, $title, $body, $picture){
+    global $db;
+    $query = "update `Post` set Title=:title, Body_Text=:body, Picture=:picture where Post_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->bindValue(':title', $title);
+    $statement->bindValue(':body', $body);
     $statement->bindValue(':picture', $picture);
     $statement->execute();
     $statement->closeCursor();
