@@ -7,7 +7,7 @@ function findPosts ($name)  // given a search for a club name, returns relevant 
     $l = "%";
     $regex = $l.$name.$l;
     global $db;
-    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes` FROM `Post` 
+    $query = "SELECT `Post_ID`, `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, Post.computing_id AS author FROM `Post` 
     NATURAL JOIN `Club` WHERE Club.Name LIKE :Regex OR Club.Nickname LIKE :Regex";
     $statement = $db->prepare($query);
     $statement->bindValue(':Regex', $regex);
@@ -18,7 +18,7 @@ function findPosts ($name)  // given a search for a club name, returns relevant 
 
 }
 
-function printPosts ($array) // prints each post
+function printPosts ($array, $ID) // prints each post
 {
     
     if ($array) {
@@ -30,10 +30,17 @@ function printPosts ($array) // prints each post
                 echo '<div class="card" text-align: left">';
                 echo '<div class="card-body">';
                     echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
-                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . '</p>';
+                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
                     echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
                     echo '<p class="card-footer" style="font-size:15px"> Upvotes:  ' . $row['Upvotes'] . '             Downvotes:  ' . $row['Downvotes'] . '</p'; 
                 echo '</div>';
+                if($row['author'] == $ID){
+                    echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block; text-align: center;" >
+                    <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                    <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
+                    title = "Click to update information about your post"/>
+                    </form>';
+                } 
             echo '</div>';
             }
         }
@@ -69,12 +76,23 @@ What club are you looking for? <input type="text" name="clubName"><br>
 <br>
 
 <?php 
+session_start();
+if(!isset($_SESSION['user'])){
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $clubName = $_POST["clubName"];
         $posts = findPosts($clubName);
-        printPosts($posts);
+        printPosts($posts, null);
     }
-
+}
+else{
+    $user = getUser($_SESSION['computingID']);
+    $ID = $user['computing_id'];   
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $clubName = $_POST["clubName"];
+        $posts = findPosts($clubName);
+        printPosts($posts, $ID);
+    }
+}
 ?>
 
 

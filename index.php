@@ -38,7 +38,7 @@ function downvote($pid){
     $statement->closeCursor();
 }
 
-function printPosts ($array) // prints each post
+function printPosts ($array, $ID) // prints each post
 {
     
     if ($array) {
@@ -68,7 +68,14 @@ function printPosts ($array) // prints each post
                         <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
                         </form>';  
                 echo '</div>';
-                echo '</div>'; 
+                echo '</div>';
+                if($row['author'] == $ID){
+                    echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
+                    <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                    <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
+                    title = "Click to update information about your post"/>
+                    </form>';
+                } 
                 echo '</div>';
             echo '</div>';
             echo '</div>';
@@ -109,6 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 <?php 
+session_start();
 if(!isset($_SESSION['user'])){
     header("Location: login.php");
 }
@@ -117,7 +125,7 @@ else{
 }
 $ID = $user['computing_id'];   
 $posts = getUserPosts($ID);
-printPosts($posts);
+printPosts($posts, $ID);
 
 ?>
 
