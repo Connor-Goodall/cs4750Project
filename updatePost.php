@@ -3,25 +3,30 @@
     require("club-db.php");
     session_start();
     if(!isset($_SESSION['user'])){
-        header("Location: login.php");
+        header("Location: index.php");
     }
     else{
         $user = getUser($_SESSION['computingID']);
         $post = getPost($_POST['id']);
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Confirm Update")){
-                if (count($_FILES) > 0) {
-                    if (is_uploaded_file($_FILES['postPicture']['tmp_name'])) {
-                        $imgData = file_get_contents($_FILES['postPicture']['tmp_name']);
+        if($post == null){
+            header("Location: index.php");
+        }
+        else{
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Confirm Update")){
+                    if (count($_FILES) > 0) {
+                        if (is_uploaded_file($_FILES['postPicture']['tmp_name'])) {
+                            $imgData = file_get_contents($_FILES['postPicture']['tmp_name']);
+                        }
                     }
+                    if($imgData != null){
+                        updatePost($_POST['id'], $_POST['postTitle'], $_POST['postBody'], $imgData);
+                    }
+                    else{
+                        updatePost($_POST['id'], $_POST['postTitle'], $_POST['postBody'], $post['Picture']);
+                    }
+                header("location: ".$_POST['source']);
                 }
-                if($imgData != null){
-                    updatePost($_POST['id'], $_POST['postTitle'], $_POST['postBody'], $imgData);
-                }
-                else{
-                    updatePost($_POST['id'], $_POST['postTitle'], $_POST['postBody'], $post['Picture']);
-                }
-                header("Location: index.php");
             }
         }
     }
@@ -59,6 +64,7 @@
                 </div>
                 <div class="row mb-4 mx-3">
                     <input type="hidden" name="id" value= <?php echo $post['Post_ID']; ?> />
+                    <input type="hidden" name="source" value= <?php echo $_POST['updateSource']; ?> />
                     <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Confirm Update" 
                         title = "Click to update post" style = "width: 20%; display: block; margin: auto;"
                     />

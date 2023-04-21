@@ -72,8 +72,16 @@ function printPosts ($array, $ID) // prints each post
                 if($row['author'] == $ID){
                     echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
                     <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                    <input type="hidden" name="updateSource" value= "index.php"/>
                     <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
-                    title = "Click to update information about your post"/>
+                    title = "Click to update information about your post" style = "margin-right:100px;"/>
+                    </form>';
+                    echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
+                    <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                    <input type="hidden" name="deleteSource" value= "index.php"/>
+                    <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
+                                title = "Click to Delete post"/>
+                    
                     </form>';
                 } 
                 echo '</div>';
