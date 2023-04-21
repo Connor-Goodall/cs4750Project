@@ -283,6 +283,14 @@ function deleteStudent($computingID){
     $statement->execute();
     $statement->closeCursor();
 }
+function deletePost($id){
+    global $db;
+    $query = "delete from `Post` where Post_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function deleteFaculty($computingID){
     global $db;
     $query = "delete from `Faculty` where computing_id=:computingID";
