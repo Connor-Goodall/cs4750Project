@@ -1,12 +1,14 @@
 <?php 
 require("connect-db.php");
 require("club-db.php");
+$upvotesArray = array(-1, -2);
 error_reporting(E_ERROR | E_PARSE);
+
 
 function getUserPosts ($ID)  // given a search for a club name, returns relevant info about all the posts created by that club
 {
     global $db;
-    $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID`, p.computing_id AS author 
+    $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID` 
     FROM `Post` AS p NATURAL JOIN `Club` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $ID);
@@ -19,23 +21,68 @@ function getUserPosts ($ID)  // given a search for a club name, returns relevant
 
 // home page has my bulletin
 // club info page has a button for the clubs individual bulletin page
-
-function upvote($pid){
+function verify_like($computing_id, $pid) {
     global $db;
-    $query = "UPDATE Post SET `Upvotes` = `Upvotes` + 1 WHERE `Post_ID`= :pid;";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':pid', $pid);
-    $statement->execute();
-    $statement->closeCursor();
+        $query = "SELECT * FROM `likes` WHERE `computing_id` = :computing_id AND `Post_ID` = :pid";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':computing_id', $computing_id);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+        if (!$results){
+            // no like/dislike has occured
+            return FALSE;
+        }
+        else {
+            return TRUE;
+        }
+       
+        }
+
+
+
+
+
+function upvote($pid, $ID){
+    $check = verify_like($ID, $pid);
+    if (!$check){
+        global $db;
+        $query = "UPDATE Post SET `Upvotes` = `Upvotes` + 1 WHERE `Post_ID`= :pid;";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $query2 = "INSERT INTO `likes`(`computing_id`, `Post_ID`, `Dislike`) VALUES (:ID,:pid,0)";
+        $statement = $db->prepare($query2);
+        $statement->bindValue(':ID', $ID);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $statement->closeCursor();
+        header("refresh", 0);
+        
+    }
+    
+    
 }
 
-function downvote($pid){
-    global $db;
-    $query = "UPDATE Post SET `Downvotes` = `Downvotes` + 1 WHERE `Post_ID`= :pid;";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':pid', $pid);
-    $statement->execute();
-    $statement->closeCursor();
+function downvote($pid, $ID){
+    $check = verify_like($ID, $pid);
+    if (!$check) {
+        global $db;
+        $query = "UPDATE Post SET `Downvotes` = `Downvotes` + 1 WHERE `Post_ID`= :pid;";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $query2 = "INSERT INTO `likes`(`computing_id`, `Post_ID`, `Dislike`) VALUES (:ID,:pid,1)";
+        $statement = $db->prepare($query2);
+        $statement->bindValue(':ID', $ID);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $statement->closeCursor();
+        header("refresh", 0);
+        
+    }
+    
 }
 
 function printPosts ($array) // prints each post
@@ -60,7 +107,7 @@ function printPosts ($array) // prints each post
                     echo '<div style="text-align:  left">';
                     echo '<div  class = "btn-group";>';
                         echo '<form action = "index.php" method = "post"> 
-                            <input type = "hidden" name = "upbtn" value='.$pid . '>
+                            <input type = "hidden" name = "upbtn" value='.$pid. '>
                             <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
                             </form>'; 
                         echo '<form action = "index.php" method = "post"> 
@@ -79,15 +126,6 @@ function printPosts ($array) // prints each post
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if ($_POST["upbtn"]) {
-        upvote($_POST["upbtn"]);
-    }
-    if ($_POST["downbtn"]){
-        downvote($_POST["downbtn"]);
-    }
-    
-}
 
 ?>
 
@@ -119,8 +157,18 @@ $ID = $user['computing_id'];
 $posts = getUserPosts($ID);
 printPosts($posts);
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_POST["upbtn"]) {
+        upvote($_POST["upbtn"], $ID);
+    }
+    if ($_POST["downbtn"]){
+        downvote($_POST["downbtn"], $ID);
+    }
+    
+}
+
 ?>
 
 
-
+location.reload()
 </html>
