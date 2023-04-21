@@ -164,6 +164,16 @@ function getPost($id){
     $statement->closeCursor();
     return $result;
 }
+function getEvent($id){
+    global $db;
+    $query = "select * from `Event` where Post_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 function getLoginInformation($computingID, $password)
 {
     global $db;
@@ -196,6 +206,17 @@ function updatePost($id, $title, $body, $picture){
     $statement->bindValue(':title', $title);
     $statement->bindValue(':body', $body);
     $statement->bindValue(':picture', $picture);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function updateEvent($id, $meetingTime, $location, $partnerships){
+    global $db;
+    $query = "update `Event` set Event_Meeting_Time=:meetingTime, Event_Location=:location, Partnerships=:partnerships where Post_ID=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->bindValue(':meetingTime', $meetingTime);
+    $statement->bindValue(':location', $location);
+    $statement->bindValue(':partnerships', $partnerships);
     $statement->execute();
     $statement->closeCursor();
 }
