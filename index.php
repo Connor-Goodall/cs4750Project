@@ -8,7 +8,7 @@ error_reporting(E_ERROR | E_PARSE);
 function getUserPosts ($ID)  // given a search for a club name, returns relevant info about all the posts created by that club
 {
     global $db;
-    $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID` 
+    $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID`, p.computing_id AS author 
     FROM `Post` AS p NATURAL JOIN `Club` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $ID);
@@ -23,20 +23,14 @@ function getUserPosts ($ID)  // given a search for a club name, returns relevant
 // club info page has a button for the clubs individual bulletin page
 function verify_like($computing_id, $pid) {
     global $db;
-        $query = "SELECT * FROM `likes` WHERE `computing_id` = :computing_id AND `Post_ID` = :pid";
+        $query = "SELECT * FROM `likes` WHERE `computing_id`= :computing_id AND `Post_ID`= :pid";
         $statement = $db->prepare($query);
         $statement->bindValue(':computing_id', $computing_id);
         $statement->bindValue(':pid', $pid);
         $statement->execute();
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetch();
         $statement->closeCursor();
-        if (!$results){
-            // no like/dislike has occured
-            return FALSE;
-        }
-        else {
-            return TRUE;
-        }
+        return $results;
        
         }
 
@@ -46,7 +40,8 @@ function verify_like($computing_id, $pid) {
 
 function upvote($pid, $ID){
     $check = verify_like($ID, $pid);
-    if (!$check){
+    echo $check['Dislike'];
+    if ($check == null){
         global $db;
         $query = "UPDATE Post SET `Upvotes` = `Upvotes` + 1 WHERE `Post_ID`= :pid;";
         $statement = $db->prepare($query);
@@ -61,13 +56,28 @@ function upvote($pid, $ID){
         header("refresh", 0);
         
     }
+    else if($check['Dislike'] == 0){
+        global $db;
+        $query = "UPDATE Post SET `Upvotes` = `Upvotes` - 1 WHERE `Post_ID`= :pid;";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $query2 = "DELETE FROM `likes` WHERE `Post_ID`= :pid AND `computing_id`= :ID;";
+        $statement = $db->prepare($query2);
+        $statement->bindValue(':ID', $ID);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $statement->closeCursor();
+        header("refresh", 0); 
+    }
     
     
 }
 
 function downvote($pid, $ID){
     $check = verify_like($ID, $pid);
-    if (!$check) {
+    echo $check['computing_id'] == null;
+    if ($check == null) {
         global $db;
         $query = "UPDATE Post SET `Downvotes` = `Downvotes` + 1 WHERE `Post_ID`= :pid;";
         $statement = $db->prepare($query);
@@ -81,6 +91,20 @@ function downvote($pid, $ID){
         $statement->closeCursor();
         header("refresh", 0);
         
+    }
+    else if($check['Dislike'] == 1){
+        global $db;
+        $query = "UPDATE Post SET `Downvotes` = `Downvotes` - 1 WHERE `Post_ID`= :pid;";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $query2 = "DELETE FROM `likes` WHERE `Post_ID`= :pid AND `computing_id`= :ID;";
+        $statement = $db->prepare($query2);
+        $statement->bindValue(':ID', $ID);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $statement->closeCursor();
+        header("refresh", 0); 
     }
     
 }
@@ -141,6 +165,24 @@ function printPosts ($array, $ID) // prints each post
     }
 }
 
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location: login.php");
+}
+else{
+    $user = getUser($_SESSION['computingID']);
+}
+$ID = $user['computing_id'];   
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_POST["upbtn"]) {
+        upvote($_POST["upbtn"], $ID);
+    }
+    if ($_POST["downbtn"]){
+        downvote($_POST["downbtn"], $ID);
+    }
+    
+}
 
 ?>
 
@@ -160,31 +202,9 @@ function printPosts ($array, $ID) // prints each post
 <h1 style="text-align: center"> Welcome to your Bulletin Page!</h1>
 <h4 style="text-align: center">Check out what your clubs have been up to </h4>
 
-
 <?php 
-session_start();
-if(!isset($_SESSION['user'])){
-    header("Location: login.php");
-}
-else{
-    $user = getUser($_SESSION['computingID']);
-}
-$ID = $user['computing_id'];   
-$posts = getUserPosts($ID);
-printPosts($posts, $ID);
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if ($_POST["upbtn"]) {
-        upvote($_POST["upbtn"], $ID);
-    }
-    if ($_POST["downbtn"]){
-        downvote($_POST["downbtn"], $ID);
-    }
-    
-}
-
+    $posts = getUserPosts($ID);
+    printPosts($posts, $ID);
 ?>
 
-
-location.reload()
 </html>
