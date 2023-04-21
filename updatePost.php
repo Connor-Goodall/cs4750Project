@@ -8,6 +8,7 @@
     else{
         $user = getUser($_SESSION['computingID']);
         $post = getPost($_POST['id']);
+        $event = getEvent($_POST['id']);
         if($post == null){
             header("Location: index.php");
         }
@@ -24,6 +25,9 @@
                     }
                     else{
                         updatePost($_POST['id'], $_POST['postTitle'], $_POST['postBody'], $post['Picture']);
+                    }
+                    if($event != null){
+                        updateEvent($_POST['id'], $_POST['eventMeetingTime'], $_POST['eventLocation'], $_POST['eventPartnerships']);
                     }
                 header("location: ".$_POST['source']);
                 }
@@ -62,6 +66,25 @@
                     <textarea type = "text" class = "form-control" name = "postBody"
                         style = "border: 2px solid black;"><?php if ($post != null) echo $post['Body_Text']; ?></textarea>
                 </div>
+                <?php if($event != null) : ?>
+                    <div class = "row mb-4 mx-3">
+                        Meeting Time <br/>
+                        <input type="datetime-local" class = "form-control" name="eventMeetingTime" id="eventTime" min="<?=date('Y-m-d h:i', time())?>" 
+                        value = "<?php if ($event != null) echo $event['Event_Meeting_Time']; ?>" />
+                    </div>
+                    <div class = "row mb-4 mx-3">
+                        Event Location <br/>
+                        <input type = "text" class = "form-control" name = "eventLocation"
+                            style = "border: 2px solid black;" value = "<?php if ($event != null) echo $event['Event_Location']; ?>"
+                        />
+                    </div>
+                    <div class = "row mb-4 mx-3">
+                        Partnerships <br/>
+                        <input type = "text" class = "form-control" name = "eventPartnerships"
+                            style = "border: 2px solid black;" value = "<?php if ($event != null) echo $event['Partnerships']; ?>"
+                        />
+                    </div>
+                <?php endif; ?>
                 <div class="row mb-4 mx-3">
                     <input type="hidden" name="id" value= <?php echo $post['Post_ID']; ?> />
                     <input type="hidden" name="source" value= <?php echo $_POST['updateSource']; ?> />
