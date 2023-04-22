@@ -19,6 +19,20 @@ function getUserPosts ($ID)  // given a search for a club name, returns relevant
 
 }
 
+function getUserEvents ($ID) 
+{
+    global $db;
+    $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID`, p.computing_id AS author 
+    FROM `Post` AS p NATURAL JOIN `Club` NATURAL JOIN `Event` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $ID);
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    return $results;
+
+}
+
 // home page has my bulletin
 // club info page has a button for the clubs individual bulletin page
 function verify_like($computing_id, $pid) {
@@ -109,16 +123,26 @@ function downvote($pid, $ID){
     
 }
 
-function printPosts ($array, $ID) // prints each post
+function printPosts ($array, $ID, $filterEvent) // prints each post
 {
     
     if ($array) {
         $firstClub = $array[0]['Name'];
-        echo '<h3 style="text-align: center">Posts by ' . $firstClub . '<h3>';
+        if($filterEvent == 1){
+            echo '<h3 style="text-align: center">Events by ' . $firstClub . '<h3>';
+        }
+        else{
+            echo '<h3 style="text-align: center">Posts by ' . $firstClub . '<h3>';    
+        }
 
         foreach ($array as $row) {
            if ($row['Name'] != $firstClub){
-            echo '<h3 style="text-align: center" >Posts by ' . $row['Name'] . '<h3>';
+            if($filterEvent == 1){
+                echo '<h3 style="text-align: center" >Events by ' . $row['Name'] . '<h3>';
+            }
+            else{
+                echo '<h3 style="text-align: center" >Posts by ' . $row['Name'] . '<h3>';
+            }
             $firstClub = $row['Name'];
            }
            $pid = $row['Post_ID'];
@@ -164,7 +188,6 @@ function printPosts ($array, $ID) // prints each post
         echo '<h3>No posts found</h3>';
     }
 }
-
 session_start();
 if(!isset($_SESSION['user'])){
     header("Location: login.php");
@@ -180,6 +203,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if ($_POST["downbtn"]){
         downvote($_POST["downbtn"], $ID);
+    }
+    if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Filter")){
+        if($_POST['filterPost'] == "Post"){
+            $filterEvent = 0;
+        }
+        else if($_POST['filterPost'] == "Event"){
+            $filterEvent = 1;
+        }
     }
     
 }
@@ -201,10 +232,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php include("header.php") ?>
 <h1 style="text-align: center"> Welcome to your Bulletin Page!</h1>
 <h4 style="text-align: center">Check out what your clubs have been up to </h4>
-
+<div style = "text-align: center">
+    <form action = "index.php" method = "post" style = "display: inline-block;">
+        Filter By?
+        <div class = "row mb-4 mx-3">
+            <select id = "filterPost" name = "filterPost"  
+                                style = "border: 2px solid black; width: 200px;">
+                                <?php if ($_POST['filterPost'] == "Event") : ?>
+                                    <option value = "Event"> Event </option>
+                                    <option value = "Post"> Post </option>
+                                <?php else : ?>
+                                    <option value = "Post"> Post </option>
+                                    <option value = "Event"> Event </option>
+                                <?php endif ?>
+            </select>
+        </div>
+        <div class = "row mb-4 mx-auto">
+            <input type = "submit" name = "actionBtn" value = "Filter" class = "btn btn-dark" title = "Click to filter your posts"/>
+        </div>
+    </form>
+</div>
 <?php 
-    $posts = getUserPosts($ID);
-    printPosts($posts, $ID);
+    if($filterEvent == 0){
+        $posts = getUserPosts($ID);
+        printPosts($posts, $ID, $filterEvent);
+    }
+    else{
+        $events = getUserEvents($ID); 
+        printPosts($events, $ID, $filterEvent);
+    }
 ?>
 
 </html>
