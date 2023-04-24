@@ -91,6 +91,17 @@ function checkClubName($clubName){
     $statement->closeCursor();
     return ($club != false); //false means there are no clubs found
 }
+
+function checkEvent($postID){
+    global $db;
+    $query = "select * from `Event` where Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $club = $statement->fetchAll();
+    $statement->closeCursor();
+    return ($club != false);
+}
 function addMember($clubID, $computingID){
     global $db;
     $query = "insert into `MemberOf` values (:computing_id, :Club_ID, :time_active)";
@@ -166,7 +177,7 @@ function getPost($id){
 }
 function getEvent($id){
     global $db;
-    $query = "select * from `Event` where Post_ID=:id";
+    $query = "select * from `Event` NATURAL JOIN `Post` where Post_ID=:id";
     $statement = $db->prepare($query);
     $statement->bindValue(':id', $id);
     $statement->execute();
@@ -185,6 +196,26 @@ function getLoginInformation($computingID, $password)
     $result = $statement->fetch();
     $statement->closeCursor();
     return $result;
+}
+function hasRSVP($pid, $computing_id){
+    global $db;
+    $query = "SELECT * FROM `Students_Attending` WHERE `computing_id`= :computing_id AND `Post_ID`= :pid";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computing_id', $computing_id);
+    $statement->bindValue(':pid', $pid);
+    $statement->execute();
+    $results = $statement->fetch();
+    $statement->closeCursor();
+    if(!$results){//check faculty table if no results
+        $query = "SELECT * FROM `Faculty_Attending` WHERE `computing_id`= :computing_id AND `Post_ID`= :pid";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':computing_id', $computing_id);
+        $statement->bindValue(':pid', $pid);
+        $statement->execute();
+        $results = $statement->fetch();
+        $statement->closeCursor();
+    }
+    return $results;
 }
 function updateUser($computingID, $name, $bio, $picture)
 {
