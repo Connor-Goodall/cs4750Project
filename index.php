@@ -4,21 +4,32 @@ require("club-db.php");
 $upvotesArray = array(-1, -2);
 error_reporting(E_ERROR | E_PARSE);
 
-
 function getUserPosts ($ID)  // given a search for a club name, returns relevant info about all the posts created by that club
 {
     global $db;
+    //if student
+    if(getStudent($ID)){
+        $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID`, p.computing_id AS author 
+        FROM `Post` AS p NATURAL JOIN `Club` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':computingID', $ID);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+        return $results;
+    }
+    //if faculty
     $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID`, p.computing_id AS author 
-    FROM `Post` AS p NATURAL JOIN `Club` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
+    FROM `Post` AS p NATURAL JOIN `Club` INNER JOIN `Sponsors` AS s ON s.Club_ID = p.Club_ID WHERE s.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $ID);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
     return $results;
+    
 
 }
-
 function getUserEvents ($ID) 
 {
     global $db;
@@ -32,25 +43,20 @@ function getUserEvents ($ID)
     return $results;
 
 }
-
 // home page has my bulletin
 // club info page has a button for the clubs individual bulletin page
 function verify_like($computing_id, $pid) {
     global $db;
-        $query = "SELECT * FROM `likes` WHERE `computing_id`= :computing_id AND `Post_ID`= :pid";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':computing_id', $computing_id);
-        $statement->bindValue(':pid', $pid);
-        $statement->execute();
-        $results = $statement->fetch();
-        $statement->closeCursor();
-        return $results;
+    $query = "SELECT * FROM `likes` WHERE `computing_id`= :computing_id AND `Post_ID`= :pid";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computing_id', $computing_id);
+    $statement->bindValue(':pid', $pid);
+    $statement->execute();
+    $results = $statement->fetch();
+    $statement->closeCursor();
+    return $results;
        
-        }
-
-
-
-
+}
 
 function upvote($pid, $ID){
     $check = verify_like($ID, $pid);
@@ -87,7 +93,6 @@ function upvote($pid, $ID){
     
     
 }
-
 function downvote($pid, $ID){
     $check = verify_like($ID, $pid);
     echo $check['computing_id'] == null;
@@ -123,6 +128,9 @@ function downvote($pid, $ID){
     
 }
 
+
+
+
 function printPosts ($array, $ID, $filterEvent) // prints each post
 {
     
@@ -146,11 +154,12 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
             $firstClub = $row['Name'];
            }
            $pid = $row['Post_ID'];
-
+           if(checkEvent($pid)){//if event
+                $event = getEvent($pid);
                 echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
                 echo '<div class="card-body">';
                     echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
-                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
+                    echo '<p class="text-muted" style="font-size:12px"> Event Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
                     echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
                     echo '<div style="text-align:  left">';
                     echo '<div  class = "btn-group";>';
@@ -159,11 +168,65 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                             <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
                             </form>'; 
                         echo '<form action = "index.php" method = "post"> 
-                        <input type = "hidden" name = "downbtn" value='.$pid . '>
+                        <input type = "hidden" name = "downbtn" value='. $pid . '>
                         <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
                         </form>';  
+                    if($row['author'] == $ID){
+                        echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
+                        <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                        <input type="hidden" name="updateSource" value= "index.php"/>
+                        <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
+                        title = "Click to update information about your post" style = "margin-right:100px;"/>
+                        </form>';
+                        echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
+                        <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                        <input type="hidden" name="deleteSource" value= "index.php"/>
+                        <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
+                                    title = "Click to Delete post"/>
+                        </form>';
+                    } 
                 echo '</div>';
                 echo '</div>';
+                //event info
+                echo '<div class="card-body">';
+                    echo '<hr style="border: 1px #5be7a9; width: 50%; margin: auto;">';
+                    echo '<h5 class="card-title" style="font-size:22px"> Event Information:  </h5>';
+                    echo '<p class="card-text" style="font-size:18px"> Event Location: ' . $event['Event_Location'] . '</p>';
+                    echo '<p class="card-text" style="font-size:18px"> Event Time: ' . date("l\, F jS, Y \@ h:iA", strtotime($event['Event_Meeting_Time'])) . '</p>';
+                    echo '<p class="card-text" style="font-size:18px"> Partnerships: ' . $event['Partnerships'] . '</p>';
+                if(!hasRSVP($pid, $ID)){//regular post
+                    echo '<div style="text-align:  center">';
+                    echo '<div  class = "btn-group";>';
+                        echo '<form action = "index.php" method = "post">
+                            <input type="hidden" name="pid" value='. $pid .'>
+                            <input type = "submit" class = "btn btn-info" data-inline="true" name = "actionBtn" value = "RSVP"/>
+                            </form>'; 
+                    echo '</div>';
+                    echo '</div>';
+                }else{
+                    echo '<b class="card-text" style="font-size:18px">Attending :)</b>';
+                }
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+           }else{
+            echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
+            echo '<div class="card-body">';
+                echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
+                echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
+                echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
+                echo '<div style="text-align:  left">';
+                echo '<div  class = "btn-group";>';
+                    echo '<form action = "index.php" method = "post"> 
+                        <input type = "hidden" name = "upbtn" value='.$pid . '>
+                        <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
+                        </form>'; 
+                    echo '<form action = "index.php" method = "post"> 
+                    <input type = "hidden" name = "downbtn" value='.$pid . '>
+                    <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
+                    </form>';  
+                
                 if($row['author'] == $ID){
                     echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
                     <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
@@ -179,9 +242,11 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                     
                     </form>';
                 } 
-                echo '</div>';
+            echo '</div>';
+            echo '</div>'; 
             echo '</div>';
             echo '</div>';
+            }
            
         }
     } else {
@@ -211,6 +276,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         else if($_POST['filterPost'] == "Event"){
             $filterEvent = 1;
         }
+    }
+    if($_POST["pid"]){
+        $_SESSION['pid'] = $_POST["pid"];
+        header("Location: rsvp.php");
     }
     
 }
