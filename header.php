@@ -48,13 +48,19 @@
           </ul>
         <?php else : ?>
             <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link active"  href="userProfile.php">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="logout.php">Logout</a>
-            </li>
-          </ul>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Profile
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href = "userProfile.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href = "userClubs.php">My Clubs</a></li>
+                  </ul>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" href="logout.php">Logout</a>
+              </li>
+            </ul>
         <?php endif; ?>
         </div>
       </div>

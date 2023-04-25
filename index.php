@@ -13,7 +13,7 @@ function getUserPosts ($ID)  // given a search for a club name, returns relevant
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
     return $results;
-
+    
 }
 
 // home page has my bulletin
