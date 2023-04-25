@@ -41,7 +41,7 @@ function getUserEvents ($ID)
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
     return $results;
-
+    
 }
 // home page has my bulletin
 // club info page has a button for the clubs individual bulletin page

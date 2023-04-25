@@ -2,10 +2,10 @@
     require("connect-db.php");
     require("club-db.php");
     session_start();
-    if(!isset($_SESSION['user'])){
+    if(!isset($_SESSION['user'])) {
         header("Location: login.php");
     }
-    else{
+    else {
         $user = getUser($_SESSION['computingID']);
         $student = getStudent($_SESSION['computingID']);
         $faculty = getFaculty($_SESSION['computingID']); 
