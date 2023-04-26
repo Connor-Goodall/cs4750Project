@@ -5,6 +5,15 @@
 <!DOCTYPE html>
 <html>
 <header>  
+    <style>
+      .navbar{
+        background-color: #E57200;
+        color: #232D4B;
+      }
+      .navbar-nav> li a {
+        color: #232D4B;
+      }
+    </style>
     <nav class="navbar navbar-expand-md navbar-light navbar border border-dark">
       <div class="container-fluid">            
         <a class="navbar-brand" href="index.php" >Club Hub</a>
@@ -15,6 +24,7 @@
             <style>
             .navbar-nav>li{
               border-right: 1px solid #000;
+              color: #232D4B;
             }
             .navbar-nav>li:first-child{
               border-left: 1px solid #000;
@@ -65,5 +75,6 @@
         </div>
       </div>
     </nav>
+  </div>
   </header>
   </html>
