@@ -239,7 +239,6 @@ function printNonPosts ($array) // prints each post
                         <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '" style = "margin-right:150px;"/>
                         </form>';  
                 if($row['author'] == $ID){
-                    echo '<div  class = "btn-group";>';
                     echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block; text-align: center;" >
                     <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
                     <input type="hidden" name="updateSource" value= "bulletin.php"/>
@@ -326,6 +325,8 @@ What club are you looking for?
        
         if ($_POST["clubName"]) {
             $clubName = $_POST["clubName"];
+            $posts = findPosts($clubName);
+            printPosts($posts);
         }
        
         
