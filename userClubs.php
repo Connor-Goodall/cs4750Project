@@ -35,16 +35,30 @@
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         $statement->closeCursor();
+        if(!$results){
+            $statement = $db->prepare("SELECT `Name`, `Nickname`, `Concentration`, `Club_ID` FROM `Club` NATURAL JOIN `Sponsors` AS s WHERE s.computing_id = :computingID");
+            $statement->bindValue(':computingID', $ID);
+            $statement->execute();
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $statement->closeCursor();
+        }
     } catch (Exception $e) {
         print("Exception caught.");
     }
     ?>
 
     <br>
-        <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-            Your Clubs:
-        </p>
-
+        <?php
+        if(!getFaculty($ID)){
+            echo'<p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
+                Your Clubs:
+            </p>';
+        }else{
+            echo'<p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
+                Sponsored Clubs:
+            </p>';
+        }
+        ?>
     <div class="container mt-5" style="text-align: center">
         <?php
             if ($results) {
