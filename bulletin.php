@@ -18,7 +18,6 @@ function findPosts ($name)  // given a search for a club name, returns relevant 
     return $results;
 
 }
-
 function verify_like($computing_id, $pid) {
     global $db;
         $query = "SELECT * FROM `likes` WHERE `computing_id` = :computing_id AND `Post_ID` = :pid";
@@ -100,7 +99,7 @@ function printPosts ($array) // prints each post
                 echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
                 echo '<div class="card-body">';
                     echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
-                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . '</p>';
+                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
                     echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
                     echo '<div style="text-align:  left">';
                     echo '<div  class = "btn-group";>';
@@ -117,7 +116,21 @@ function printPosts ($array) // prints each post
                 echo '</div>';
                 echo '</div>'; 
                 echo '</div>';
-            echo '</div>';
+                if($row['author'] == $ID){
+                    echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block; text-align: center;" >
+                    <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                    <input type="hidden" name="updateSource" value= "bulletin.php"/>
+                    <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
+                    title = "Click to update information about your post" style = "margin-right:100px;"/>
+                    </form>';
+                    echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
+                    <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
+                    <input type="hidden" name="clubName" value='.$row['Name'] . '/>
+                    <input type="hidden" name="deleteSource" value= "bulletin.php"/>
+                    <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
+                                title = "Click to Delete post"/>
+                    </form>';
+                } 
             echo '</div>';
            
         }
@@ -203,9 +216,17 @@ What club are you looking for? <input type="text" name="clubName">
             printPosts($posts);
         }
        
-        
     }
-
+}
+else{
+    $user = getUser($_SESSION['computingID']);
+    $ID = $user['computing_id'];   
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $clubName = $_POST["clubName"];
+        $posts = findPosts($clubName);
+        printPosts($posts, $ID);
+    }
+}
 ?>
 
 

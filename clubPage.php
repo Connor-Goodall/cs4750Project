@@ -63,7 +63,7 @@
                         </div>
                         <div style = "display: inline-block;">
                             <?php if($club['Nickname'] == null) : ?>
-                                        <?php echo "No nickname." ?>
+                                        <?php echo "None" ?>
                                     <?php else: ?>
                                         <?php echo $club['Nickname']; ?>
                                     <?php endif; ?>
@@ -224,6 +224,7 @@
                     <div class = "col">
                         <div class = "text-decoration-underline" style = "font-weight: bold; display: inline-block;">
                             Dues:
+                            
                         </div>
                         <div style = "display: inline-block;">
                             <?php if($club['Dues'] == 0.00) : ?>
@@ -282,6 +283,7 @@
                 <div class = "row">
                     <div class = "text-decoration-underline d-flex justify-content-center" style = "font-weight: bold;">
                         Logo:
+
                     </div>
                     &nbsp
                     <?php if($club['Logo'] == null) : ?>
@@ -290,7 +292,7 @@
                         </div>
                     <?php else: ?>
                         <div class="d-flex justify-content-center">
-                            <?php echo '<img class = "account-img" src="data:image/jpeg;base64,'.base64_encode($club['Logo']).'" style = "height: 250px; width: 250px;">'; ?> 
+                            <?php echo '<img class = "account-img" src="data:image/jpeg;base64,'.base64_encode($club['Logo']).'" style = "width: 80%; max-height: 20vw; object-fit: scale-down;">'; ?> 
                         </div>
                     <?php endif; ?> 
                 </div>
@@ -301,7 +303,7 @@
                     </div>
                 </div>
                 &nbsp
-                <div class = "row">
+                <div class = "row" style = "margin-left : 30px;">
                     <div class="text-decoration-underline" style = "font-weight: bold; display: inline-block;">
                         Funding Source(s):
                     </div>
@@ -314,7 +316,7 @@
                     </div>
                 </div>
                 &nbsp
-                <div class = "row">
+                <div class = "row" style = "margin-left : 30px;">
                     <div class="text-decoration-underline" style = "font-weight: bold; display: inline-block;">
                         Costs (Non-Dues):
                     </div>
@@ -349,7 +351,7 @@
             </div>
         <?php endif; ?>
     <?php endif; ?>
-    <?php if($userMember != null) : ?>
+    <?php if($userMember != null && $userLeader == null) : ?>
         <div style = "text-align: center">
             <form name = "deleteMemberForm" action = "clubInformation.php" method = "POST">
                 <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
@@ -358,7 +360,7 @@
             </form>
         </div>
     <?php else : ?>
-        <?php if($student != null) : ?>
+        <?php if($student != null && $userLeader == null) : ?>
             <div style = "text-align: center">
                 <form name = "addMemberForm" action = "clubInformation.php" method = "POST">
                     <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
@@ -371,11 +373,31 @@
     &nbsp
     <?php if($userLeader != null) : ?>
         <div style = "text-align: center">
-            <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
+            <?php if($userLeader['Exec_Role'] == "President") : ?>
+                <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
+                        <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                        <input type = "submit" name = "actionBtn" value = "Update Club Info" class = "btn btn-dark" 
+                        title = "Click to update information about your club" style = "margin-right:200px;"/>
+                </form>
+                <form action = "editMembers.php" method = "POST" style = "display:inline-block;" >
+                        <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                        <input type = "submit" name = "actionBtn" value = "Edit Your Enrollment" class = "btn btn-secondary" 
+                        title = "Click to edit your enrollment" style = "margin-right:300px;"/>
+                </form>
+            <?php else : ?>
+                <form action = "updateClub.php" method = "POST" style = "display:inline-block;" >
+                        <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                        <input type = "submit" name = "actionBtn" value = "Update Club Info" class = "btn btn-dark" 
+                        title = "Click to update information about your club"/>
+                </form>
+            <?php endif; ?>
+            <?php if($userLeader['Exec_Role'] == "President") : ?>
+                <form action = "deleteClub.php" method = "post" style = "display:inline-block;">
                     <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
-                    <input type = "submit" name = "actionBtn" value = "Update Club Information" class = "btn btn-dark" 
-                    title = "Click to update information about your club"/>
-            </form>
+                    <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
+                                title = "Click to Delete club" style = " width: 100%;"/>
+                </form>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
     </body>

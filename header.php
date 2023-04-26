@@ -7,7 +7,7 @@
 <header>  
     <nav class="navbar navbar-expand-md navbar-light navbar border border-dark">
       <div class="container-fluid">            
-        <a class="navbar-brand" href="index.php" >Club Finder</a>
+        <a class="navbar-brand" href="index.php" >Club Hub</a>
         <button class="navbar-toggler" type="button" style="border-right: 1px solid #000;" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,10 +28,13 @@
                       <a class="nav-link active" href="clubSearch.php">Search for Clubs</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link active" href="#">Search for Sponsors</a>
+                      <a class="nav-link active" href="facultySearch.php">Search for Sponsors</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link active" href="createClub.php">Add your Club</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="createPost.php">Create a Post</a>
                   </li>
             </ul>    
         <?php if(!isset($_SESSION['user'])) : ?>
@@ -45,13 +48,19 @@
           </ul>
         <?php else : ?>
             <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link active"  href="userProfile.php">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="logout.php">Logout</a>
-            </li>
-          </ul>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Profile
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href = "userProfile.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href = "userClubs.php">My Clubs</a></li>
+                  </ul>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" href="logout.php">Logout</a>
+              </li>
+            </ul>
         <?php endif; ?>
         </div>
       </div>

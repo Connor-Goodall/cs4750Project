@@ -36,7 +36,6 @@
         </p>
     </div>
     
-    <div>
         <form name = "loginForm" action = "login.php" method = "post" style = "position:absolute; top: 20%; right:0;
         left:0;">
         <?php if($user == null && $tryLogin == 1) : ?>
@@ -50,7 +49,6 @@
                 </div>
             </div>
         <?php endif; ?>
-    </div>
       <div class = "row mb-4 mx-3">
         Computing ID* <br/>
         <input type = "text" class = "form-control" name = "loginComputingID" maxlength = "6" 

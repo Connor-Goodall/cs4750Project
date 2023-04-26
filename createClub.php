@@ -72,7 +72,7 @@
 <body style = "background: #5be7a9;" style = "position:absolute; top: 20%; text-align: center;">
     <?php include("header.php") ?>
     <br>
-    <p class = "text-decoration-underline" style = "font-size: 25px;" >Club Creation Form</p>
+    <p class = "text-decoration-underline" style = "font-size: 25px; text-align:center;" >Club Creation Form</p>
 <form name = "clubCreationForm" enctype="multipart/form-data" action = "createClub.php" method = "post" style = "display:<?php echo $display; ?>;">
     <div class = "row mb-4 mx-3">
         Club Name* <br/>

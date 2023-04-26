@@ -1,6 +1,8 @@
 <?php 
     require("connect-db.php");
     require("club-db.php");
+    $currentStudent = NULL;
+    $tryRegister = 0;
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Add account"))
         {
@@ -17,6 +19,11 @@
                 else{
                     addStudent($_POST['userComputingID'], NULL, $_POST['userYear']); 
                 }
+                $currentStudent = getStudent($_POST['userComputingID']);
+                if($currentStudent == null){
+                    deleteUser($_POST['userComputingID']);
+                    $tryRegister = 1;
+                }
                 
             }
             else if($_POST['userAffiliation'] == "faculty"){
@@ -26,6 +33,9 @@
                 else{
                     addFaculty($_POST['userComputingID'], NULL); 
                 }
+            }
+            if($tryRegister == 0){
+                header("Location: login.php");
             }
         }
     }
@@ -50,6 +60,17 @@
 
     <div>
         <form name = "registerForm" action = "register.php" method = "POST" style = "text-align: center">
+            <?php if($currentStudent == null && $tryRegister == 1) : ?>
+                <div class = "row mb-0 mx-3">
+                    <div class = "alert alert-danger">
+                        <ul class = "m-0">
+                            <li>
+                                You have entered a wrong student year. Please change it to 1-4 to be able to register.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class = "row mb-4 mx-3">
             Computing ID* <br/>
                 <input type = "text" class = "form-control" name = "userComputingID" maxlength = "6" 
@@ -97,13 +118,9 @@
             </div>
             <div class = "row mb-4 mx-3" id = "studentOptionTwo" style = "display: none; text-align:left;">
             Year
-                <select id = "userYear" name = "userYear"  
-                    style = "border: 2px solid black; height: 35px;">
-                    <option value = "1"> First </option>
-                    <option value = "2"> Second </option>
-                    <option value = "3"> Third </option>
-                    <option value = "4"> Fourth </option>
-                </select>
+            <input type = "number" class = "form-control" name = "userYear" 
+                    style = "border: 2px solid black;" placeholder = "Your year..."
+                />
             </div>
             <div class = "row mb-4 mx-3" id = "facultyOption" style = "display: none; text-align:left;">
             Department
