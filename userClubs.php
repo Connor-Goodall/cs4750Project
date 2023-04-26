@@ -36,7 +36,7 @@
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         $statement->closeCursor();
         if(!$results){
-            $statement = $db->prepare("SELECT `Name`, `Nickname`, `Concentration`, `Club_ID` FROM `Club` NATURAL JOIN `Sponsors` AS s WHERE s.computing_id = :computingID");
+            $statement = $db->prepare("SELECT `Name`, `Nickname`, `Concentration`, `Club_ID`, `Logo` FROM `Club` NATURAL JOIN `Sponsors` AS s WHERE s.computing_id = :computingID");
             $statement->bindValue(':computingID', $ID);
             $statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);

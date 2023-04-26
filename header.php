@@ -7,7 +7,7 @@
 <header>  
     <nav class="navbar navbar-expand-md navbar-light navbar border border-dark">
       <div class="container-fluid">            
-        <a class="navbar-brand" href="index.php" >Club Finder</a>
+        <a class="navbar-brand" href="index.php" >Club Hub</a>
         <button class="navbar-toggler" type="button" style="border-right: 1px solid #000;" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
