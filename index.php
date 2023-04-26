@@ -102,7 +102,7 @@ function printPosts ($array) // prints each post
                 echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
                 echo '<div class="card-body">';
                     echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
-                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
+                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . '</p>';
                     echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
                     echo '<div style="text-align:  left">';
                     echo '<div  class = "btn-group";>';
