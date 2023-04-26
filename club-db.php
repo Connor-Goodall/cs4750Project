@@ -197,6 +197,28 @@ function getLoginInformation($computingID, $password)
     $statement->closeCursor();
     return $result;
 }
+function getStudentEnrollment($computingID, $postID){
+    global $db;
+    $query = "select is_speaker from `Students_Attending` where computing_id=:computingID and Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+function getFacultyEnrollment($computingID, $postID){
+    global $db;
+    $query = "select is_speaker from `Faculty_Attending` where computing_id=:computingID and Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 function hasRSVP($pid, $computing_id){
     global $db;
     $query = "SELECT * FROM `Students_Attending` WHERE `computing_id`= :computing_id AND `Post_ID`= :pid";
@@ -262,6 +284,16 @@ function updateStudent($computingID, $major, $year)
     $statement->execute();
     $statement->closeCursor();
 }
+function updateStudentEnrollment($computingID, $postID, $isSpeaking){
+    global $db;
+    $query = "update `Students_Attending` set is_speaker=:isSpeaking where computing_id=:computingID and Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':postID', $postID);
+    $statement->bindValue(':isSpeaking', $isSpeaking);
+    $statement->execute();
+    $statement->closeCursor();   
+}
 function updateFaculty($computingID, $department)
 {
     global $db;
@@ -271,6 +303,16 @@ function updateFaculty($computingID, $department)
     $statement->bindValue(':department', $department);
     $statement->execute();
     $statement->closeCursor();
+}
+function updateFacultyEnrollment($computingID, $postID, $isSpeaking){
+    global $db;
+    $query = "update `Faculty_Attending` set is_speaker=:isSpeaking where computing_id=:computingID and Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':postID', $postID);
+    $statement->bindValue(':isSpeaking', $isSpeaking);
+    $statement->execute();
+    $statement->closeCursor();   
 }
 function updateLeader($computingID, $clubID, $role){
     global $db;
@@ -383,6 +425,24 @@ function deleteClub($id){
     $query = "delete from `Club` where Club_ID=:id";
     $statement = $db->prepare($query);
     $statement->bindValue(':id', $id);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteStudentAttendee($computingID, $postID){
+    global $db;
+    $query = "delete from `Students_Attending` where computing_id=:computingID and Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteFacultyAttendee($computingID, $postID){
+    global $db;
+    $query = "delete from `Faculty_Attending` where computing_id=:computingID and Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->bindValue(':postID', $postID);
     $statement->execute();
     $statement->closeCursor();
 }

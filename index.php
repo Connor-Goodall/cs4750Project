@@ -161,6 +161,11 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                     echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
                     echo '<p class="text-muted" style="font-size:12px"> Event Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
                     echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
+                    if($row['Picture'] != null){
+                        echo '<div class="d-flex justify-content-center">';
+                        echo '<img src="data:image/jpeg;base64,'.base64_encode($row['Picture']).'" style = "width: 100%; height: 20vw; object-fit: scale-down;" class = "card-img-top">';
+                        echo '</div>'; 
+                    }
                     echo '<div style="text-align:  left">';
                     echo '<div  class = "btn-group";>';
                         echo '<form action = "index.php" method = "post"> 
@@ -169,14 +174,14 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                             </form>'; 
                         echo '<form action = "index.php" method = "post"> 
                         <input type = "hidden" name = "downbtn" value='. $pid . '>
-                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
+                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '" style = "margin-right:200px;"/>
                         </form>';  
                     if($row['author'] == $ID){
                         echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
                         <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
                         <input type="hidden" name="updateSource" value= "index.php"/>
                         <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
-                        title = "Click to update information about your post" style = "margin-right:100px;"/>
+                        title = "Click to update information about your post" style = "margin-right:50px;"/>
                         </form>';
                         echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
                         <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
@@ -197,14 +202,25 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                 if(!hasRSVP($pid, $ID)){//regular post
                     echo '<div style="text-align:  center">';
                     echo '<div  class = "btn-group";>';
-                        echo '<form action = "index.php" method = "post">
-                            <input type="hidden" name="pid" value='. $pid .'>
-                            <input type = "submit" class = "btn btn-info" data-inline="true" name = "actionBtn" value = "RSVP"/>
-                            </form>'; 
+                            echo '<form action = "index.php" method = "post">
+                                <input type="hidden" name="pid" value='. $pid .'>
+                                <input type = "submit" class = "btn btn-info" data-inline="true" name = "actionBtn" value = "RSVP"/>
+                                </form>'; 
                     echo '</div>';
                     echo '</div>';
                 }else{
                     echo '<b class="card-text" style="font-size:18px">Attending :)</b>';
+                    echo '<br/>';
+                    echo '<div  class = "btn-group";>';
+                        echo '<form action = "index.php" method = "post">
+                        <input type="hidden" name="pid" value='. $pid .'>
+                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Un-RSVP" style = "margin-right:50px;"/>
+                        </form>'; 
+                        echo '<form action = "updateRSVP.php" method = "post">
+                        <input type="hidden" name="pid" value='. $pid .'>
+                        <input type = "submit" class = "btn btn-dark" data-inline="true" name = "actionBtn" value = "Update RSVP"/>
+                        </form>'; 
+                        echo '</div>';
                 }
                 echo '</div>';
                 echo '</div>';
@@ -278,8 +294,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     if($_POST["pid"]){
-        $_SESSION['pid'] = $_POST["pid"];
-        header("Location: rsvp.php");
+        if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "RSVP")){
+            $_SESSION['pid'] = $_POST["pid"];
+            header("Location: rsvp.php");
+        }
+        else if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Un-RSVP")){
+            if(getStudent($_SESSION['computingID']) != null){
+                deleteStudentAttendee($_SESSION['computingID'], $_POST['pid']);
+            }
+            else{
+                deleteFacultyAttendee($_SESSION['computingID'], $_POST['pid']);  
+            }
+        }
     }
     
 }
