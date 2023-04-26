@@ -2,6 +2,7 @@
     session_start();
     require("connect-db.php");
     require("club-db.php");
+    require("password.php");
     $tryLogin = 0;
     if(isset($_SESSION['user'])){
         header("Location: index.php");

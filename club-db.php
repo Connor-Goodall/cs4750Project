@@ -1,4 +1,5 @@
 <?php
+require("password.php");
 function addUser($computingID, $name, $password)
 {
     global $db;
@@ -188,14 +189,19 @@ function getEvent($id){
 function getLoginInformation($computingID, $password)
 {
     global $db;
-    $query = "select * from `User` where computing_id=:computingID and Password=:password";
+    $query = "select * from `User` where computing_id=:computingID";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $computingID);
-    $statement->bindValue(':password', $password);
     $statement->execute();
     $result = $statement->fetch();
     $statement->closeCursor();
-    return $result;
+    $passwordsMatch = ($password == $result['Password']);
+    $passwordsMatch = $passwordsMatch || password_verify($password, $result['Password']);
+    if($result && $passwordsMatch){
+        return $result;
+    }else{
+        return NULL;
+    }      
 }
 function getStudentEnrollment($computingID, $postID){
     global $db;
