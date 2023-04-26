@@ -23,8 +23,9 @@ function getEventPosts($clubName) {
     global $db;
     $l = "%";
     $regex = $l.$clubName.$l;
-    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`,`Downvotes`, Event.Post_ID, `Event_Meeting_Time`, `Event_Location` 
-    FROM `Event` LEFT JOIN (Post NATURAL JOIN Club) on Event.Post_ID = Post.Post_ID WHERE `Name` LIKE :cName OR Nickname LIKE :cName ;";
+    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`,`Downvotes`, Event.Post_ID, `Event_Meeting_Time`, 
+    `Event_Location`, `Partnerships` FROM `Event` LEFT JOIN (Post NATURAL JOIN Club) on Event.Post_ID = Post.Post_ID WHERE `Name` 
+    LIKE :cName OR Nickname LIKE :cName ;";
     $statement = $db->prepare($query);
     $statement->bindValue(':cName', $regex);
     $statement->execute();
@@ -115,16 +116,63 @@ function downvote($pid, $ID){
 }
 
 
+function printEventPosts ($array) {
+    if ($array) {
+        $firstClub = $array[0]['Name'];
+        echo '<h3 style="text-align: center"> Event Posts by ' . $firstClub . '<h3>';
+
+        foreach ($array as $row) {
+           if ($row['Name'] != $firstClub){
+            echo '<h3 style="text-align: center" > Event Posts by ' . $row['Name'] . '<h3>';
+            $firstClub = $row['Name'];
+           }
+           $pid = $row['Post_ID'];
+
+                echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
+                echo '<div class="card-body">';
+                    echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
+                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . '</p>';
+                    echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
+                    echo '<p class="card-text" style="font-size:18px"> When:  ' . $row['Event_Meeting_Time'] . '</p>';
+                    echo '<p class="card-text" style="font-size:18px"> Where:  ' . $row['Event_Location'] . '</p>';
+                    if ($row['Partnerships']) {
+                        echo '<p class="text-muted" style="font-size:18px"> Brought to you in association with:  '. $row['Partnerships'] . '</p>';
+                    }
+                    echo '<div style="text-align:  left">';
+                    echo '<div  class = "btn-group";>';
+                        echo '<form action = "bulletin.php" method = "post"> 
+                            <input type = "hidden" name = "upvotebtn" value='.$pid. '>
+                            <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
+                            <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
+                            </form>'; 
+                        echo '<form action = "bulletin.php" method = "post"> 
+                        <input type = "hidden" name = "downvotebtn" value='.$pid . '>
+                        <input type = "hidden" name = "clubName" value =' . $row['Name'] . '>
+                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
+                        </form>';  
+                echo '</div>';
+                echo '</div>'; 
+                echo '</div>';
+            echo '</div>';
+            echo '</div>';
+           
+        }
+    } 
+    else {
+        echo '<h3>No event posts found</h3>';
+    }
+}
+
 function printPosts ($array) // prints each post
 {
     
     if ($array) {
         $firstClub = $array[0]['Name'];
-        echo '<h3 style="text-align: center"> Posts by ' . $firstClub . '<h3>';
+        echo '<h3 style="text-align: center"> All Posts by ' . $firstClub . '<h3>';
 
         foreach ($array as $row) {
            if ($row['Name'] != $firstClub){
-            echo '<h3 style="text-align: center" >Posts by ' . $row['Name'] . '<h3>';
+            echo '<h3 style="text-align: center" > All Posts by ' . $row['Name'] . '<h3>';
             $firstClub = $row['Name'];
            }
            $pid = $row['Post_ID'];
@@ -158,6 +206,50 @@ function printPosts ($array) // prints each post
     }
 }
 
+
+function printNonPosts ($array) // prints each post
+{
+    
+    if ($array) {
+        $firstClub = $array[0]['Name'];
+        echo '<h3 style="text-align: center"> Non-Event Posts by ' . $firstClub . '<h3>';
+
+        foreach ($array as $row) {
+           if ($row['Name'] != $firstClub){
+            echo '<h3 style="text-align: center" >Non-Event Posts by ' . $row['Name'] . '<h3>';
+            $firstClub = $row['Name'];
+           }
+           $pid = $row['Post_ID'];
+
+                echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
+                echo '<div class="card-body">';
+                    echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
+                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . '</p>';
+                    echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
+                    echo '<div style="text-align:  left">';
+                    echo '<div  class = "btn-group";>';
+                        echo '<form action = "bulletin.php" method = "post"> 
+                            <input type = "hidden" name = "upvotebtn" value='.$pid. '>
+                            <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
+                            <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
+                            </form>'; 
+                        echo '<form action = "bulletin.php" method = "post"> 
+                        <input type = "hidden" name = "downvotebtn" value='.$pid . '>
+                        <input type = "hidden" name = "clubName" value =' . $row['Name'] . '>
+                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
+                        </form>';  
+                echo '</div>';
+                echo '</div>'; 
+                echo '</div>';
+            echo '</div>';
+            echo '</div>';
+           
+        }
+    } else {
+        echo '<h3>No non-event posts found</h3>';
+    }
+}
+
 // notes:  one bulletin page for each club and a user-based bulletin page, perhaps happens after login
 ?>
 
@@ -181,20 +273,22 @@ function printPosts ($array) // prints each post
 <form action="bulletin.php" method="post" style = "text-align:center">
 What club are you looking for? 
 <input type="text" name="clubName">
-<br> <br/>
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
+<br/>
+<div class="btn-group btn-group-toggle p-1" data-toggle="buttons">
   <label class="btn btn-secondary">
-    <input type="radio" name="all" id="all" autocomplete="off" > All Posts
+    <input type="radio" name="all" id="all" autocomplete="off" value = "all" > All Posts
   </label>
   <label class="btn btn-secondary">
-    <input type="radio" name="event" id="event" autocomplete="off"> Event Posts Only
+    <input type="radio" name="event" id="event" autocomplete="off" value = "event"> Event Posts Only
   </label>
   <label class="btn btn-secondary">
-    <input type="radio" name="nonEvent" id="nonEvent" autocomplete="off"> Non-Event Posts Only
+    <input type="radio" name="nonEvent" id="nonEvent" autocomplete="off" value ="nonEvent"> Non-Event Posts Only
   </label>
 </div>
 <input type="submit" class = "btn btn-dark btn-block" style = "text-align:center">
 </form>
+
+<br></br>
 
 
 <?php 
@@ -222,23 +316,23 @@ What club are you looking for?
             $clubName = $_POST["clubName"];
 
             if ($_POST["event"]){
-                echo("event");
+                
                 $posts = getEventPosts($clubName);
-                printPosts($posts);
-                echo("this is club name". $clubName);
+                printEventPosts($posts);
+                
             }
             else if ($_POST["nonEvent"]) {
-                echo("nonevent");
+                
                 $posts = getNonEventPosts($clubName);
-                printPosts($posts);
-                echo("this is club name". $clubName);
+                printNonPosts($posts);
+                
             }
             else{
                 // $_POST["clubName"] 
-                echo("all");
+                
                 $posts = findPosts($clubName);
                 printPosts($posts);
-                echo("this is club name". $clubName);
+                
             }
             
 
