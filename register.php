@@ -51,7 +51,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
-<body style = "background: #5be7a9; font-family: Lato;">">
+<body style = "background: #232D4B; font-family: Lato; color: #E57200;">
     <div>
         <?php include("header.php") ?>
     </div>
@@ -79,7 +79,7 @@
                 <input type = "text" class = "form-control" name = "userComputingID" maxlength = "6" 
                     style = "border: 2px solid black;" placeholder = "Your computing ID..." required
                 />
-                <small id = "computingIDInformation" class = "form-text text-muted" style="color:black !important; text-align:left;"> Required. 
+                <small id = "computingIDInformation" class = "form-text text-muted" style="color:#E57200 !important; text-align:left;"> Required. 
                     7 characters or fewer. Letters and digits only. 
                 </small> 
             </div>
@@ -88,7 +88,7 @@
                 <input type = "password" class = "form-control" name = "userPassword" maxlength = "100" minlength = "8" 
                     style = "border: 2px solid black;" placeholder = "Your password..." required
                 />
-                <small id = "passwordInformation" class = "form-text text-muted" style="color:black !important; text-align:left;">
+                <small id = "passwordInformation" class = "form-text text-muted" style="color:#E57200 !important; text-align:left;">
                     Required. 8 characters minimum.
                 </small> 
             </div>
@@ -97,7 +97,7 @@
                 <input type = "text" class = "form-control" name = "userName" 
                     style = "border: 2px solid black;" placeholder = "Your name..."
                 />
-                <small id = "nameInformation" class = "form-text text-muted" style="color:black !important; text-align:left;">
+                <small id = "nameInformation" class = "form-text text-muted" style="color:#E57200 !important; text-align:left;">
                     First Name and Last Name
                 </small> 
             </div>
@@ -109,7 +109,7 @@
                     <option value = "student"> Student </option>
                     <option value = "faculty"> Faculty </option>
                 </select>
-                <small id = "affiliationInformation" class = "form-text text-muted" style="color:black !important; text-align:left; "> 
+                <small id = "affiliationInformation" class = "form-text text-muted" style="color:#E57200 !important; text-align:left; "> 
                     Required.
                 </small> 
             </div>
@@ -132,8 +132,8 @@
                 />
             </div>
             <div class="row mb-4 mx-3">
-                <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Add account" 
-                title = "Click to register account" style = "width: 10%; display: block; margin: auto;"
+                <input type = "submit" class = "btn" name = "actionBtn" value = "Add account" 
+                title = "Click to register account" style = "width: 10%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"
                 />
             </div>
     </div>

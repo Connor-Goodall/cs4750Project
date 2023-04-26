@@ -110,7 +110,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
-<body style = "background: #5be7a9; font-family: Lato;" style = "position:absolute; top: 20%; text-align: center;">
+<body style = "background: #232D4B; font-family: Lato; color: #E57200;" style = "position:absolute; top: 20%; text-align: center;">
     <?php include("header.php") ?>
     <br>
     <p class = "text-decoration-underline" style = "font-size: 25px;" >Post Creation Form</p>
@@ -125,7 +125,7 @@
             }
             ?>
         </select>
-        <small class = "form-text text-muted" style="color:black !important"> Required. 
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Required. 
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
@@ -133,20 +133,20 @@
         <input type = "text" class = "form-control" name = "title" maxlength = "255" 
             style = "border: 2px solid black;" placeholder = "Post Title"
         />
-        <small class = "form-text text-muted" style="color:black !important"> I.E. "Reminder to pay dues!" or "Club dinner this Friday 10/11!"
+        <small class = "form-text text-muted" style="color:#E57200 !important"> I.E. "Reminder to pay dues!" or "Club dinner this Friday 10/11!"
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Post Body <br/>
         <textarea rows= "8" onkeyup="textCounter(this,'counter',3000);" name = "body" placeholder = "Information about your post..." maxlength = "3000" style="border:solid 2px black;"></textarea>
         <input disabled maxlength="3" size="3" value ="3000" id="counter"/>
-        <small class = "form-text text-muted" style="color:black !important"> Describe the post in detail.
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Describe the post in detail.
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Picture <br/>
         <input type = "file" class = "form-control" name = "picture" id="picture" accept = "image/*" id = "imgInp" />
-        <small id = "pictureInformation" class = "form-text text-muted" style="color:black !important">
+        <small id = "pictureInformation" class = "form-text text-muted" style="color:#E57200 !important">
             Upload a picture for the post if you want.
         </small> 
     </div>
@@ -157,7 +157,7 @@
             <option value = "No"> No </option>
             <option value = "Yes"> Yes </option>
         </select>
-        <small id = "postTypeInformation" class = "form-text text-muted" style="color:black !important; text-align:left; "> 
+        <small id = "postTypeInformation" class = "form-text text-muted" style="color:#E57200 !important; text-align:left; "> 
             Required.
         </small> 
         
@@ -166,7 +166,7 @@
     <div class = "row mb-4 mx-3" id="eventOptionOne" style = "display: none; text-align:left;">
         When is the event?* <br/>
         <input type="datetime-local" class = "form-control" name="eventMeetingTime" id="eventTime" min="<?=date('Y-m-d h:i', time())?>" >
-        <small class = "form-text text-muted" style="color:black !important"> Required. Enter the time the event starts.
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Required. Enter the time the event starts.
         </small> 
     </div>
     <div class = "row mb-4 mx-3" id="eventOptionTwo" style = "display: none; text-align:left;">
@@ -174,7 +174,7 @@
         <input type = "text" class = "form-control" name = "eventLocation" id="eventLocation" maxlength = "255" 
             style = "border: 2px solid black;" placeholder = "Enter the club's meeting location..."
         />
-        <small class = "form-text text-muted" style="color:black !important">Required. I.E. "Rice 120"
+        <small class = "form-text text-muted" style="color:#E57200 !important">Required. I.E. "Rice 120"
         </small> 
     </div>
     <div class = "row mb-4 mx-3" id="eventOptionThree" style = "display: none; text-align:left;">
@@ -182,12 +182,12 @@
         <input type = "text" class = "form-control" name = "partnerships" maxlength = "500" 
             style = "border: 2px solid black;" placeholder = "Enter the club's meeting location..."
         />
-        <small class = "form-text text-muted" style="color:black !important"> If your club event has multiple partnerships, make sure to separate them using "," 
+        <small class = "form-text text-muted" style="color:#E57200 !important"> If your club event has multiple partnerships, make sure to separate them using "," 
         </small> 
     </div>
     <div class="row mb-4 mx-3">
       <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Create Post" 
-        title = "Click to create post" style = "width: 10%; display: block; margin: auto;"/>
+        title = "Click to create post" style = "width: 10%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"/>
     </div>
     <script>
         function textCounter(field,field2,maxlimit){

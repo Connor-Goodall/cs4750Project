@@ -30,7 +30,7 @@
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
         </head>
-        <body style = "background: #5be7a9; font-family: Lato;">
+        <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
             <?php include("header.php") ?>
             &nbsp
             <div style = "position:absolute; top: 40%; right:0; left:0;">

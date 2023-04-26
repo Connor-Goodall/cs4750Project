@@ -4,6 +4,9 @@
     require("club-db.php");
     require("password.php");
     $tryLogin = 0;
+    if(isset($_SESSION['user'])){
+        header("Location: index.php");
+    }
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Login"))
         {
@@ -64,8 +67,8 @@
         /> 
     </div>
     <div class="row mb-4 mx-3">
-      <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Login" 
-        title = "Click to login into your account" style = "width: 10%; display: block; margin: auto;"
+      <input type = "submit" class = "btn" name = "actionBtn" value = "Login" 
+        title = "Click to login into your account" style = "width: 10%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"
       />
     </div>
     </form>

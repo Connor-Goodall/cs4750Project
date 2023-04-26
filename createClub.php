@@ -70,7 +70,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
-<body style = "background: #5be7a9; font-family: Lato;" style = "position:absolute; top: 20%; text-align: center;">
+<body style = "background: #232D4B; font-family: Lato; color: #E57200;" style = "position:absolute; top: 20%; text-align: center;">
     <?php include("header.php") ?>
     <br>
     <p class = "text-decoration-underline" style = "font-size: 25px; text-align:center;" >Club Creation Form</p>
@@ -80,7 +80,7 @@
         <input type = "text" class = "form-control" name = "clubName" maxlength = "255" 
             style = "border: 2px solid black;" placeholder = "Your club's name..." required
         />
-        <small class = "form-text text-muted" style="color:black !important"> Required. 
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Required. 
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
@@ -88,7 +88,7 @@
         <input type = "text" class = "form-control" name = "nickname" maxlength = "10" 
             style = "border: 2px solid black;" placeholder = "Nickname"
         />
-        <small class = "form-text text-muted" style="color:black !important"> Usually an abbreviation or acronym of the club's name
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Usually an abbreviation or acronym of the club's name
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
@@ -96,7 +96,7 @@
         <input type = "text" class = "form-control" name = "concentration" maxlength = "255" 
             style = "border: 2px solid black;" placeholder = "Enter the club's concentration(s)"
         />
-        <small class = "form-text text-muted" style="color:black !important"> If your club has multiple concentrations, make sure to separate them using "," 
+        <small class = "form-text text-muted" style="color:#E57200 !important"> If your club has multiple concentrations, make sure to separate them using "," 
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
@@ -117,42 +117,42 @@
     <div class = "row mb-4 mx-3">
         Logo <br/>
         <input type = "file" class = "form-control" name = "logo" id="logo" accept = "image/*" id = "imgInp" />
-        <small id = "nameInformation" class = "form-text text-muted" style="color:black !important">
+        <small id = "nameInformation" class = "form-text text-muted" style="color:#E57200 !important">
             Upload an image file for the club's logo
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Dues $ <br/>
         <input type="number" class="form-control" placeholder="0.00"  name="dues" min="0" value="0" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'" oninput="validity.valid||(value='');">
-        <small class = "form-text text-muted" style="color:black !important">
+        <small class = "form-text text-muted" style="color:#E57200 !important">
             Enter the amount members are expected to pay yearly in club dues
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Costs $ <br/>
         <input type="number" class="form-control" placeholder="0.00"  name="costs" min="0" value="0" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'" oninput="validity.valid||(value='');">
-        <small class = "form-text text-muted" style="color:black !important">
+        <small class = "form-text text-muted" style="color:#E57200 !important">
             Enter the amount members are expected to pay yearly in non-dues associated costs
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Constitution <br/>
         <input name="constitution"  id="constitution" type="file" class="form-control" accept=".pdf, .docx, .doc" />
-        <small class = "form-text text-muted" style="color:black !important">
+        <small class = "form-text text-muted" style="color:#E57200 !important">
             Upload a PDF/DOC/DOCX file for your club's constituion
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Application <br/>
         <input name="application" id="application" type="file" class="form-control" accept=".pdf, .docx, .doc" />
-        <small class = "form-text text-muted" style="color:black !important">
+        <small class = "form-text text-muted" style="color:#E57200 !important">
             Upload a PDF/DOC/DOCX file for your club's application
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Bylaws <br/>
         <input name="bylaws" id="bylaws" type="file" class="form-control" accept=".pdf, .docx, .doc" />
-        <small class = "form-text text-muted" style="color:black !important">
+        <small class = "form-text text-muted" style="color:#E57200 !important">
             Upload a PDF/DOC/DOCX file for your club's bylaws
         </small> 
     </div>
@@ -161,13 +161,13 @@
         <input type = "text" class = "form-control" name = "fundingSource" maxlength = "500" 
             style = "border: 2px solid black;" placeholder = "Enter the club's funding source(s)"
         />
-        <small class = "form-text text-muted" style="color:black !important"> If your club has multiple sources, make sure to separate them using "," 
+        <small class = "form-text text-muted" style="color:#E57200 !important"> If your club has multiple sources, make sure to separate them using "," 
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Founding Date<br/>
         <input type="date" class = "form-control" id="datePicker" name="foundingDate" onload="setDate()">
-        <small class = "form-text text-muted" style="color:black !important"> Enter the date the club was founded 
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Enter the date the club was founded 
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
@@ -175,13 +175,13 @@
         <input type = "text" class = "form-control" name = "meetingDays" maxlength = "20" 
             style = "border: 2px solid black;" placeholder = "MoTuWeThFrSaSu"
         />
-        <small class = "form-text text-muted" style="color:black !important"> Enter your the days your club meets. I.E."MoTu"
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Enter your the days your club meets. I.E."MoTu"
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
         Meeting Time<br/>
         <input type="time" class = "form-control" name="meetingTime">
-        <small class = "form-text text-muted" style="color:black !important"> Enter the club meeting time 
+        <small class = "form-text text-muted" style="color:#E57200 !important"> Enter the club meeting time 
         </small> 
     </div>
     <div class = "row mb-4 mx-3">
@@ -189,12 +189,12 @@
         <input type = "text" class = "form-control" name = "meetingLocation" maxlength = "255" 
             style = "border: 2px solid black;" placeholder = "Enter the club's meeting location..."
         />
-        <small class = "form-text text-muted" style="color:black !important"> I.E. "Rice 120"
+        <small class = "form-text text-muted" style="color:#E57200 !important"> I.E. "Rice 120"
         </small> 
     </div>
     <div class="row mb-4 mx-3">
-      <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Create Club" 
-        title = "Click to create club" style = "width: 10%; display: block; margin: auto;"/>
+      <input type = "submit" class = "btn" name = "actionBtn" value = "Create Club" 
+        title = "Click to create club" style = "width: 10%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"/>
     </div>
     <script>
         function textCounter(field,field2,maxlimit){

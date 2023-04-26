@@ -118,7 +118,7 @@
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
         </head>
-        <body style = "background: #5be7a9; font-family: Lato;">
+        <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
         <?php include("header.php") ?>
             &nbsp
             <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
@@ -136,7 +136,7 @@
                 <input type = "text" class = "form-control" name = "nickname" maxlength = "10" 
                     style = "border: 2px solid black;" value = "<?php if ($club != null) echo $club['Nickname']; ?>"
                 />
-                <small class = "form-text text-muted" style="color:black !important"> 
+                <small class = "form-text text-muted" style="color:#E57200 !important"> 
                     Usually an abbreviation or acronym of the club's name
                 </small> 
             </div>
@@ -145,7 +145,7 @@
                 <input type = "text" class = "form-control" name = "concentration" maxlength = "255" 
                     style = "border: 2px solid black;" value = "<?php if ($club != null) echo $club['Concentration']; ?>"
                 />
-                <small class = "form-text text-muted" style="color:black !important"> If your club has multiple concentrations, make sure to separate them using "," 
+                <small class = "form-text text-muted" style="color:#E57200 !important"> If your club has multiple concentrations, make sure to separate them using "," 
                 </small> 
             </div>
             <div class = "row mb-4 mx-3">
@@ -169,35 +169,35 @@
             <div class = "row mb-4 mx-3">
                 Dues $ <br/>
                 <input type="number" class="form-control" value = "<?php if ($club != null) echo number_format($club['Dues'], 2); ?>" name="dues" min="0" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" />
-                <small class = "form-text text-muted" style="color:black !important">
+                <small class = "form-text text-muted" style="color:#E57200 !important">
                     Enter the amount members are expected to pay yearly in club dues
                 </small> 
             </div>
             <div class = "row mb-4 mx-3">
                 Costs $ <br/>
                 <input type="number" class="form-control" name="costs" min="0" value = "<?php if ($club != null) echo number_format($club['Costs'], 2); ?>" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" />
-                <small class = "form-text text-muted" style="color:black !important">
+                <small class = "form-text text-muted" style="color:#E57200 !important">
                     Enter the amount members are expected to pay yearly in non-dues associated costs
                 </small> 
             </div>
             <div class = "row mb-4 mx-3">
                 Constitution <br/>
                 <input name="constitution" id="constitution" type="file" class="form-control" accept=".pdf, .docx, .doc" />
-                <small class = "form-text text-muted" style="color:black !important">
+                <small class = "form-text text-muted" style="color:#E57200 !important">
                     PDF/DOC/DOCX file ONLY
                 </small> 
             </div>
             <div class = "row mb-4 mx-3">
                 Application <br/>
                 <input name="application" id="application" type="file" class="form-control" accept=".pdf, .docx, .doc" />
-                <small class = "form-text text-muted" style="color:black !important">
+                <small class = "form-text text-muted" style="color:#E57200 !important">
                     PDF/DOC/DOCX file ONLY
                 </small> 
             </div>
             <div class = "row mb-4 mx-3">
                 Bylaws <br/>
                 <input name="bylaws" id="bylaws" type="file" class="form-control" accept=".pdf, .docx, .doc" />
-                <small class = "form-text text-muted" style="color:black !important">
+                <small class = "form-text text-muted" style="color:#E57200 !important">
                     PDF/DOC/DOCX file ONLY
                 </small> 
             </div>
@@ -206,7 +206,7 @@
                 <input type = "text" class = "form-control" name = "fundingSource" maxlength = "500" 
                     style = "border: 2px solid black;" value = "<?php if ($club != null) echo $club['Funding_source']; ?>"
                 />
-                <small class = "form-text text-muted" style="color:black !important"> If your club has multiple sources, make sure to separate them using "," 
+                <small class = "form-text text-muted" style="color:#E57200 !important"> If your club has multiple sources, make sure to separate them using "," 
                 </small> 
             </div>
             <div class = "row mb-4 mx-3">
@@ -219,7 +219,7 @@
                 <input type = "text" class = "form-control" name = "meetingDays" maxlength = "20" 
                     style = "border: 2px solid black;" value = "<?php if ($club != null) echo $club['meeting_days']; ?>"
                 />
-                <small class = "form-text text-muted" style="color:black !important"> Enter your the days your club meets. I.E."MoTu"
+                <small class = "form-text text-muted" style="color:#E57200 !important"> Enter your the days your club meets. I.E."MoTu"
                 </small> 
             </div>
             <div class = "row mb-4 mx-3">
@@ -231,7 +231,7 @@
                 <input type = "text" class = "form-control" name = "meetingLocation" maxlength = "255" 
                     style = "border: 2px solid black;" value = "<?php if ($club != null) echo $club['meeting_location']; ?>"
                 />
-                <small class = "form-text text-muted" style="color:black !important"> I.E. "Rice 120"
+                <small class = "form-text text-muted" style="color:#E57200 !important"> I.E. "Rice 120"
                 </small> 
             </div>
             <div class="row mb-4 mx-3">

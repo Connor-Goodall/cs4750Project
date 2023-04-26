@@ -23,7 +23,7 @@
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
         </head>
-        <body style = "background: #5be7a9; font-family: Lato;">
+        <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
         <?php include("header.php") ?>
         <div class = "media">
             &nbsp
@@ -40,26 +40,26 @@
                 </div>
                 <div class = "col-4">
                     <div class = "media-body">
-                        <p class = "text-decoration-underline" style = "color: black !important; font-size: 20px; font-weight: bold;">
+                        <p class = "text-decoration-underline" style = "font-size: 20px; font-weight: bold;">
                             Profile Info
                         </p>
-                        <p class = "text-secondary" style = "color: black !important; font-size: 15px;">
+                        <p class = "text" style = "font-size: 15px;">
                             Bio: <?php echo $user['Bio'];?>
                         </p>
                         <?php if($student != null) : ?>
                             &nbsp
-                            <p class = "text-secondary" style = "color: black !important; font-size: 15px;">
+                            <p class = "text" style = "font-size: 15px;">
                                 Major: <?php echo $student['Major'];?>
                             </p>
                             &nbsp
-                            <p class = "text-secondary" style = "color: black !important; font-size: 15px;">
+                            <p class = "text" style = "font-size: 15px;">
                                 Year: <?php echo $student['Year'];?>
                             </p>
                             &nbsp
                             <?php 
                                 $memberCount = 0;
                                     if($memberResults != null){
-                                        echo '<div class = "text-secondary" style = "color: black !important; font-size: 15px;">Member Of: </div>';
+                                        echo '<div class = "text" style = "font-size: 15px;">Member Of: </div>';
                                         foreach($memberResults as $memberRow){
                                             if($memberCount != 0){
                                                 echo ", ";
@@ -77,7 +77,7 @@
                                 <?php 
                                     $leaderCount = 0;
                                         if($leaderResults != null){
-                                            echo '<div class = "text-secondary" style = "color: black !important; font-size: 15px;">Leader Of: </div>';
+                                            echo '<div class = "text" style = "font-size: 15px;">Leader Of: </div>';
                                             foreach($leaderResults as $leaderRow){
                                                 if($leaderCount != 0){
                                                     echo ", ";
@@ -92,14 +92,14 @@
                                     ?>
                         <?php elseif($faculty != null) : ?>
                             &nbsp
-                            <p class = "text-secondary" style = "color: black !important; font-size: 15px;">
+                            <p class = "text" style = "font-size: 15px;">
                                 Department: <?php echo $faculty['Department'];?>
                             </p>
                             &nbsp
                             <?php 
                                 $sponsorCount = 0;
                                     if($sponsorResults != null){
-                                        echo '<div class = "text-secondary" style = "color: black !important; font-size: 15px;">Sponsor Of: </div>';
+                                        echo '<div class = "text" style = "font-size: 15px;">Sponsor Of: </div>';
                                         foreach($sponsorResults as $sponsorRow){
                                             if($sponsorCount != 0){
                                                 echo ", ";
