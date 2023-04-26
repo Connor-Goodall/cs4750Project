@@ -2,6 +2,7 @@
     session_start();
     require("connect-db.php");
     require("club-db.php");
+    require("password.php");
     $tryLogin = 0;
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Login"))
