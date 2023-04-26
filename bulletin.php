@@ -19,6 +19,37 @@ function findPosts ($name)  // given a search for a club name, returns relevant 
 
 }
 
+function getEventPosts($clubName) {
+    global $db;
+    $l = "%";
+    $regex = $l.$clubName.$l;
+    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`,`Downvotes`, Event.Post_ID, `Event_Meeting_Time`, `Event_Location` 
+    FROM `Event` LEFT JOIN (Post NATURAL JOIN Club) on Event.Post_ID = Post.Post_ID WHERE `Name` LIKE :cName OR Nickname LIKE :cName ;";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':cName', $regex);
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    return $results;
+}
+
+function getNonEventPosts($clubName) {
+    global $db;
+    $l = "%";
+    $regex = $l.$clubName.$l;
+    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, Post.Post_ID, `Downvotes` FROM `Post` 
+    NATURAL JOIN `Club` WHERE Club.Name LIKE :cName OR Nickname LIKE :cName
+ EXCEPT
+    SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, Post.Post_ID, `Downvotes`
+     FROM `Event` LEFT JOIN (Post NATURAL JOIN Club) on Event.Post_ID = Post.Post_ID";
+     $statement = $db->prepare($query);
+     $statement->bindValue(':cName', $regex);
+     $statement->execute();
+     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+     $statement->closeCursor();
+     return $results;
+}
+
 function verify_like($computing_id, $pid) {
     global $db;
         $query = "SELECT * FROM `likes` WHERE `computing_id` = :computing_id AND `Post_ID` = :pid";
@@ -83,12 +114,13 @@ function downvote($pid, $ID){
     
 }
 
+
 function printPosts ($array) // prints each post
 {
     
     if ($array) {
         $firstClub = $array[0]['Name'];
-        echo '<h3 style="text-align: center">Posts by ' . $firstClub . '<h3>';
+        echo '<h3 style="text-align: center"> Posts by ' . $firstClub . '<h3>';
 
         foreach ($array as $row) {
            if ($row['Name'] != $firstClub){
@@ -147,26 +179,27 @@ function printPosts ($array) // prints each post
 <h1 style = "text-align:center"> Welcome to the Bulletin Page!</h1>
 
 <form action="bulletin.php" method="post" style = "text-align:center">
-What club are you looking for? <input type="text" name="clubName">
+What club are you looking for? 
+<input type="text" name="clubName">
+<br> <br/>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary">
+    <input type="radio" name="all" id="all" autocomplete="off" > All Posts
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="event" id="event" autocomplete="off"> Event Posts Only
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="nonEvent" id="nonEvent" autocomplete="off"> Non-Event Posts Only
+  </label>
+</div>
 <input type="submit" class = "btn btn-dark btn-block" style = "text-align:center">
 </form>
 
 
-<!-- <form action = "bulletin.php" id = "postForm" method="post">
-<label for="postType">Choose a Post Type:</label>
-<select name="postType" id="postType" form = "postForm">
-  <option value="event" name = "event" >Event Posts</option>
-  <option value="nonEvent" name = "nonEvent" >Non-Event Posts</option>
-  <option value="all" name = "all" selected>All posts</option>
-</select>
-<input type="submit"> -->
-</form>
-
-
-
-<br>
-
 <?php 
+
+    session_start();
     if(!isset($_SESSION['user'])){
         header("Location: login.php");
     }
@@ -176,7 +209,7 @@ What club are you looking for? <input type="text" name="clubName">
     $ID = $user['computing_id'];
     
 
-
+    $clubName = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($_POST["upvotebtn"]) {
             upvote($_POST["upvotebtn"], $ID);
@@ -184,23 +217,31 @@ What club are you looking for? <input type="text" name="clubName">
         if ($_POST["downvotebtn"]){
             downvote($_POST["downvotebtn"], $ID);
         }
-        if ($_POST["postType"]) {
-            echo("postType");
-            // if ($_POST["postType"] = "event"){
-
-            // }
-            // else if ($_POST["postType"] = "nonEvent") {
-
-            // }
-            // else {
-            //     $_POST["clubName"] 
-            // }
-
-        }
+       
         if ($_POST["clubName"]) {
             $clubName = $_POST["clubName"];
-            $posts = findPosts($clubName);
-            printPosts($posts);
+
+            if ($_POST["event"]){
+                echo("event");
+                $posts = getEventPosts($clubName);
+                printPosts($posts);
+                echo("this is club name". $clubName);
+            }
+            else if ($_POST["nonEvent"]) {
+                echo("nonevent");
+                $posts = getNonEventPosts($clubName);
+                printPosts($posts);
+                echo("this is club name". $clubName);
+            }
+            else{
+                // $_POST["clubName"] 
+                echo("all");
+                $posts = findPosts($clubName);
+                printPosts($posts);
+                echo("this is club name". $clubName);
+            }
+            
+
         }
        
         
