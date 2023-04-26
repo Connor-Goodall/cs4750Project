@@ -33,8 +33,18 @@ function getUserPosts ($ID)  // given a search for a club name, returns relevant
 function getUserEvents ($ID) 
 {
     global $db;
+    if(getStudent($ID)){
+        $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID`, p.computing_id AS author 
+        FROM `Post` AS p NATURAL JOIN `Club` NATURAL JOIN `Event` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':computingID', $ID);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+        return $results;
+    }
     $query = "SELECT `Title`, `Body_Text`, `Name`, `Post_Date`, `Picture`, `Upvotes`, `Downvotes`, `Post_ID`, p.computing_id AS author 
-    FROM `Post` AS p NATURAL JOIN `Club` NATURAL JOIN `Event` INNER JOIN `MemberOf` AS m ON m.Club_ID = p.Club_ID WHERE m.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
+    FROM `Post` AS p NATURAL JOIN `Club` NATURAL JOIN `Event` INNER JOIN `Sponsors` AS s ON s.Club_ID = p.Club_ID WHERE s.computing_id = :computingID ORDER BY `Name`,  `Post_Date`";
     $statement = $db->prepare($query);
     $statement->bindValue(':computingID', $ID);
     $statement->execute();
