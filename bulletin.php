@@ -202,7 +202,7 @@ function printPosts ($array) // prints each post
            
         }
     } else {
-        echo '<h3>No posts found</h3>';
+        echo '<h3>No non-event posts found</h3>';
     }
 }
 

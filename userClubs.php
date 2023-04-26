@@ -1,6 +1,13 @@
+<?php
+    require("connect-db.php");
+    require("club-db.php");
+?>
+
 
 <!DOCTYPE html>
     <html>
+
+
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -10,31 +17,48 @@
     <body style = "background: #5be7a9;">
     <?php include("header.php") ?>
 
-    <?php
+    <?php 
 
+    session_start();
+    if(!isset($_SESSION['user'])) {
+        header("Location: login.php");
+    }
+
+    $user = getUser($_SESSION['computingID']);
+    $ID = $user['computing_id'];
+    
     global $db;
-    $keyword = $_GET['keyword'];
-    $statement = $db->prepare("select * FROM `Club` where `Name` like '%$keyword%' or `Nickname` like '%$keyword%' or `Concentration` like '%$keyword%' ");
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-    $statement->closeCursor();
 
+    try {
+        $statement = $db->prepare("SELECT `Name`, `Nickname`, `Concentration`, `Club_ID`, `Logo` FROM `Club` NATURAL JOIN `MemberOf` AS m WHERE m.computing_id = :computingID");
+        $statement->bindValue(':computingID', $ID);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+        if(!$results){
+            $statement = $db->prepare("SELECT `Name`, `Nickname`, `Concentration`, `Club_ID`, `Logo` FROM `Club` NATURAL JOIN `Sponsors` AS s WHERE s.computing_id = :computingID");
+            $statement->bindValue(':computingID', $ID);
+            $statement->execute();
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $statement->closeCursor();
+        }
+    } catch (Exception $e) {
+        print("Exception caught.");
+    }
     ?>
 
     <br>
-    <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-        Club Finder Search
-    </p>
-    <br>
-    <form name=clubSearch action=clubSearch.php method="GET" style="text-align: center">
-        <div class = "row mb-4 mx-3">
-            <input type = "text" class = "form-control" name = "keyword" style = "border: 2px solid black;" placeholder = "Search Clubs..."/>
-        </div>
-        <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Search Clubs"
-        title = "Search" style = "width: 10%; display: block; margin: auto;"
-        />
-    </form>
-
+        <?php
+        if(!getFaculty($ID)){
+            echo'<p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
+                Your Clubs:
+            </p>';
+        }else{
+            echo'<p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
+                Sponsored Clubs:
+            </p>';
+        }
+        ?>
     <div class="container mt-5" style="text-align: center">
         <?php
             if ($results) {
@@ -58,7 +82,7 @@
                     echo '<br>';
                 }
             } else {
-                echo '<h3>No search results found...</h3>';
+                echo '<h3>Not in any clubs yet...</h3>';
             }
         ?>
     </div>

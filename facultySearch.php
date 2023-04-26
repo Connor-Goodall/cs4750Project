@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
     <html>
     <head>
@@ -12,25 +11,24 @@
 
     <?php
 
-    global $db;
     $keyword = $_GET['keyword'];
-    $statement = $db->prepare("select * FROM `Club` where `Name` like '%$keyword%' or `Nickname` like '%$keyword%' or `Concentration` like '%$keyword%' ");
+    $statement = $db->prepare("select `Department`, `Name`, User.computing_id, User.Profile_Picture from `Faculty` join `User` on User.computing_id = Faculty.computing_id
+                             where `Department` like '%$keyword%' or `Name` like '%$keyword%' ");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
-
     ?>
 
     <br>
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-        Club Finder Search
+        Club Finder Faculty Search
     </p>
     <br>
-    <form name=clubSearch action=clubSearch.php method="GET" style="text-align: center">
+    <form name=facultySearch action=facultySearch.php method="GET" style="text-align: center">
         <div class = "row mb-4 mx-3">
-            <input type = "text" class = "form-control" name = "keyword" style = "border: 2px solid black;" placeholder = "Search Clubs..."/>
+            <input type = "text" class = "form-control" name = "keyword" style = "border: 2px solid black;" placeholder = "Search Faculty..."/>
         </div>
-        <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Search Clubs"
+        <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Search Faculty"
         title = "Search" style = "width: 10%; display: block; margin: auto;"
         />
     </form>
@@ -40,19 +38,20 @@
             if ($results) {
                 foreach ($results as $row) {
                     echo '<div class="card mx-auto" style="width: 18rem; text-align: center">';
-                    if($row['Logo'] == null){
+                    echo '&nbsp';
+                    if($row['Profile_Picture'] == null){
                         echo '<div class="d-flex justify-content-center">';
-                        echo '<img src = "profile_pics\noImage.jpg" style = "height: 150px; width: 150px;" class = "card-img-top">';
-                        echo '</div>';
+                        echo '<img class = "rounded-circle account-img card-img-top" src = "profile_pics\default.jpg" style = "height: 120px; width: 120px;">';
+                        echo '</div>'; 
                     }
                     else{
                         echo '<div class="d-flex justify-content-center">';
-                        echo '<img src="data:image/jpeg;base64,'.base64_encode($row['Logo']).'" style = "width: 100%; height: 10vw; object-fit: scale-down;" class = "card-img-top">';
-                        echo '</div>';
+                        echo '<img class = "rounded-circle account-img" src="data:image/jpeg;base64,'.base64_encode($row['Profile_Picture']).'" style = "text-align: center; width: 120px; height: 120px;">';
+                        echo '</div>';  
                     }
                         echo '<div class="card-body">';
-                            echo '<h5 class="card-title" style="font-size:18px"> <a href = "clubPage.php?id=' . $row['Club_ID'] . '">' . $row['Name'] . (isset($row['Nickname']) ? ' (' . $row['Nickname'] . ')' : '') .'</a> </h5>';
-                                echo '<p class="card-text" style="font-size:12px">' . $row['Concentration'] . '</p>';
+                            echo '<h5 class="card-title" style="font-size:18px"> <a href = "profilePage.php?user=' . $row['computing_id'] . '">' . $row['Name'] . ' (' . $row['computing_id'] . '@virginia.edu)' . '</a> </h5>';
+                                echo '<p class="card-text" style="font-size:12px">' . $row['Department'] . '</p>';
                         echo '</div>';
                     echo '</div>';
                     echo '<br>';
