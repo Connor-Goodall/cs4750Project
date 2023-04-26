@@ -1,16 +1,18 @@
 <?php 
     require("connect-db.php");
     require("club-db.php");
+    require("password.php");
     $currentStudent = NULL;
     $tryRegister = 0;
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Add account"))
         {
+            $password_hash = password_hash($_POST['userPassword'], PASSWORD_DEFAULT);
             if(!empty($_POST['userName'])){
-                addUser($_POST['userComputingID'], $_POST['userName'], $_POST['userPassword']);
+                addUser($_POST['userComputingID'], $_POST['userName'], $password_hash);
             }
             else{
-                addUser($_POST['userComputingID'], NULL, $_POST['userPassword']);
+                addUser($_POST['userComputingID'], NULL, $password_hash);
             }
             if($_POST['userAffiliation'] == "student"){
                 if(!empty($_POST['userMajor'])){
