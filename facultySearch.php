@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
     </head>
-    <body style = "background: #5be7a9; font-family: Lato;">
+    <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
     <?php include("header.php") ?>
 
     <?php
@@ -29,8 +29,8 @@
         <div class = "row mb-4 mx-3">
             <input type = "text" class = "form-control" name = "keyword" style = "border: 2px solid black;" placeholder = "Search Faculty..."/>
         </div>
-        <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Search Faculty"
-        title = "Search" style = "width: 10%; display: block; margin: auto;"
+        <input type = "submit" class = "btn" name = "actionBtn" value = "Search Faculty"
+        title = "Search" style = "width: 10%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"
         />
     </form>
 

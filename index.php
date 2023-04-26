@@ -70,7 +70,6 @@ function verify_like($computing_id, $pid) {
 
 function upvote($pid, $ID){
     $check = verify_like($ID, $pid);
-    echo $check['Dislike'];
     if ($check == null){
         global $db;
         $query = "UPDATE Post SET `Upvotes` = `Upvotes` + 1 WHERE `Post_ID`= :pid;";
@@ -333,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
-<body style = "background: #5be7a9; font-family: Lato;">
+<body style = "background: #232D4B; font-family: Lato; color: #E57200;">
 
 <?php include("header.php") ?>
 <h1 style="text-align: center"> Welcome to your Bulletin Page!</h1>
@@ -354,7 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </select>
         </div>
         <div class = "row mb-4 mx-auto">
-            <input type = "submit" name = "actionBtn" value = "Filter" class = "btn btn-dark" title = "Click to filter your posts"/>
+            <input type = "submit" name = "actionBtn" value = "Filter" class = "btn" title = "Click to filter your posts" style = "background-color: #E57200; color: #232D4B;"/>
         </div>
     </form>
 </div>

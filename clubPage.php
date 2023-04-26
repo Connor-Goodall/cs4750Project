@@ -29,7 +29,7 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
     </head>
-    <body style = "background: #5be7a9; font-family: Lato;">
+    <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
     <?php include("header.php") ?>
     &nbsp
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
@@ -38,7 +38,7 @@
     <div style="text-align: center">
     <form name = "gotoBulletin" action = "bulletin.php" method = "POST">
                     <input type='hidden' name='clubName' value= <?php echo $club['Name']; ?> />
-                    <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Bulletin"  />
+                    <input type = "submit" class = "btn" name = "actionBtn" value = "Bulletin" style = "background-color: #E57200; color: #232D4B;"/>
                 </form>
     </div>
     <br>
@@ -338,8 +338,8 @@
         <div style = "text-align: center">
             <form name = "deleteSponsorForm" action = "clubInformation.php" method = "POST">
                 <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
-                <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Remove Your Sponsor" 
-                                title = "Click to remove your sponsor" />
+                <input type = "submit" class = "btn btn" name = "actionBtn" value = "Remove Your Sponsor" 
+                                title = "Click to remove your sponsor" style = "background-color: #E57200; color: #232D4B;"/>
             </form>
         </div>
         <?php else : ?>
@@ -347,8 +347,8 @@
             <div style = "text-align: center">
                 <form name = "addSponsorForm" action = "clubInformation.php" method = "POST">
                 <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
-                    <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Sponsor This Club" 
-                                title = "Click to sponsor this club"/>
+                    <input type = "submit" class = "btn" name = "actionBtn" value = "Sponsor This Club" 
+                                title = "Click to sponsor this club" style = "background-color: #E57200; color: #232D4B;"/>
                 </form>
             </div>
         <?php endif; ?>
@@ -357,8 +357,8 @@
         <div style = "text-align: center">
             <form name = "deleteMemberForm" action = "clubInformation.php" method = "POST">
                 <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
-                <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Leave This Club" 
-                                title = "Click to leave this club" />
+                <input type = "submit" class = "btn" name = "actionBtn" value = "Leave This Club" 
+                                title = "Click to leave this club" style = "background-color: #E57200; color: #232D4B;"/>
             </form>
         </div>
     <?php else : ?>
@@ -367,7 +367,7 @@
                 <form name = "addMemberForm" action = "clubInformation.php" method = "POST">
                     <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
                     <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Join This Club" 
-                                    title = "Click to join this club" />
+                                    title = "Click to join this club" style = "background-color: #E57200; color: #232D4B;"/>
                 </form>
             </div>
         <?php endif; ?>

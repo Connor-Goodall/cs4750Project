@@ -53,7 +53,7 @@
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
         </head>
-        <body style = "background: #5be7a9; font-family: Lato;">
+        <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
         <?php include("header.php") ?>
             &nbsp
             <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
@@ -68,14 +68,14 @@
                         <option value = "No"> No. </option>
                         <option value = "Yes"> Yes, I'll be speaking! </option>
                     </select>
-                    <small id = "speakingInfo" class = "form-text text-muted" style="color:black !important; text-align:left; "> 
+                    <small id = "speakingInfo" class = "form-text text-muted" style="color:#E57200 !important; text-align:left; "> 
                         Required.
                     </small> 
                 </div>
                 <div class="row mb-4 mx-3">
                     <input type="hidden" name="pid" value= <?php echo $post['Post_ID']; ?> />
                     <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Confirm Update" 
-                        title = "Click to update post" style = "width: 20%; display: block; margin: auto;"
+                        title = "Click to update post" style = "width: 20%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"
                     />
                     </div>
             </form>

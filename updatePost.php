@@ -44,7 +44,7 @@
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
         </head>
-        <body style = "background: #5be7a9; font-family: Lato;">
+        <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
         <?php include("header.php") ?>
             &nbsp
             <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
@@ -89,8 +89,8 @@
                 <div class="row mb-4 mx-3">
                     <input type="hidden" name="id" value= <?php echo $post['Post_ID']; ?> />
                     <input type="hidden" name="source" value= <?php echo $_POST['updateSource']; ?> />
-                    <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Confirm Update" 
-                        title = "Click to update post" style = "width: 20%; display: block; margin: auto;"
+                    <input type = "submit" class = "btn" name = "actionBtn" value = "Confirm Update" 
+                        title = "Click to update post" style = "width: 20%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"
                     />
                     </div>
             </form>

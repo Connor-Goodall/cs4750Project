@@ -68,7 +68,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
-<body style = "background: #5be7a9; font-family: Lato;" style = "position:absolute; top: 20%; text-align: center;">
+<body style = "background: #232D4B; font-family: Lato; color: #E57200;" style = "position:absolute; top: 20%; text-align: center;">
     <?php include("header.php") ?>
     <br>
     <?php echo '<p class = "text-decoration-underline" style = "font-size: 25px;" >' . $event['Title'] . ' RSVP FORM:</p>';?>
@@ -80,7 +80,7 @@
             <option value = "No"> No, I cannot be there. </option>
             <option value = "Yes"> Yes, I'll be there! </option>
         </select>
-        <small id = "attendingQuestionInfo" class = "form-text text-muted" style="color:black !important; text-align:left; "> 
+        <small id = "attendingQuestionInfo" class = "form-text text-muted" style="color:#E57200 !important; text-align:left; "> 
             Required.
         </small> 
     </div>
@@ -91,13 +91,13 @@
             <option value = "No"> No. </option>
             <option value = "Yes"> Yes, I'll be speaking! </option>
         </select>
-        <small id = "speakingInfo" class = "form-text text-muted" style="color:black !important; text-align:left; "> 
+        <small id = "speakingInfo" class = "form-text text-muted" style="color:#E57200 !important; text-align:left; "> 
             Required.
         </small> 
     </div>
     <div class="row mb-4 mx-3">
-      <input type = "submit" class = "btn btn-dark" name = "actionBtn" value = "Submit RSVP" 
-        title = "Click to submit" style = "width: 10%; display: block; margin: auto;"/>
+      <input type = "submit" class = "btn" name = "actionBtn" value = "Submit RSVP" 
+        title = "Click to submit" style = "width: 10%; display: block; margin: auto; background-color: #E57200; color: #232D4B;"/>
     </div>
 </form>
 <b class = "text" style = "font-size: 25px; display:<?php echo $resDisplay; ?>"> RSVP Form Submitted! </b>

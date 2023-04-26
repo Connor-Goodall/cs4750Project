@@ -8,7 +8,7 @@ function findPosts ($name)  // given a search for a club name, returns relevant 
     $l = "%";
     $regex = $l.$name.$l;
     global $db;
-    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Post_ID`, `Downvotes` FROM `Post` 
+    $query = "SELECT `Name`, `Title`, `Body_Text`, `Post_Date`, `Picture`, `Upvotes`, `Post_ID`, `Downvotes`, computing_id AS author FROM `Post` 
     NATURAL JOIN `Club` WHERE Club.Name LIKE :Regex OR Club.Nickname LIKE :Regex";
     $statement = $db->prepare($query);
     $statement->bindValue(':Regex', $regex);
@@ -82,7 +82,7 @@ function downvote($pid, $ID){
     
 }
 
-function printPosts ($array) // prints each post
+function printPosts ($array, $ID) // prints each post
 {
     
     if ($array) {
@@ -111,17 +111,15 @@ function printPosts ($array) // prints each post
                         echo '<form action = "bulletin.php" method = "post"> 
                         <input type = "hidden" name = "downvotebtn" value='.$pid . '>
                         <input type = "hidden" name = "clubName" value =' . $row['Name'] . '>
-                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
+                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '" style = "margin-right:150px;"/>
                         </form>';  
-                echo '</div>';
-                echo '</div>'; 
-                echo '</div>';
                 if($row['author'] == $ID){
+                    echo '<div  class = "btn-group";>';
                     echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block; text-align: center;" >
                     <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
                     <input type="hidden" name="updateSource" value= "bulletin.php"/>
                     <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
-                    title = "Click to update information about your post" style = "margin-right:100px;"/>
+                    title = "Click to update information about your post" style = "margin-right:50px;"/>
                     </form>';
                     echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
                     <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
@@ -130,7 +128,10 @@ function printPosts ($array) // prints each post
                     <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
                                 title = "Click to Delete post"/>
                     </form>';
-                } 
+                }
+            echo '</div>';
+            echo '</div>'; 
+            echo '</div>'; 
             echo '</div>';
            
         }
@@ -187,8 +188,6 @@ What club are you looking for? <input type="text" name="clubName">
         $user = getUser($_SESSION['computingID']);
     }
     $ID = $user['computing_id'];
-    
-
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($_POST["upvotebtn"]) {
@@ -213,20 +212,10 @@ What club are you looking for? <input type="text" name="clubName">
         if ($_POST["clubName"]) {
             $clubName = $_POST["clubName"];
             $posts = findPosts($clubName);
-            printPosts($posts);
+            printPosts($posts, $ID);
         }
        
     }
-}
-else{
-    $user = getUser($_SESSION['computingID']);
-    $ID = $user['computing_id'];   
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $clubName = $_POST["clubName"];
-        $posts = findPosts($clubName);
-        printPosts($posts, $ID);
-    }
-}
 ?>
 
 
