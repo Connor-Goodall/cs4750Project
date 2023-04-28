@@ -98,7 +98,15 @@
                                             </form>
                                         </div>
                                     </div>
-                                <?php endforeach; ?>
+                                <?php endforeach; ?> 
+                                &nbsp
+                                <div class = "row" style = "margin-left: 200px;">
+                                <form action = "addLeaders.php" method = "post" style = "display:inline-block;">
+                                                <input type='hidden' name='id' value=<?php echo $club['Club_ID'];?> />
+                                                <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Add Leader" 
+                                                    title = "Click to Add leader" style = "background-color: #E57200; color: #232D4B;"/>
+                                            </form>
+                                </div>   
                         </div>   
                         <div class = "col">
                                 <div class = "row">
