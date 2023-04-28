@@ -87,6 +87,7 @@
                 $clubID = $statement->fetchColumn();
                 $statement->closeCursor();
                 $postID = addPost($_SESSION['computingID'], $clubID, date('Y-m-d h:i', time()), $picData, $_POST['title'], 0, $_POST['body'], 0);
+                addPlans($clubID, $postID);
                 if($_POST['postType'] == "Yes"){//IS AN EVENT
                     addEvent($_POST['eventMeetingTime'], $_POST['eventLocation'], $_POST['partnerships'], $postID);
                     echo "<b> You have created an event post for " . $clubName . " ! </b>";
