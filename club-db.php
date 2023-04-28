@@ -113,6 +113,16 @@ function addMember($clubID, $computingID){
     $statement->execute();
     $statement->closeCursor();
 }
+function addLeader($computingID, $clubID, $role){
+    global $db;
+    $query = "insert into `Leads` values (:role, :Club_ID, :computing_id)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computing_id', $computingID);
+    $statement->bindValue(':Club_ID', $clubID);
+    $statement->bindValue(':role', $role);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function setLeader($clubID, $computingID){
     global $db;
     $query = "insert into `Leads` values (:Exec_Role, :Club_ID, :computing_id)";
