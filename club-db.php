@@ -42,13 +42,13 @@ function addSponsor($computingID, $clubID){
     $statement->execute();
     $statement->closeCursor();
 }
-function addClub($name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation)
+function addClub($name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation, $ID)
 {
     global $db;
     $sql = "SELECT COUNT(*) FROM `Club`";
     $res = $db->query($sql);
     $clubID = $res->fetchColumn();
-    $query = "insert into `Club` values (:Name, :Mission_Statement, :Nickname, :Concentration, :Description, :Logo, :Dues, :Constitution, :Application, :Bylaws, :Website, :Funding_source, :Founding_date, :Costs, :meeting_time, :meeting_days, :meeting_location, :Club_ID)";
+    $query = "insert into `Club` values (:Name, :Mission_Statement, :Nickname, :Concentration, :Description, :Logo, :Dues, :Constitution, :Application, :Bylaws, :Website, :Funding_source, :Founding_date, :Costs, :meeting_time, :meeting_days, :meeting_location, :Club_ID, :update_by)";
     $statement = $db->prepare($query);
     //Wow that's a lot of bindValues 0_0
     $statement->bindValue(':Name', $name);
@@ -76,6 +76,7 @@ function addClub($name, $missionStatement, $nickname, $concentration, $descripti
     }
     $statement->bindValue(':meeting_days', $meetingDays);
     $statement->bindValue(':meeting_location', $meetingLocation);
+    $statement->bindValue(':update_by', $ID);
     $statement->bindValue(':Club_ID', $clubID);
     $statement->execute();
     $statement->closeCursor();
@@ -324,13 +325,13 @@ function updateLeader($computingID, $clubID, $role){
     $statement->execute();
     $statement->closeCursor();
 }
-function updateClub($id, $name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation)
+function updateClub($id, $name, $missionStatement, $nickname, $concentration, $description, $logo, $dues, $constitution, $application, $bylaws, $website, $fundingSource, $foundingDate, $costs, $meetingTime, $meetingDays, $meetingLocation, $updateID)
 {
     global $db;
     $query = "update `Club` set Name=:name, Mission_Statement=:missionStatement, Nickname=:nickname, Concentration=:concentration,
      Description=:description, Logo=:logo, Dues=:dues, Constitution=:constitution, Application=:application, 
      Bylaws=:bylaws, Website=:website, Funding_source=:funding_source, Founding_date=:founding_date, Costs=:costs, 
-     meeting_time=:mtingtime, meeting_days=:mtingdays, meeting_location=:mtinglocation where Club_ID=:id";
+     meeting_time=:mtingtime, meeting_days=:mtingdays, meeting_location=:mtinglocation, Update_By=:update_by where Club_ID=:id";
     $statement = $db->prepare($query);
     $statement->bindValue(':name', $name);
     $statement->bindValue(':missionStatement', $missionStatement);
@@ -357,6 +358,7 @@ function updateClub($id, $name, $missionStatement, $nickname, $concentration, $d
     }
     $statement->bindValue(':mtingdays', $meetingDays);
     $statement->bindValue(':mtinglocation', $meetingLocation);
+    $statement->bindValue(':update_by', $updateID);
     $statement->bindValue(':id', $id);
     $statement->execute();
     $statement->closeCursor();
