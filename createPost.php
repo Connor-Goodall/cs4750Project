@@ -206,10 +206,10 @@
         picture.addEventListener('change', (event) => {
             const target = event.target
                 if (target.files && target.files[0]) {
-                const maxAllowedSize = 65535;
+                const maxAllowedSize = 16777215;
                 if (target.files[0].size > maxAllowedSize) {
                     // Here you can ask your users to load correct file
-                    alert("File is too big! Must be less than 65,535B!");
+                    alert("File is too big! Must be less than 16.7 MB!");
                     target.value = ''
                 }
             }

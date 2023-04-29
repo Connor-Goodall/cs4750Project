@@ -18,6 +18,7 @@
         $userLeader = getLeader($_SESSION['computingID'], $_GET['id']);
     }
     $club = getClub($_GET['id']);
+    $memberCount = getClubCount($_GET['id'])[0];
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,13 @@
     <?php include("header.php") ?>
     &nbsp
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-        <?php echo $club['Name']; ?>
+
+        <?php if((int) $memberCount != 1){
+                echo $club['Name']; echo " - ". $memberCount ." members";
+              }else{
+                echo $club['Name']; echo " - ". $memberCount ." member"; 
+              }
+        ?>
     </p>
     <div style="text-align: center">
     <form name = "gotoBulletin" action = "bulletin.php" method = "POST">
