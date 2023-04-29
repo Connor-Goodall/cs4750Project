@@ -104,7 +104,6 @@ function upvote($pid, $ID){
 }
 function downvote($pid, $ID){
     $check = verify_like($ID, $pid);
-    echo $check['computing_id'] == null;
     if ($check == null) {
         global $db;
         $query = "UPDATE Post SET `Downvotes` = `Downvotes` + 1 WHERE `Post_ID`= :pid;";
@@ -163,9 +162,10 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
             $firstClub = $row['Name'];
            }
            $pid = $row['Post_ID'];
+           $check = verify_like($ID, $pid);
            if(checkEvent($pid)){//if event
                 $event = getEvent($pid);
-                echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
+                echo '<div class="card mx-auto" style="width: 50rem; text-align: center; background: #232D4B; border-width: 5px; border-color: black;">';
                 echo '<div class="card-body">';
                     echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
                     echo '<p class="text-muted" style="font-size:12px"> Event Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
@@ -179,11 +179,29 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                     echo '<div  class = "btn-group";>';
                         echo '<form action = "index.php" method = "post"> 
                             <input type = "hidden" name = "upbtn" value='.$pid. '>
-                            <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
+                            <button type = "submit" class = "btn" data-inline="true" name = "actionBtn">'; 
+                                if($check['Dislike'] == 0 && $check != null){
+                                    echo '<i class="fas fa-long-arrow-alt-up" style = " font-size: 36px; color: #4BB543; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                                }
+                                else{
+                                    echo '<i class="fas fa-long-arrow-alt-up" style = " font-size: 36px; color: transparent; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                                }
+                                echo '<p style = "font-size: 15px; color: #E57200;">  ';
+                                echo $row['Upvotes'];
+                            echo '</p></button>
                             </form>'; 
                         echo '<form action = "index.php" method = "post"> 
                         <input type = "hidden" name = "downbtn" value='. $pid . '>
-                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '" style = "margin-right:200px;"/>
+                        <button type = "submit" class = "btn" data-inline="true" name = "actionBtn" style = "margin-right:350px;">';
+                            if($check['Dislike'] == 1){
+                                echo '<i class="fas fa-long-arrow-alt-down" style = " font-size: 36px; color: #FF0000; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                            }
+                            else{
+                                echo '<i class="fas fa-long-arrow-alt-down" style = " font-size: 36px; color: transparent; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                            }
+                            echo '<p style = "font-size: 15px; color: #E57200;">  ';
+                            echo $row['Downvotes'];
+                        echo '</p></button>
                         </form>';  
                     if($row['author'] == $ID){
                         echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
@@ -236,7 +254,7 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                 echo '</div>';
                 echo '</div>';
            }else{
-            echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
+            echo '<div class="card mx-auto" style="width: 50rem; text-align: center; background: #232D4B; border-width: 5px; border-color: black;"">';
             echo '<div class="card-body">';
                 echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
                 echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
@@ -244,13 +262,31 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                 echo '<div style="text-align:  left">';
                 echo '<div  class = "btn-group";>';
                     echo '<form action = "index.php" method = "post"> 
-                        <input type = "hidden" name = "upbtn" value='.$pid . '>
-                        <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
-                        </form>'; 
-                    echo '<form action = "index.php" method = "post"> 
-                    <input type = "hidden" name = "downbtn" value='.$pid . '>
-                    <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
-                    </form>';  
+                    <input type = "hidden" name = "upbtn" value='.$pid. '>
+                    <button type = "submit" class = "btn" data-inline="true" name = "actionBtn">'; 
+                        if($check['Dislike'] == 0 && $check != null){
+                            echo '<i class="fas fa-long-arrow-alt-up" style = " font-size: 36px; color: #4BB543; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                        }
+                        else{
+                            echo '<i class="fas fa-long-arrow-alt-up" style = " font-size: 36px; color: transparent; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                        }
+                        echo '<p style = "font-size: 15px; color: #E57200;">  ';
+                        echo $row['Upvotes'];
+                    echo '</p></button>
+                    </form>'; 
+                        echo '<form action = "index.php" method = "post"> 
+                        <input type = "hidden" name = "downbtn" value='. $pid . '>
+                        <button type = "submit" class = "btn" data-inline="true" name = "actionBtn" style = "margin-right:350px;">';
+                            if($check['Dislike'] == 1){
+                                echo '<i class="fas fa-long-arrow-alt-down" style = " font-size: 36px; color: #FF0000; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                            }
+                            else{
+                                echo '<i class="fas fa-long-arrow-alt-down" style = " font-size: 36px; color: transparent; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
+                            }
+                            echo '<p style = "font-size: 15px; color: #E57200;">  ';
+                            echo $row['Downvotes'];
+                        echo '</p></button>
+                        </form>';  
                 
                 if($row['author'] == $ID){
                     echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
@@ -272,7 +308,7 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
             echo '</div>';
             echo '</div>';
             }
-           
+        echo '&nbsp';  
         }
     } else {
         echo '<h3>No posts found</h3>';
@@ -286,7 +322,6 @@ else{
     $user = getUser($_SESSION['computingID']);
 }
 $ID = $user['computing_id'];   
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_POST["upbtn"]) {
         upvote($_POST["upbtn"], $ID);
@@ -331,9 +366,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
-
 <?php include("header.php") ?>
 <h1 style="text-align: center"> Welcome to your Bulletin Page!</h1>
 <h4 style="text-align: center">Check out what your clubs have been up to </h4>
