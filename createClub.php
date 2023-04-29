@@ -46,7 +46,7 @@
                 }
                 $clubName = $_POST['clubName'];
                 if(!checkClubName($clubName)){
-                    $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $consData, $appData, $bylawsData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                    $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $consData, $appData, $bylawsData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                     addMember($clubID, $_SESSION['computingID']);
                     setLeader($clubID, $_SESSION['computingID']);
                     echo "<b> " . $clubName . " has been added to the database!</b>";

@@ -31,36 +31,36 @@
                     if($constData != null){
                         if($appData != null){
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                         }
                         else{
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $constData, $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                         }
                     }
                     else{
                         if($appData != null){
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                         }
                         else{
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $club['Constitution'], $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             } 
                         }
                     }
@@ -69,36 +69,36 @@
                     if($constData != null){
                         if($appData != null){
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                         }
                         else{
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $constData, $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             } 
                         }
                     }
                     else{
                         if($appData != null){
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $appData, $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $appData, $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                         }
                         else{
                             if($byData != null){
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $club['Application'], $byData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             }
                             else{
-                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                                updateClub($club['Club_ID'], $_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $club['Logo'], $_POST['dues'], $club['Constitution'], $club['Application'], $club['Bylaws'], $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                             } 
                         }   
                     } 
