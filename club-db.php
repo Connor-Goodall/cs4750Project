@@ -185,6 +185,16 @@ function getClub($id){
     $statement->closeCursor();
     return $result;
 }
+function getClubCount($id){
+    global $db;
+    $query = "CALL `memberCount`(:id);";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 function getPost($id){
     global $db;
     $query = "select * from `Post` where Post_ID=:id";
