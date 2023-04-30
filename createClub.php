@@ -46,7 +46,7 @@
                 }
                 $clubName = $_POST['clubName'];
                 if(!checkClubName($clubName)){
-                    $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $consData, $appData, $bylawsData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation']);
+                    $clubID = addClub($_POST['clubName'], $_POST['missionStatement'], $_POST['nickname'], $_POST['concentration'], $_POST['description'], $logoData, $_POST['dues'], $consData, $appData, $bylawsData, $_POST['website'], $_POST['fundingSource'], $_POST['foundingDate'], $_POST['costs'], $_POST['meetingTime'], $_POST['meetingDays'], $_POST['meetingLocation'], $_SESSION['computingID']);
                     addMember($clubID, $_SESSION['computingID']);
                     setLeader($clubID, $_SESSION['computingID']);
                     echo "<b> " . $clubName . " has been added to the database!</b>";
@@ -228,10 +228,10 @@
         logo.addEventListener('change', (event) => {
             const target = event.target
                 if (target.files && target.files[0]) {
-                const maxAllowedSize = 65535;
+                const maxAllowedSize = 16777215;
                 if (target.files[0].size > maxAllowedSize) {
                     // Here you can ask your users to load correct file
-                    alert("File is too big! Must be less than 65,535B!");
+                    alert("File is too big! Must be less than 16.7 MB!");
                     target.value = ''
                 }
             }
@@ -239,10 +239,10 @@
         cons.addEventListener('change', (event) => {
             const target = event.target
                 if (target.files && target.files[0]) {
-                const maxAllowedSize = 65535;
+                const maxAllowedSize = 16777215;
                 if (target.files[0].size > maxAllowedSize) {
                     // Here you can ask your users to load correct file
-                    alert("File is too big! Must be less than 65,535B!");
+                    alert("File is too big! Must be less than 16.7 MB!");
                     target.value = ''
                 }
             }
@@ -250,10 +250,10 @@
         app.addEventListener('change', (event) => {
             const target = event.target
                 if (target.files && target.files[0]) {
-                const maxAllowedSize = 65535;
+                const maxAllowedSize = 16777215;
                 if (target.files[0].size > maxAllowedSize) {
                     // Here you can ask your users to load correct file
-                    alert("File is too big! Must be less than 65,535B!");
+                    alert("File is too big! Must be less than 16.7 MB!");
                     target.value = ''
                 }
             }
@@ -261,10 +261,10 @@
         bylaws.addEventListener('change', (event) => {
             const target = event.target
                 if (target.files && target.files[0]) {
-                const maxAllowedSize = 65535;
+                const maxAllowedSize = 16777215;
                 if (target.files[0].size > maxAllowedSize) {
                     // Here you can ask your users to load correct file
-                    alert("File is too big! Must be less than 65,535B!");
+                    alert("File is too big! Must be less than 16.7 MB!");
                     target.value = ''
                 }
             }

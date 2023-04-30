@@ -99,8 +99,6 @@ function upvote($pid, $ID){
         $statement->closeCursor();
         header("refresh", 0); 
     }
-    
-    
 }
 function downvote($pid, $ID){
     $check = verify_like($ID, $pid);
@@ -167,7 +165,7 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                 $event = getEvent($pid);
                 echo '<div class="card mx-auto" style="width: 50rem; text-align: center; background: #232D4B; border-width: 5px; border-color: black;">';
                 echo '<div class="card-body">';
-                    echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
+                    echo '<h5 class="card-title" style="font-size:22px"> <b>' . $row['Title'] . ' </b></h5>';
                     echo '<p class="text-muted" style="font-size:12px"> Event Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
                     echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
                     if($row['Picture'] != null){
@@ -222,11 +220,11 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                 //event info
                 echo '<div class="card-body">';
                     echo '<hr style="border: 1px #5be7a9; width: 50%; margin: auto;">';
-                    echo '<h5 class="card-title" style="font-size:22px"> Event Information:  </h5>';
-                    echo '<p class="card-text" style="font-size:18px"> Event Location: ' . $event['Event_Location'] . '</p>';
-                    echo '<p class="card-text" style="font-size:18px"> Event Time: ' . date("l\, F jS, Y \@ h:iA", strtotime($event['Event_Meeting_Time'])) . '</p>';
-                    echo '<p class="card-text" style="font-size:18px"> Partnerships: ' . $event['Partnerships'] . '</p>';
-                if(!hasRSVP($pid, $ID)){//regular post
+                    echo '<h5 class="card-title" style="font-size:22px"> <b>  Event Information: </b>  </h5>';
+                    echo '<p class="card-text" style="font-size:18px"><u> Event Location: </u> ' . $event['Event_Location'] . '</p>';
+                    echo '<p class="card-text" style="font-size:18px"> <u> Event Time: </u> ' . date("l\, F jS, Y \@ h:iA", strtotime($event['Event_Meeting_Time'])) . '</p>';
+                    echo '<p class="card-text" style="font-size:18px"> <u>  Partnerships: </u> ' . $event['Partnerships'] . '</p>';
+                if(!hasRSVP($pid, $ID)){//if user has not submitted an rsvp yet
                     echo '<div style="text-align:  center">';
                     echo '<div  class = "btn-group";>';
                             echo '<form action = "index.php" method = "post">
