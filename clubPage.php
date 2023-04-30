@@ -36,10 +36,9 @@
         <?php echo $club['Name']; ?>
     </p>
     <div style="text-align: center">
-    <form name = "gotoBulletin" action = "bulletin.php" method = "POST">
-                    <input type='hidden' name='clubName' value= <?php echo $club['Name']; ?> />
-                    <input type = "submit" class = "btn" name = "actionBtn" value = "Bulletin" style = "background-color: #E57200; color: #232D4B;"/>
-                </form>
+    <?php
+    echo '<a class="btn btn-dark" role="button" href = "bulletin.php?club=' . $club['Name'] . '" style = "background-color: #E57200; color: #232D4B;">Bulletin</a>';
+    ?>
     </div>
     <br>
     <div class = "container">
