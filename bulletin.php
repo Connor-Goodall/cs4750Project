@@ -227,7 +227,7 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                     }
                     echo '<div style="text-align:  left">';
                     echo '<div  class = "btn-group";>';
-                        echo '<form action = "index.php" method = "post"> 
+                        echo '<form action = "bulletin.php?club=' . $row['Name'] . '" method = "post"> 
                             <input type = "hidden" name = "upbtn" value='.$pid. '>
                             <button type = "submit" class = "btn" data-inline="true" name = "actionBtn">'; 
                                 if($check['Dislike'] == 0 && $check != null){
@@ -240,7 +240,7 @@ function printPosts ($array, $ID, $filterEvent) // prints each post
                                 echo $row['Upvotes'];
                             echo '</p></button>
                             </form>'; 
-                        echo '<form action = "index.php" method = "post"> 
+                        echo '<form action = "bulletin.php?club=' . $row['Name'] . '" method = "post"> 
                         <input type = "hidden" name = "downbtn" value='. $pid . '>
                         <button type = "submit" class = "btn" data-inline="true" name = "actionBtn" style = "margin-right:350px;">';
                             if($check['Dislike'] == 1){
@@ -510,11 +510,11 @@ else{
 $ID = $user['computing_id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if ($_POST["upvotebtn"]) {
-        upvote($_POST["upvotebtn"], $ID);
+    if ($_POST["upbtn"]) {
+        upvote($_POST["upbtn"], $ID);
     }
-    if ($_POST["downvotebtn"]){
-        downvote($_POST["downvotebtn"], $ID);
+    if ($_POST["downbtn"]){
+        downvote($_POST["downbtn"], $ID);
     }
    
     }
