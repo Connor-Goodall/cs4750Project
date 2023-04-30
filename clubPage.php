@@ -290,7 +290,7 @@
                     &nbsp
                     <?php if($club['Logo'] == null) : ?>
                         <div class="d-flex justify-content-center">
-                            <img class = "account-img" src = "profile_pics\noImage.jpg" style = "min-width: 250px; min-height: 250px; width: 250px; height: 250px;">
+                            <img class = "account-img" src = "https://t3.ftcdn.net/jpg/04/62/93/66/240_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg" style = "min-width: 250px; min-height: 250px; width: 250px; height: 250px;">
                         </div>
                     <?php else: ?>
                         <div class="d-flex justify-content-center">

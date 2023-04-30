@@ -3,11 +3,11 @@
 ////////////////////////////////////////////
 
 /** S23, PHP (on Google Standard App Engine) connect to MySQL instance (GCP) **/
-// $username = 'root';                       // or your username
-// $password = 'your-root-password';     
-// $host = 'instance-connection-name';       // e.g., 'cs4750:us-east4:db-demo'; 
-// $dbname = 'your-database-name';           // e.g., 'guestbook';
-// $dsn = "mysql:unix_socket=/cloudsql/instance-connection-name;dbname=your-database-name";
+$username = 'root';                       // or your username
+$password = 'IReallyHopeThisDoesNotChargeMe54%';     
+$host = 'cobalt-concord-385218:us-east4:clubhub';       // e.g., 'cs4750:us-east4:db-demo'; 
+$dbname = 'clubhub';           // e.g., 'guestbook';
+$dsn = "mysql:unix_socket=/cloudsql/cobalt-concord-385218:us-east4:clubhub;dbname=clubhub";
 //       e.g., "mysql:unix_socket=/cloudsql/cs4750:us-east4:db-demo;dbname=guestbook";
 // --------- to test, include app.yaml with the following code
 // runtime: php74
@@ -20,7 +20,7 @@
 // $username = 'root';
 // $password = 'your-root-password';
 // $host = 'instance-connection-name';       // e.g., 'cs4750:us-east4:db-demo'; 
-// $dbname = 'your-database-name;;           // e.g., 'guestbook';
+// $dbname = 'clubhub';           // e.g., 'guestbook';
 // $dsn = "mysql:host=your-SQL-public-IP-address;dbname=your-database-name";   // connect PHP (XAMPP) to DB (GCP)
 //       e.g., "mysql:host=99.99.999.99;dbname=$dbname";   
 
@@ -42,11 +42,11 @@
 ////////////////////////////////////////////
 
 /** S23, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on CS server) **/
-$username = 'cag3dmr'; 
-$password = 'CreatingClubsIsVeryCoolToDo65%';
-$host = 'mysql01.cs.virginia.edu';
-$dbname = 'cag3dmr';
-$dsn = "mysql:host=$host;dbname=$dbname";
+//$username = 'cag3dmr'; 
+//$password = 'CreatingClubsIsVeryCoolToDo65%';
+//$host = 'mysql01.cs.virginia.edu';
+//$dbname = 'cag3dmr';
+//$dsn = "mysql:host=$host;dbname=$dbname";
 ////////////////////////////////////////////
 
 // To find a hostname, access phpMyAdmin
@@ -92,7 +92,7 @@ catch (PDOException $e)     // handle a PDO exception (errors thrown by the PDO 
    // Call a method from any object, use the object's name followed by -> and then method's name
    // All exception objects provide a getMessage() method that returns the error message 
    $error_message = $e->getMessage();        
-   echo "<p>An error occurred while connecting to the database: $error_message </p>";
+   //echo "<p>An error occurred while connecting to the database: $error_message </p>";
 }
 catch (Exception $e)       // handle any type of exception
 {

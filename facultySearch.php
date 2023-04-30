@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
     <html>
     <head>
@@ -42,7 +45,7 @@
                     echo '&nbsp';
                     if($row['Profile_Picture'] == null){
                         echo '<div class="d-flex justify-content-center">';
-                        echo '<img class = "rounded-circle account-img card-img-top" src = "profile_pics\default.jpg" style = "height: 120px; width: 120px;">';
+                        echo '<img class = "rounded-circle account-img card-img-top" src = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" style = "height: 120px; width: 120px;">';
                         echo '</div>'; 
                     }
                     else{

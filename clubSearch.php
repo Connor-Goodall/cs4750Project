@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
     <html>
     <head>
@@ -43,7 +45,7 @@
                     echo '<div class="card mx-auto" style="width: 18rem; text-align: center;">';
                     if($row['Logo'] == null){
                         echo '<div class="d-flex justify-content-center">';
-                        echo '<img src = "profile_pics\noImage.jpg" style = "height: 150px; width: 150px;" class = "card-img-top">';
+                        echo '<img src = "https://t3.ftcdn.net/jpg/04/62/93/66/240_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg" style = "height: 150px; width: 150px;" class = "card-img-top">';
                         echo '</div>';
                     }
                     else{
