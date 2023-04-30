@@ -13,7 +13,12 @@
         else{
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Yes")){
-                    deletePost($_POST['id']);
+                    deleteEvent($_POST['id']);
+                    deletePost_Plans_Relationship($_POST['id']);
+                    deletePost_Faculty_Attending_Relationship($_POST['id']);
+                    deletePost_Students_Attending_Relationship($_POST['id']);
+                    deletePost_Likes_Relationship($_POST['id']);
+                    deletePost($_POST['id']);                  
                     header("location: ".$_POST['source']);
                     exit();
                 }

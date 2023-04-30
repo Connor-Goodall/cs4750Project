@@ -18,7 +18,6 @@
         $userLeader = getLeader($_SESSION['computingID'], $_GET['id']);
     }
     $club = getClub($_GET['id']);
-    $memberCount = getClubCount($_GET['id'])[0];
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,19 +33,12 @@
     <?php include("header.php") ?>
     &nbsp
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-
-        <?php if((int) $memberCount != 1){
-                echo $club['Name']; echo " - ". $memberCount ." members";
-              }else{
-                echo $club['Name']; echo " - ". $memberCount ." member"; 
-              }
-        ?>
+        <?php echo $club['Name']; ?>
     </p>
     <div style="text-align: center">
-    <form name = "gotoBulletin" action = "bulletin.php" method = "POST">
-                    <input type='hidden' name='clubName' value= <?php echo $club['Name']; ?> />
-                    <input type = "submit" class = "btn" name = "actionBtn" value = "Bulletin" style = "background-color: #E57200; color: #232D4B;"/>
-                </form>
+    <?php
+    echo '<a class="btn btn-dark" role="button" href = "bulletin.php?club=' . $club['Name'] . '" style = "background-color: #E57200; color: #232D4B;">Bulletin</a>';
+    ?>
     </div>
     <br>
     <div class = "container">
@@ -297,7 +289,7 @@
                     &nbsp
                     <?php if($club['Logo'] == null) : ?>
                         <div class="d-flex justify-content-center">
-                            <img class = "account-img" src = "profile_pics\noImage.jpg" style = "min-width: 250px; min-height: 250px; width: 250px; height: 250px;">
+                            <img class = "account-img" src = "https://t3.ftcdn.net/jpg/04/62/93/66/240_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg" style = "min-width: 250px; min-height: 250px; width: 250px; height: 250px;">
                         </div>
                     <?php else: ?>
                         <div class="d-flex justify-content-center">

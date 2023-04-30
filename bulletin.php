@@ -137,72 +137,29 @@ function downvote($pid, $ID){
 }
 
 
-function printEventPosts ($array, $ID) {
-    if ($array) {
-        $firstClub = $array[0]['Name'];
-        echo '<h3 style="text-align: center"> Event Posts by ' . $firstClub . '<h3>';
-
-        foreach ($array as $row) {
-           if ($row['Name'] != $firstClub){
-            echo '<h3 style="text-align: center" > Event Posts by ' . $row['Name'] . '<h3>';
-            $firstClub = $row['Name'];
-           }
-           $pid = $row['Post_ID'];
-
-                echo '<div class="card mx-auto" style="width: 50rem; text-align: center">';
-                echo '<div class="card-body">';
-                    echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
-                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . '</p>';
-                    if($row['Picture'] != null){
-                        echo '<div class="d-flex justify-content-center">';
-                        echo '<img src="data:image/jpeg;base64,'.base64_encode($row['Picture']).'" style = "width: 100%; height: 20vw; object-fit: scale-down;" class = "card-img-top">';
-                        echo '</div>'; 
-                    }
-                    echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
-                    echo '<p class="card-text" style="font-size:18px"> When:  ' . $row['Event_Meeting_Time'] . '</p>';
-                    echo '<p class="card-text" style="font-size:18px"> Where:  ' . $row['Event_Location'] . '</p>';
-                    if ($row['Partnerships']) {
-                        echo '<p class="text-muted" style="font-size:18px"> Brought to you in association with:  '. $row['Partnerships'] . '</p>';
-                    }
-                    echo '<div style="text-align:  left">';
-                    echo '<div  class = "btn-group";>';
-                        echo '<form action = "bulletin.php" method = "post"> 
-                            <input type = "hidden" name = "upvotebtn" value='.$pid. '>
-                            <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
-                            <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
-                            </form>'; 
-                        echo '<form action = "bulletin.php" method = "post"> 
-                        <input type = "hidden" name = "downvotebtn" value='.$pid . '>
-                        <input type = "hidden" name = "clubName" value =' . $row['Name'] . '>
-                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '"/>
-                        </form>';  
-                echo '</div>';
-                echo '</div>'; 
-                echo '</div>';
-            echo '</div>';
-            echo '</div>';
-           
-        }
-    } 
-    else {
-        echo '<h3>No event posts found</h3>';
-    }
-}
-
-function printPosts ($array, $ID) // prints each post
+function printPosts ($array, $ID, $filterEvent) // prints each post
 {
     
     if ($array) {
         $firstClub = $array[0]['Name'];
-        echo '<h3 style="text-align: center"> All Posts by ' . $firstClub . '<h3>';
+        if($filterEvent == 1){
+            echo '<h3 style="text-align: center">Events by ' . $firstClub . '<h3>';
+        }
+        else{
+            echo '<h3 style="text-align: center">Posts by ' . $firstClub . '<h3>';    
+        }
 
         foreach ($array as $row) {
            if ($row['Name'] != $firstClub){
-            echo '<h3 style="text-align: center" > All Posts by ' . $row['Name'] . '<h3>';
+            if($filterEvent == 1){
+                echo '<h3 style="text-align: center" >Events by ' . $row['Name'] . '<h3>';
+            }
+            else{
+                echo '<h3 style="text-align: center" >Posts by ' . $row['Name'] . '<h3>';
+            }
             $firstClub = $row['Name'];
            }
            $pid = $row['Post_ID'];
-
            $check = verify_like($ID, $pid);
            if(checkEvent($pid)){//if event
                 $event = getEvent($pid);
@@ -218,9 +175,8 @@ function printPosts ($array, $ID) // prints each post
                     }
                     echo '<div style="text-align:  left">';
                     echo '<div  class = "btn-group";>';
-                        echo '<form action = "bulletin.php" method = "post"> 
-                            <input type = "hidden" name = "upvotebtn" value='.$pid. '>
-                            <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
+                        echo '<form action = "bulletin.php?club=' . $row['Name'] . '" method = "post"> 
+                            <input type = "hidden" name = "upbtn" value='.$pid. '>
                             <button type = "submit" class = "btn" data-inline="true" name = "actionBtn">'; 
                                 if($check['Dislike'] == 0 && $check != null){
                                     echo '<i class="fas fa-long-arrow-alt-up" style = " font-size: 36px; color: #4BB543; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
@@ -232,9 +188,8 @@ function printPosts ($array, $ID) // prints each post
                                 echo $row['Upvotes'];
                             echo '</p></button>
                             </form>'; 
-                        echo '<form action = "bulletin.php" method = "post"> 
-                        <input type = "hidden" name = "downvotebtn" value='. $pid . '>
-                        <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
+                        echo '<form action = "bulletin.php?club=' . $row['Name'] . '" method = "post"> 
+                        <input type = "hidden" name = "downbtn" value='. $pid . '>
                         <button type = "submit" class = "btn" data-inline="true" name = "actionBtn" style = "margin-right:350px;">';
                             if($check['Dislike'] == 1){
                                 echo '<i class="fas fa-long-arrow-alt-down" style = " font-size: 36px; color: #FF0000; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
@@ -249,13 +204,13 @@ function printPosts ($array, $ID) // prints each post
                     if($row['author'] == $ID){
                         echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
                         <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
-                        <input type="hidden" name="updateSource" value= "bulletin.php"/>
+                        <input type="hidden" name="updateSource" value= "index.php"/>
                         <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
                         title = "Click to update information about your post" style = "margin-right:50px;"/>
                         </form>';
                         echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
                         <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
-                        <input type="hidden" name="deleteSource" value= "bulletin.php"/>
+                        <input type="hidden" name="deleteSource" value= "index.php"/>
                         <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
                                     title = "Click to Delete post"/>
                         </form>';
@@ -272,19 +227,17 @@ function printPosts ($array, $ID) // prints each post
                 if(!hasRSVP($pid, $ID)){//regular post
                     echo '<div style="text-align:  center">';
                     echo '<div  class = "btn-group";>';
-                            echo '<form action = "bulletin.php" method = "post">
+                            echo '<form action = "index.php" method = "post">
                                 <input type="hidden" name="pid" value='. $pid .'>
-                                <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
                                 <input type = "submit" class = "btn btn-info" data-inline="true" name = "actionBtn" value = "RSVP"/>
                                 </form>'; 
                     echo '</div>';
                     echo '</div>';
-                }
-                else{
+                }else{
                     echo '<b class="card-text" style="font-size:18px">Attending :)</b>';
                     echo '<br/>';
                     echo '<div  class = "btn-group";>';
-                        echo '<form action = "bulletin.php" method = "post">
+                        echo '<form action = "index.php" method = "post">
                         <input type="hidden" name="pid" value='. $pid .'>
                         <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Un-RSVP" style = "margin-right:50px;"/>
                         </form>'; 
@@ -306,9 +259,8 @@ function printPosts ($array, $ID) // prints each post
                 echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
                 echo '<div style="text-align:  left">';
                 echo '<div  class = "btn-group";>';
-                    echo '<form action = "bulletin.php" method = "post"> 
-                    <input type = "hidden" name = "upvotebtn" value='.$pid. '>
-                    <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
+                    echo '<form action = "index.php" method = "post"> 
+                    <input type = "hidden" name = "upbtn" value='.$pid. '>
                     <button type = "submit" class = "btn" data-inline="true" name = "actionBtn">'; 
                         if($check['Dislike'] == 0 && $check != null){
                             echo '<i class="fas fa-long-arrow-alt-up" style = " font-size: 36px; color: #4BB543; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
@@ -320,9 +272,8 @@ function printPosts ($array, $ID) // prints each post
                         echo $row['Upvotes'];
                     echo '</p></button>
                     </form>'; 
-                        echo '<form action = "bulletin.php" method = "post"> 
-                        <input type = "hidden" name = "downvotebtn" value='. $pid . '>
-                        <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
+                        echo '<form action = "index.php" method = "post"> 
+                        <input type = "hidden" name = "downbtn" value='. $pid . '>
                         <button type = "submit" class = "btn" data-inline="true" name = "actionBtn" style = "margin-right:350px;">';
                             if($check['Dislike'] == 1){
                                 echo '<i class="fas fa-long-arrow-alt-down" style = " font-size: 36px; color: #FF0000; -webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #000000;"></i>';
@@ -338,13 +289,13 @@ function printPosts ($array, $ID) // prints each post
                 if($row['author'] == $ID){
                     echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block;" >
                     <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
-                    <input type="hidden" name="updateSource" value= "bulletin.php"/>
+                    <input type="hidden" name="updateSource" value= "index.php"/>
                     <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
                     title = "Click to update information about your post" style = "margin-right:100px;"/>
                     </form>';
                     echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
                     <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
-                    <input type="hidden" name="deleteSource" value= "bulletin.php"/>
+                    <input type="hidden" name="deleteSource" value= "index.php"/>
                     <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
                                 title = "Click to Delete post"/>
                     
@@ -363,92 +314,18 @@ function printPosts ($array, $ID) // prints each post
 }
 
 
-function printNonPosts ($array, $ID) // prints each post
-{
-    
-    if ($array) {
-        $firstClub = $array[0]['Name'];
-        echo '<h3 style="text-align: center"> Non-Event Posts by ' . $firstClub . '<h3>';
-
-        foreach ($array as $row) {
-           if ($row['Name'] != $firstClub){
-            echo '<h3 style="text-align: center" >Non-Event Posts by ' . $row['Name'] . '<h3>';
-            $firstClub = $row['Name'];
-           }
-           $pid = $row['Post_ID'];
-
-                echo '<div class="card mx-auto" style="width: 50rem; text-align: center; background: #232D4B; border-width: 5px; border-color: black;"">';
-                echo '<div class="card-body">';
-                    echo '<h5 class="card-title" style="font-size:22px">' . $row['Title'] . '</h5>';
-                    echo '<p class="text-muted" style="font-size:12px"> Posted:  '. $row['Post_Date'] . ' by '. $row['author'] . '</p>';
-                    echo '<p class="card-text" style="font-size:18px">' . $row['Body_Text'] . '</p>';
-                    if($row['Picture'] != null){
-                        echo '<div class="d-flex justify-content-center">';
-                        echo '<img src="data:image/jpeg;base64,'.base64_encode($row['Picture']).'" style = "width: 100%; height: 20vw; object-fit: scale-down;" class = "card-img-top">';
-                        echo '</div>'; 
-                    }
-                    echo '<div style="text-align:  left">';
-                    echo '<div  class = "btn-group";>';
-                        echo '<form action = "bulletin.php" method = "post"> 
-                            <input type = "hidden" name = "upvotebtn" value='.$pid. '>
-                            <input type = "hidden" name = "clubName" value =' .$row['Name'] . '>
-                            <input type = "submit" class = "btn btn-success mx-2" data-inline="true" name = "actionBtn" value = "Upvotes:  ' . $row['Upvotes'] .'"/>
-                            </form>'; 
-                        echo '<form action = "bulletin.php" method = "post"> 
-                        <input type = "hidden" name = "downvotebtn" value='.$pid . '>
-                        <input type = "hidden" name = "clubName" value =' . $row['Name'] . '>
-                        <input type = "submit" class = "btn btn-danger" data-inline="true" name = "actionBtn" value = "Downvotes:  ' . $row['Downvotes'] . '" style = "margin-right:200px;"/>
-                        </form>';  
-                if($row['author'] == $ID){
-                    echo '<form action = "updatePost.php" method = "POST" style = "display:inline-block; text-align: center;" >
-                    <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
-                    <input type="hidden" name="updateSource" value= "bulletin.php"/>
-                    <input type = "submit" name = "actionBtn" value = "Update Post" class = "btn btn-dark" 
-                    title = "Click to update information about your post" style = "margin-right:50px;"/>
-                    </form>';
-                    echo '<form action = "deletePost.php" method = "post" style = "display:inline-block;">
-                    <input type="hidden" name="id" value='.$row['Post_ID'] . '/>
-                    <input type="hidden" name="clubName" value='.$row['Name'] . '/>
-                    <input type="hidden" name="deleteSource" value= "bulletin.php"/>
-                    <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "Delete" 
-                                title = "Click to Delete post"/>
-                    </form>';
-                }
-            echo '</div>';
-            echo '</div>'; 
-            echo '</div>'; 
-            echo '</div>';
-           
-        }
-    } else {
-        echo '<h3>No non-event posts found</h3>';
-    }
-}
 
 // notes:  one bulletin page for each club and a user-based bulletin page, perhaps happens after login 
-
-?>
-<?php 
-session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-        if($_POST["pid"]){
+if($_POST["pid"]){
+    
             if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "RSVP")){
                 $_SESSION['pid'] = $_POST["pid"];
                 header("Location: rsvp.php");
             }
-            if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Un-RSVP")){
-                if(getStudent($_SESSION['computingID']) != null){
-                    echo "HELLO";
-                    deleteStudentAttendee($_SESSION['computingID'], $_POST['pid']);
-                }
-                else{
-                    deleteFacultyAttendee($_SESSION['computingID'], $_POST['pid']);  
-                }
-            }
+
         }   
-}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -465,30 +342,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
 
 <?php include("header.php") ?>
-<h1 style = "text-align:center"> Welcome to the Bulletin Page!</h1>
+<h1 style = "text-align:center"> Welcome to <?php echo $_GET['club'];?>'s Bulletin Page!</h1>
 
-<form action="bulletin.php" method="post" style = "text-align:center">
-What club are you looking for? 
-<input type="text" name="clubName">
-<br/>
-<div class="btn-group btn-group-toggle p-1" data-toggle="buttons">
-  <label class="btn btn-secondary">
-    <input type="radio" name="all" id="all" autocomplete="off" value = "all" > All Posts
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="event" id="event" autocomplete="off" value = "event"> Event Posts Only
-  </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="nonEvent" id="nonEvent" autocomplete="off" value ="nonEvent"> Non-Event Posts Only
-  </label>
+<div style = "text-align: center">
+    
+    <?php
+   
+    echo '<form action = "bulletin.php?club=' . $_GET['club'] . '" method = "post" style = "display: inline-block;">';
+    ?>
+        Filter By?
+        <div class = "row mb-4 mx-3">
+            <select id = "filterPost" name = "filterPost"  
+                                style = "border: 2px solid black; width: 200px;">
+                                <?php if ($_POST['filterPost'] == "Event") : ?>
+                                    <option value = "Event"> Event </option>
+                                    <option value = "Post"> Post </option>
+                                <?php else : ?>
+                                    <option value = "Post"> Post </option>
+                                    <option value = "Event"> Event </option>
+                                <?php endif ?>
+            </select>
+        </div>
+        <div class = "row mb-4 mx-auto">
+            <input type = "submit" name = "actionBtn" value = "Filter" class = "btn" title = "Click to filter your posts" style = "background-color: #E57200; color: #232D4B;"/>
+        </div>
+    </form>
 </div>
-<input type="submit" class = "btn btn-dark btn-block" style = "text-align:center">
-</form>
+
 
 <br></br>
 
 
 <?php 
+session_start();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    if(!isset($_SESSION['user'])){
+        header("Location: login.php");
+    }
+    else{
+        $user = getUser($_SESSION['computingID']);
+    }
+    $ID = $user['computing_id'];
+
+       
+}
+ 
 if(!isset($_SESSION['user'])){
     header("Location: login.php");
 }
@@ -496,43 +395,58 @@ else{
     $user = getUser($_SESSION['computingID']);
 }
 $ID = $user['computing_id'];
-$clubName = null;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if ($_POST["upvotebtn"]) {
-        upvote($_POST["upvotebtn"], $ID);
+    if ($_POST["upbtn"]) {
+        upvote($_POST["upbtn"], $ID);
     }
-    if ($_POST["downvotebtn"]){
-        downvote($_POST["downvotebtn"], $ID);
+    if ($_POST["downbtn"]){
+        downvote($_POST["downbtn"], $ID);
     }
    
-    if ($_POST["clubName"]) {
-        $clubName = $_POST["clubName"];
-        if($_POST['all']){
-            $posts = findPosts($clubName);
-            printPosts($posts, $ID);
+    }
+    if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Filter")){
+        if($_POST['filterPost'] == "Post"){
+            $filterEvent = 0;
         }
-        elseif($_POST['event']){
-            $events = getEventPosts($clubName);
-            printEventPosts($events, $ID);
+        else if($_POST['filterPost'] == "Event"){
+            $filterEvent = 1;
         }
-        elseif($_POST['nonEvent']){
-            $nonEvents = getNonEventPosts($clubName);
-            printNonPosts($nonEvents, $ID);
+    }
+
+    if($_POST["pid"]){
+        
+        if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Un-RSVP")){
+            $clubName = $_GET['club'];
+            if(getStudent($ID) != null){
+                deleteStudentAttendee($ID, $_POST['pid']);
+            }
+            else{
+                deleteFacultyAttendee($ID, $_POST['pid']);  
+            }
+            header("Location : bulletin.php?club=". $clubName);
         }
-        else{
-            $posts = findPosts($clubName);
-            printPosts($posts, $ID); 
-        }
+    } 
+    
+    if($filterEvent == 0){
+        $posts = findPosts($_GET['club']);
+        printPosts($posts, $ID, $filterEvent);
+    }
+    else{
+        $posts = getEventPosts($_GET['club']);
+        
+        printPosts($posts, $ID, $filterEvent);
     }
 
 
    
     
-}
+
 ?>
 
 
 
 </html>
+
 
 

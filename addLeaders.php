@@ -79,7 +79,7 @@
     <?php endif; ?>
     <div class = "row mb-4 mx-3">
         Computing ID <br/>
-        <input type = "text" class = "form-control" name = "leaderID" maxlength = "255" 
+        <input type = "text" class = "form-control" name = "leaderID" maxlength = "7" 
             style = "border: 2px solid black;" placeholder = "Leader Computing ID..."
         required />
         <small class = "form-text text-muted" style="color:#E57200 !important"> Computing ID of the leader you will add. Required. 

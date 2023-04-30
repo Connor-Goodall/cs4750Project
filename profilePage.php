@@ -37,7 +37,7 @@
                 <div class = "col-3" style = "margin-left: 400px;">
                     <div style = "text-align: center" >
                         <?php if($user['Profile_Picture'] == null) : ?>
-                            <img class = "rounded-circle account-img" src = "profile_pics\default.jpg" style = "width: 200px; height: 200px;">
+                            <img class = "rounded-circle account-img" src = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" style = "width: 200px; height: 200px;">
                         <?php else: ?>
                             <?php echo '<img class = "rounded-circle account-img" src="data:image/jpeg;base64,'.base64_encode($user['Profile_Picture']).'" style = "text-align: center; width: 200px; height: 200px;">'; ?> 
                         <?php endif; ?> 

@@ -56,7 +56,7 @@
         <?php endif; ?>
       <div class = "row mb-4 mx-3">
         Computing ID* <br/>
-        <input type = "text" class = "form-control" name = "loginComputingID" maxlength = "6" 
+        <input type = "text" class = "form-control" name = "loginComputingID" maxlength = "7" 
             style = "border: 2px solid black;" placeholder = "Your computing ID..." required
         />
     </div>

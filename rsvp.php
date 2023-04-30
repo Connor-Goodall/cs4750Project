@@ -1,6 +1,7 @@
 <?php 
     require("connect-db.php");
     require("club-db.php");
+    error_reporting(E_ERROR | E_PARSE);
     session_start();
     function addRSVP($compID, $pid, $speaking){
         global $db;
@@ -34,13 +35,14 @@
     }
     $resDisplay = 'none';
     $display = 'position:relative';
+    
     if(!hasRSVP($_SESSION['pid'], $_SESSION['computingID']) && isset($_SESSION['pid'])){
         $event = getEvent($_SESSION['pid']);
     }else if(isset($_SESSION['pid'])){
         $display = 'none';
         echo '<b>Already RSVP\'d to the event!</b>';
     }else{
-        header("Location: index.php");
+        //header("Location: index.php");
     }
     //Adds the post to the database ---also adds the event if needed
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
