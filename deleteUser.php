@@ -11,11 +11,26 @@
         $faculty = getFaculty($_SESSION['computingID']); 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Yes")){
+                deleteUser_Likes_Relationship($_SESSION['computingID']);
                 deleteUser($_SESSION['computingID']);
                 if($student != null){
+                    deleteStudent_MemberOf_Relationship($_SESSION['computingID']);
+                    deleteStudent_Students_Attending_Relationship($_SESSION['computingID']);
+                    deleteStudent_Leads_Relationship($_SESSION['computingID']);
+                    $posts = getPostsFromStudent($_SESSION['computingID']);
+                    foreach ($posts as $post) {
+                        deleteEvent($post['Post_ID']);
+                        deletePost_Plans_Relationship($post['Post_ID']);
+                        deletePost_Faculty_Attending_Relationship($post['Post_ID']);
+                        deletePost_Students_Attending_Relationship($post['Post_ID']);
+                        deletePost_Likes_Relationship($post['Post_ID']);
+                        deletePost($post['Post_ID']);  
+                    } 
                     deleteStudent($_SESSION['computingID']);
                 }
                 elseif($faculty != null){
+                    deleteFaculty_Sponsors_Relationship($_SESSION['computingID']);
+                    deleteFaculty_Faculty_Attending_Relationship($_SESSION['computingID']);
                     deleteFaculty($_SESSION['computingID']);
                 }
                 session_destroy();

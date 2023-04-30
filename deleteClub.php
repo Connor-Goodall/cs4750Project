@@ -11,6 +11,19 @@
         $club = getClub($_POST['id']);
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(!empty($_POST['actionBtn']) && ($_POST['actionBtn'] == "Yes")){
+                deleteClub_MemberOf_Relationship($_POST['id']);
+                deleteClub_Sponsors_Relationship($_POST['id']);
+                deleteClub_Leads_Relationship($_POST['id']);
+                deleteClub_Plans_Relationship($_POST['id']);
+                $posts = getPostsFromClub($_POST['id']);
+                foreach ($posts as $post) {
+                    deleteEvent($post['Post_ID']);
+                    deletePost_Plans_Relationship($post['Post_ID']);
+                    deletePost_Faculty_Attending_Relationship($post['Post_ID']);
+                    deletePost_Students_Attending_Relationship($post['Post_ID']);
+                    deletePost_Likes_Relationship($post['Post_ID']);
+                    deletePost($post['Post_ID']);  
+                }  
                 deleteClub($_POST['id']);
                 header("location: clubSearch.php");
                 exit();

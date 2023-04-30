@@ -483,6 +483,126 @@ function deleteFacultyAttendee($computingID, $postID){
     $statement->execute();
     $statement->closeCursor();
 }
+function deleteUser_Likes_Relationship($computingID){
+    global $db;
+    $query = "delete from `likes` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteStudent_MemberOf_Relationship($computingID){
+    global $db;
+    $query = "delete from `MemberOf` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteStudent_Students_Attending_Relationship($computingID){
+    global $db;
+    $query = "delete from `Students_Attending` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteStudent_Leads_Relationship($computingID){
+    global $db;
+    $query = "delete from `Leads` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteFaculty_Sponsors_Relationship($computingID){
+    global $db;
+    $query = "delete from `Sponsors` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deleteFaculty_Faculty_Attending_Relationship($computingID){
+    global $db;
+    $query = "delete from `Faculty_Attending` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor(); 
+}
+function deleteClub_MemberOf_Relationship($clubID){
+    global $db;
+    $query = "delete from `MemberOf` where Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $statement->closeCursor(); 
+}
+function deleteClub_Sponsors_Relationship($clubID){
+    global $db;
+    $query = "delete from `Sponsors` where Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $statement->closeCursor(); 
+}
+function deleteClub_Leads_Relationship($clubID){
+    global $db;
+    $query = "delete from `Leads` where Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $statement->closeCursor(); 
+}
+function deleteClub_Plans_Relationship($clubID){
+    global $db;
+    $query = "delete from `Plans` where Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $statement->closeCursor(); 
+}
+function deleteEvent($postID){
+    global $db;
+    $query = "delete from `Event` where Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deletePost_Plans_Relationship($postID){
+    global $db;
+    $query = "delete from `Plans` where Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deletePost_Faculty_Attending_Relationship($postID){
+    global $db;
+    $query = "delete from `Faculty_Attending` where Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deletePost_Students_Attending_Relationship($postID){
+    global $db;
+    $query = "delete from `Students_Attending` where Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+function deletePost_Likes_Relationship($postID){
+    global $db;
+    $query = "delete from `likes` where Post_ID=:postID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':postID', $postID);
+    $statement->execute();
+    $statement->closeCursor();
+}
 function getSponsor($computingID, $clubID){
     global $db;
     $query = "select * from `Sponsors` where computing_id=:computingID and Club_ID=:clubID";
@@ -525,6 +645,26 @@ function getAllSponsors($id){
     $results = $statement->fetchAll();
     $statement->closeCursor();
     return $results;
+}
+function getPostsFromClub($clubID){
+    global $db;
+    $query = "select Post_ID from `Post` where Club_ID=:clubID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':clubID', $clubID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results; 
+}
+function getPostsFromStudent($computingID){
+    global $db;
+    $query = "select Post_ID from `Post` where computing_id=:computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results; 
 }
 function getLeaders($id){
     global $db;
