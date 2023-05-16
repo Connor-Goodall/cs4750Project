@@ -1,5 +1,5 @@
 # Club Hub
-deploying on XAMPP
+##deploying on XAMPP
 
 Instructions on deploying to xampp: https://www.cs.virginia.edu/~up3f/cs4640/supplement/basic-deployment.html#section1
 
