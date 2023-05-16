@@ -30,7 +30,14 @@
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
         </head>
         <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
-        <?php include("header.php") ?>
+        <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
         <div class = "media">
             &nbsp
             <div class = "row">

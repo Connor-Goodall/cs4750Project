@@ -75,7 +75,9 @@
                     if (is_uploaded_file($_FILES['picture']['tmp_name'])) {
                         $picData = file_get_contents($_FILES['picture']['tmp_name']);
                     }else{
-                        $picData = $_POST['picture'];
+                        if(isset($_POST['picture'])){
+                            $picData = $_POST['picture'];
+                        }
                     }
                 }
                 $clubName = $_POST['clubName'];
@@ -112,7 +114,14 @@
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;" style = "position:absolute; top: 20%; text-align: center;">
-    <?php include("header.php") ?>
+      <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
     <br>
     <p class = "text-decoration-underline" style = "font-size: 25px;" >Post Creation Form</p>
 <form name = "postCreationForm" enctype="multipart/form-data" action = "createPost.php" method = "post" style = "display:<?php echo $display; ?>;">

@@ -26,22 +26,30 @@
                     if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
                         $logoData = file_get_contents($_FILES['logo']['tmp_name']);
                     }else{
-                        $logoData = $_POST['logo'];
+                        if (isset($_POST['logo'])){
+                            $logoData = $_POST['logo'];
+                        }
                     }
                     if (is_uploaded_file($_FILES['constitution']['tmp_name'])) {
                         $consData = file_get_contents($_FILES['constitution']['tmp_name']);
                     }else{
-                        $consData = $_POST['constitution'];
+                        if (isset($_POST['constitution'])){
+                            $consData = $_POST['constitution'];
+                        }
                     }
                     if (is_uploaded_file($_FILES['application']['tmp_name'])) {
                         $appData = file_get_contents($_FILES['application']['tmp_name']);
                     }else{
-                        $appData = $_POST['application'];
+                        if (isset($_POST['application'])){
+                            $appData = $_POST['application'];
+                        }
                     }
                     if (is_uploaded_file($_FILES['bylaws']['tmp_name'])) {
                         $bylawsData = file_get_contents($_FILES['bylaws']['tmp_name']);
                     }else{
-                        $bylawsData = $_POST['bylaws'];
+                        if (isset($_POST['bylaws'])){
+                            $bylawsData = $_POST['bylaws'];
+                        }
                     }
                 }
                 $clubName = $_POST['clubName'];
@@ -71,7 +79,14 @@
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;" style = "position:absolute; top: 20%; text-align: center;">
-    <?php include("header.php") ?>
+        <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
     <br>
     <p class = "text-decoration-underline" style = "font-size: 25px; text-align:center;" >Club Creation Form</p>
 <form name = "clubCreationForm" enctype="multipart/form-data" action = "createClub.php" method = "post" style = "display:<?php echo $display; ?>;">

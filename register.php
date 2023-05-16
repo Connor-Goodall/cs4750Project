@@ -53,12 +53,19 @@
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
     <div>
-        <?php include("header.php") ?>
+        <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
     </div>
     <br>
 
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-        Club Finder Registration
+        Club Hub Registration
     </p>
 
     <div>

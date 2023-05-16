@@ -71,7 +71,14 @@
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;" style = "position:absolute; top: 20%; text-align: center;">
-    <?php include("header.php") ?>
+        <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
     <br>
     <?php echo '<p class = "text-decoration-underline" style = "font-size: 25px;" >' . $event['Title'] . ' RSVP FORM:</p>';?>
 <form name = "rsvpForm" enctype="multipart/form-data" action = "rsvp.php" method = "post" style = "display:<?php echo $display; ?>;">

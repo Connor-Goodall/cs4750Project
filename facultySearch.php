@@ -1,5 +1,7 @@
 <?php
 session_start();
+require("connect-db.php");
+require("club-db.php");
 ?>
 <!DOCTYPE html>
     <html>
@@ -11,21 +13,39 @@ session_start();
         <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
     </head>
     <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
-    <?php include("header.php") ?>
+    <?php 
+        if(!isset($_SESSION['user'])){
+            include("nonuserHeader.php");
+        }
+        else{
+            include("userHeader.php");  
+        }
+    ?>
 
     <?php
-
-    $keyword = $_GET['keyword'];
-    $statement = $db->prepare("select `Department`, `Name`, User.computing_id, User.Profile_Picture from `Faculty` join `User` on User.computing_id = Faculty.computing_id
-                             where `Department` like '%$keyword%' or `Name` like '%$keyword%' ");
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-    $statement->closeCursor();
+    $keyword = NULL;
+    $results = NULL;
+    if (isset($_GET['keyword'])){
+        global $db; 
+        $keyword = $_GET['keyword'];
+        $statement = $db->prepare("select `Department`, `Name`, User.computing_id, User.Profile_Picture from `Faculty` join `User` on User.computing_id = Faculty.computing_id
+                                 where `Department` like '%$keyword%' or `Name` like '%$keyword%' ");
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+    }
+    else{
+        global $db; 
+        $statement = $db->prepare("select `Department`, `Name`, User.computing_id, User.Profile_Picture from `Faculty` join `User` on User.computing_id = Faculty.computing_id ");
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+    }
     ?>
 
     <br>
     <p class = "text-decoration-underline" style = "text-align: center; font-size: 25px;">
-        Club Finder Faculty Search
+        Club Hub Faculty Search
     </p>
     <br>
     <form name=facultySearch action=facultySearch.php method="GET" style="text-align: center">
