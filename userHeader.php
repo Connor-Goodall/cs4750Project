@@ -32,7 +32,7 @@
                       <a class="nav-link active" href="facultySearch.php" style = "color: #232D4B;">Search for Sponsors</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link active" href="createClub.php" style = "color: #232D4B;">Add your Club</a>
+                      <a class="nav-link active" href="createClub.php" style = "color: #232D4B;">Add Your Club</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link active" href="createPost.php" style = "color: #232D4B;">Create a Post</a>
