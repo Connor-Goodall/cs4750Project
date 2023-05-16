@@ -368,7 +368,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
-<?php include("header.php") ?>
+<?php 
+        if(!isset($_SESSION['user'])){
+            include("nonuserHeader.php");
+        }
+        else{
+            include("userHeader.php");  
+        }
+    ?>
 <h1 style="text-align: center"> Welcome to your Bulletin Page!</h1>
 <h4 style="text-align: center">Check out what your clubs have been up to </h4>
 <div style = "text-align: center">

@@ -36,7 +36,14 @@
             <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
         </head>
         <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
-            <?php include("header.php") ?>
+        <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
             &nbsp
             <div style = "position:absolute; top: 40%; right:0; left:0;">
                 <p style = "text-align:center; font-size: 20px;">
@@ -51,7 +58,9 @@
                         title = "Click Yes to delete this post" style = "margin-right:100px;"/>
                     </form>
                     <form action = <?php echo $_POST['deleteSource'] ?> method = "post" style = "display:inline-block;">
-                        <input type='hidden' name='clubName' value= <?php echo $_POST['clubName']; ?> />
+                        <?php if (isset($_POST['clubName'])) : ?>
+                            <input type='hidden' name='clubName' value= <?php echo $_POST['clubName']; ?> />
+                        <?php endif; ?>
                         <input type = "submit" class = "btn btn-danger" name = "actionBtn" value = "No" 
                             title = "Click no to return to the previous page"/>
                     </form>

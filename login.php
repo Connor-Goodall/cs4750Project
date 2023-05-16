@@ -4,6 +4,7 @@
     require("club-db.php");
     require("password.php");
     $tryLogin = 0;
+    $user = NULL;
     if(isset($_SESSION['user'])){
         header("Location: index.php");
     }
@@ -33,11 +34,18 @@
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
-    <?php include("header.php") ?>
+    <?php 
+        if(!isset($_SESSION['user'])){
+            include("nonuserHeader.php");
+        }
+        else{
+            include("userHeader.php");  
+        }
+    ?>
     <br>
     <div>
         <p class = "text-decoration-underline" style = "font-size: 25px; text-align:center;">
-            Club Finder Login
+            Club Hub Login
         </p>
     </div>
     

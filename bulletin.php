@@ -1,4 +1,6 @@
 <?php
+session_start();
+require("connect-db.php");
 require("club-db.php");
 error_reporting(E_ERROR | E_PARSE);
 
@@ -338,10 +340,18 @@ if($_POST["pid"]){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;">
 
-<?php include("header.php") ?>
+        <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
 <h1 style = "text-align:center"> Welcome to <?php echo $_GET['club'];?>'s Bulletin Page!</h1>
 
 <div style = "text-align: center">
@@ -374,7 +384,6 @@ if($_POST["pid"]){
 
 
 <?php 
-session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if(!isset($_SESSION['user'])){

@@ -4,6 +4,7 @@
     session_start();
     $club = null;
     $student = null;
+    $leader = null;
     $tryStudent = 0;
     $sameLeader = 0;
     $userLeader = getLeader($_SESSION['computingID'], $_POST['id']);
@@ -51,7 +52,14 @@
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
 <body style = "background: #232D4B; font-family: Lato; color: #E57200;" style = "position:absolute; top: 20%; text-align: center;">
-    <?php include("header.php") ?>
+        <?php 
+            if(!isset($_SESSION['user'])){
+                include("nonuserHeader.php");
+            }
+            else{
+                include("userHeader.php");  
+            }
+        ?>
     <br>
     <p class = "text-decoration-underline" style = "font-size: 25px; text-align: center;" >Add a Leader to <?php echo $club['Name'] ?> </p>
 <form name = "leaderCreationForm" enctype="multipart/form-data" action = "addLeaders.php" method = "post">

@@ -1,7 +1,3 @@
-<?php 
-    require("connect-db.php");
-    session_start();
-?>
 <!DOCTYPE html>
 <html>
 <header>  
@@ -42,7 +38,6 @@
                       <a class="nav-link active" href="createPost.php" style = "color: #232D4B;">Create a Post</a>
                   </li>
             </ul>    
-        <?php if(!isset($_SESSION['user'])) : ?>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
                 <a class="nav-link active" href="login.php" style = "color: #232D4B;">Login</a>
@@ -51,22 +46,6 @@
                 <a class="nav-link active" href="register.php" style = "color: #232D4B;">Register</a>
             </li>
           </ul>
-        <?php else : ?>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style = "color: #232D4B;">
-                    Profile
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="profileDropdown" style = "background-color: #E57200;">
-                    <li><a class="dropdown-item" href = "userProfile.php" style = "color: #232D4B;">My Profile</a></li>
-                    <li><a class="dropdown-item" href = "userClubs.php" style = "color: #232D4B;">My Clubs</a></li>
-                  </ul>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active" href="logout.php" style = "color: #232D4B;">Logout</a>
-              </li>
-            </ul>
-        <?php endif; ?>
         </div>
       </div>
     </nav>
