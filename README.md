@@ -1,6 +1,12 @@
-# cs4750Project
-* Make sure that you alter the user table to include the password variable by using ALTER TABLE `User` ADD Password VARCHAR(100);
-* Also, make sure that you add a password for the users you plan on logging on with in the `User` table.
-* Be sure to add your connect-db.php file to the same directory before deploying on the sqlserver
-* Make sure to add ON DELETE CASCADE by using ALTER TABLE ADD CONSTRAINT to every table that has the student or faculty computing id as a foreign key 
-(like this: ALTER TABLE `Leads` ADD CONSTRAINT delete_Student_Leads FOREIGN KEY(computing_id) REFERENCES `Student`(computing_id) ON DELETE CASCADE)
+# Club Hub
+deploying on XAMPP
+
+Instructions on deploying to xampp: https://www.cs.virginia.edu/~up3f/cs4640/supplement/basic-deployment.html#section1
+
+For local deployment, Use your command line to navigate to your xampp/htdocs folder and type "git clone https://github.com/Connor-Goodall/cs4750Project" (HTTPS) or "git clone git@github.com:Connor-Goodall/cs4750Project.git" (SSH) into the command line in order to place the folder in the correct spot for deployment.
+
+To setup the database, follow the instructions on accessing phpMyAdmin, adding a user, creating a database (name the database clubhub), and importing a SQL file (import the SQL file clubhub.sql from the cs4750Project folder): https://www.cs.virginia.edu/~up3f/cs4750/supplement/DB-setup-xampp.html#section2
+
+Once done, add your username and password that you created in the instructions for adding a user to the "PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on local XAMPP)" section in the connect-db.php file from the cs4750Project folder
+
+Once the xampp app on is opened on your computer and the apache webserver and the mysql database is started, the app can be viewed through your webbrowser at http://localhost/cs4750Project/index.php
